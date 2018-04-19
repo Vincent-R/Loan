@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/testm1514519497994" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1514519497994" name="" targetNamespace="http://www.activiti.org/testm1514519497994" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="mortgageLoan" isClosed="false" isExecutable="true" name="Mortgage Loan" processType="None">
+    <startEvent activiti:initiator="userId" id="start" name="Start Event">
+      <extensionElements>
+        <activiti:formProperty id="loanId" name="Loan Id" readable="true" required="true" type="string" variable="loanId" writable="true"/>
+      </extensionElements>
+    </startEvent>
+    <userTask activiti:candidateGroups="receiver" activiti:exclusive="true" id="receive" name="Receive Task"/>
+    <sequenceFlow id="_4" sourceRef="start" targetRef="receive"/>
+    <userTask activiti:candidateGroups="viewer" activiti:exclusive="true" id="view" name="View Task"/>
+    <sequenceFlow id="_6" sourceRef="receive" targetRef="view"/>
+    <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="Visa Task"/>
+    <sequenceFlow id="_8" sourceRef="view" targetRef="visa"/>
+    <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="Order Task"/>
+    <sequenceFlow id="_10" sourceRef="visa" targetRef="order"/>
+    <userTask activiti:candidateGroups="approver" activiti:exclusive="true" id="approve" name="Approve Task">
+      <extensionElements>
+        <activiti:formProperty id="approveSuccessful" name="Approve Successful" readable="true" required="true" type="enum" variable="approveSuccessful" writable="true">
+          <activiti:value id="true" name="agree"/>
+          <activiti:value id="false" name="disagree"/>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="_12" sourceRef="order" targetRef="approve"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="_13" name="ExclusiveGateway"/>
+    <sequenceFlow id="_14" sourceRef="approve" targetRef="_13"/>
+    <sequenceFlow id="_15" name="disagree" sourceRef="_13" targetRef="order">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveSuccessful == 'false'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="Mortgage Task"/>
+    <sequenceFlow id="_7" name="agree" sourceRef="_13" targetRef="mortgage">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveSuccessful == 'true'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="Loan Task"/>
+    <sequenceFlow id="_11" sourceRef="mortgage" targetRef="loan"/>
+    <endEvent id="end" name="End Event"/>
+    <sequenceFlow id="_2" sourceRef="loan" targetRef="end"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="mortgageLoan">
+      <bpmndi:BPMNShape bpmnElement="start" id="Shape-start">
+        <dc:Bounds height="32.0" width="32.0" x="105.0" y="125.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="receive" id="Shape-receive">
+        <dc:Bounds height="55.0" width="85.0" x="240.0" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="view" id="Shape-view">
+        <dc:Bounds height="55.0" width="85.0" x="380.0" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="visa" id="Shape-visa">
+        <dc:Bounds height="55.0" width="85.0" x="515.0" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="order" id="Shape-order">
+        <dc:Bounds height="55.0" width="85.0" x="655.0" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approve" id="Shape-approve">
+        <dc:Bounds height="55.0" width="85.0" x="795.0" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_13" id="Shape-_13" isMarkerVisible="false">
+        <dc:Bounds height="32.0" width="32.0" x="955.0" y="125.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="mortgage" id="Shape-mortgage">
+        <dc:Bounds height="55.0" width="85.0" x="930.0" y="250.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="loan" id="Shape-loan">
+        <dc:Bounds height="55.0" width="85.0" x="930.0" y="395.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
+        <dc:Bounds height="32.0" width="32.0" x="960.0" y="530.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_12" id="BPMNEdge__12" sourceElement="order" targetElement="approve">
+        <di:waypoint x="740.0" y="142.5"/>
+        <di:waypoint x="795.0" y="142.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_15" id="BPMNEdge__15" sourceElement="_13" targetElement="order">
+        <di:waypoint x="971.0" y="125.0"/>
+        <di:waypoint x="855.0" y="50.0"/>
+        <di:waypoint x="697.5" y="115.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14" id="BPMNEdge__14" sourceElement="approve" targetElement="_13">
+        <di:waypoint x="880.0" y="140.0"/>
+        <di:waypoint x="920.0" y="140.0"/>
+        <di:waypoint x="956.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_2" id="BPMNEdge__2" sourceElement="loan" targetElement="end">
+        <di:waypoint x="976.0" y="450.0"/>
+        <di:waypoint x="976.0" y="530.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="start" targetElement="receive">
+        <di:waypoint x="136.9687194226713" y="140.0"/>
+        <di:waypoint x="185.0" y="140.0"/>
+        <di:waypoint x="240.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="receive" targetElement="view">
+        <di:waypoint x="325.0" y="142.5"/>
+        <di:waypoint x="380.0" y="142.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="_13" targetElement="mortgage">
+        <di:waypoint x="971.0" y="157.0"/>
+        <di:waypoint x="971.0" y="250.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="view" targetElement="visa">
+        <di:waypoint x="465.0" y="142.5"/>
+        <di:waypoint x="515.0" y="142.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="mortgage" targetElement="loan">
+        <di:waypoint x="972.5" y="305.0"/>
+        <di:waypoint x="972.5" y="395.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="visa" targetElement="order">
+        <di:waypoint x="600.0" y="142.5"/>
+        <di:waypoint x="655.0" y="142.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
