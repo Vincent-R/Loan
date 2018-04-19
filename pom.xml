@@ -95,11 +95,11 @@
             <!--<version>2.9.5</version>-->
         <!--</dependency>-->
 		<!--部署时使用以屏蔽Springboot自带的tomcat-->
-		<!--<dependency>-->
-		<!--<groupId>org.springframework.boot</groupId>-->
-		<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-		<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
