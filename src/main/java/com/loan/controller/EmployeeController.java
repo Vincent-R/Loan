@@ -33,7 +33,7 @@ public class EmployeeController {
             result = new DataReturn<>(Constant.RESULT_ERROR, "密码错误" , null);
             return result;
         }
-        httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_TTLMILLIS, Constant.stringKey, employee.getId()));
+        httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId()));
         result = new DataReturn<>(Constant.RESULT_OK, "" , employee);
         return result;
     }

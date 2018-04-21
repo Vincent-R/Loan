@@ -27,6 +27,10 @@ public class Employee {
     private Department department;
 
     @Basic
+    @Column(name = "role")
+    private String role;
+
+    @Basic
     @Column(name = "phone")
     private String phone;
 
@@ -63,10 +67,6 @@ public class Employee {
     private boolean handle_h_order_receive;
 
     @Basic
-    @Column(name = "handle_h_view")
-    private boolean handle_h_view;
-
-    @Basic
     @Column(name = "handle_h_sign")
     private boolean handle_h_sign;
 
@@ -75,16 +75,40 @@ public class Employee {
     private boolean handle_h_ordering;
 
     @Basic
+    @Column(name = "handle_h_zjsj")
+    private boolean handle_h_zjsj;
+
+    @Basic
     @Column(name = "handle_h_approve")
     private boolean handle_h_approve;
+
+    @Basic
+    @Column(name = "handle_h_transfer")
+    private boolean handle_h_transfer;
 
     @Basic
     @Column(name = "handle_h_mortgage")
     private boolean handle_h_mortgage;
 
     @Basic
+    @Column(name = "handle_h_guarantee")
+    private boolean handle_h_guarantee;
+
+    @Basic
     @Column(name = "handle_h_loan")
     private boolean handle_h_loan;
+
+    @Basic
+    @Column(name = "handle_h_charge")
+    private boolean handle_h_charge;
+
+    @Basic
+    @Column(name = "handle_h_mortgage_manage")
+    private boolean handle_h_mortgage_manage;
+
+    @Basic
+    @Column(name = "handle_h_chargeback")
+    private boolean handle_h_chargeback;
 
     @Basic
     @Column(name = "query_m_status")
@@ -127,10 +151,6 @@ public class Employee {
     private boolean query_h_order_receive;
 
     @Basic
-    @Column(name = "query_h_view")
-    private boolean query_h_view;
-
-    @Basic
     @Column(name = "query_h_sign")
     private boolean query_h_sign;
 
@@ -139,16 +159,40 @@ public class Employee {
     private boolean query_h_ordering;
 
     @Basic
+    @Column(name = "query_h_zjsj")
+    private boolean query_h_zjsj;
+
+    @Basic
     @Column(name = "query_h_approve")
     private boolean query_h_approve;
+
+    @Basic
+    @Column(name = "query_h_transfer")
+    private boolean query_h_transfer;
 
     @Basic
     @Column(name = "query_h_mortgage")
     private boolean query_h_mortgage;
 
     @Basic
+    @Column(name = "query_h_guarantee")
+    private boolean query_h_guarantee;
+
+    @Basic
     @Column(name = "query_h_loan")
     private boolean query_h_loan;
+
+    @Basic
+    @Column(name = "query_h_charge")
+    private boolean query_h_charge;
+
+    @Basic
+    @Column(name = "query_h_mortgage_manage")
+    private boolean query_h_mortgage_manage;
+
+    @Basic
+    @Column(name = "query_h_chargeback")
+    private boolean query_h_chargeback;
 
     @Basic
     @Column(name = "edit_m_order_receive")
@@ -183,10 +227,6 @@ public class Employee {
     private boolean edit_h_order_receive;
 
     @Basic
-    @Column(name = "edit_h_view")
-    private boolean edit_h_view;
-
-    @Basic
     @Column(name = "edit_h_sign")
     private boolean edit_h_sign;
 
@@ -195,16 +235,40 @@ public class Employee {
     private boolean edit_h_ordering;
 
     @Basic
+    @Column(name = "edit_h_zjsj")
+    private boolean edit_h_zjsj;
+
+    @Basic
     @Column(name = "edit_h_approve")
     private boolean edit_h_approve;
+
+    @Basic
+    @Column(name = "edit_h_transfer")
+    private boolean edit_h_transfer;
 
     @Basic
     @Column(name = "edit_h_mortgage")
     private boolean edit_h_mortgage;
 
     @Basic
+    @Column(name = "edit_h_guarantee")
+    private boolean edit_h_guarantee;
+
+    @Basic
     @Column(name = "edit_h_loan")
     private boolean edit_h_loan;
+
+    @Basic
+    @Column(name = "edit_h_charge")
+    private boolean edit_h_charge;
+
+    @Basic
+    @Column(name = "edit_h_mortgage_manage")
+    private boolean edit_h_mortgage_manage;
+
+    @Basic
+    @Column(name = "edit_h_chargeback")
+    private boolean edit_h_chargeback;
 
     @Basic
     @Column(name = "delete_m_loan")
@@ -302,6 +366,14 @@ public class Employee {
         this.department = department;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -374,14 +446,6 @@ public class Employee {
         this.handle_h_order_receive = handle_h_order_receive;
     }
 
-    public boolean isHandle_h_view() {
-        return handle_h_view;
-    }
-
-    public void setHandle_h_view(boolean handle_h_view) {
-        this.handle_h_view = handle_h_view;
-    }
-
     public boolean isHandle_h_sign() {
         return handle_h_sign;
     }
@@ -398,12 +462,28 @@ public class Employee {
         this.handle_h_ordering = handle_h_ordering;
     }
 
+    public boolean isHandle_h_zjsj() {
+        return handle_h_zjsj;
+    }
+
+    public void setHandle_h_zjsj(boolean handle_h_zjsj) {
+        this.handle_h_zjsj = handle_h_zjsj;
+    }
+
     public boolean isHandle_h_approve() {
         return handle_h_approve;
     }
 
     public void setHandle_h_approve(boolean handle_h_approve) {
         this.handle_h_approve = handle_h_approve;
+    }
+
+    public boolean isHandle_h_transfer() {
+        return handle_h_transfer;
+    }
+
+    public void setHandle_h_transfer(boolean handle_h_transfer) {
+        this.handle_h_transfer = handle_h_transfer;
     }
 
     public boolean isHandle_h_mortgage() {
@@ -414,12 +494,44 @@ public class Employee {
         this.handle_h_mortgage = handle_h_mortgage;
     }
 
+    public boolean isHandle_h_guarantee() {
+        return handle_h_guarantee;
+    }
+
+    public void setHandle_h_guarantee(boolean handle_h_guarantee) {
+        this.handle_h_guarantee = handle_h_guarantee;
+    }
+
     public boolean isHandle_h_loan() {
         return handle_h_loan;
     }
 
     public void setHandle_h_loan(boolean handle_h_loan) {
         this.handle_h_loan = handle_h_loan;
+    }
+
+    public boolean isHandle_h_charge() {
+        return handle_h_charge;
+    }
+
+    public void setHandle_h_charge(boolean handle_h_charge) {
+        this.handle_h_charge = handle_h_charge;
+    }
+
+    public boolean isHandle_h_mortgage_manage() {
+        return handle_h_mortgage_manage;
+    }
+
+    public void setHandle_h_mortgage_manage(boolean handle_h_mortgage_manage) {
+        this.handle_h_mortgage_manage = handle_h_mortgage_manage;
+    }
+
+    public boolean isHandle_h_chargeback() {
+        return handle_h_chargeback;
+    }
+
+    public void setHandle_h_chargeback(boolean handle_h_chargeback) {
+        this.handle_h_chargeback = handle_h_chargeback;
     }
 
     public boolean isQuery_m_status() {
@@ -502,14 +614,6 @@ public class Employee {
         this.query_h_order_receive = query_h_order_receive;
     }
 
-    public boolean isQuery_h_view() {
-        return query_h_view;
-    }
-
-    public void setQuery_h_view(boolean query_h_view) {
-        this.query_h_view = query_h_view;
-    }
-
     public boolean isQuery_h_sign() {
         return query_h_sign;
     }
@@ -526,12 +630,28 @@ public class Employee {
         this.query_h_ordering = query_h_ordering;
     }
 
+    public boolean isQuery_h_zjsj() {
+        return query_h_zjsj;
+    }
+
+    public void setQuery_h_zjsj(boolean query_h_zjsj) {
+        this.query_h_zjsj = query_h_zjsj;
+    }
+
     public boolean isQuery_h_approve() {
         return query_h_approve;
     }
 
     public void setQuery_h_approve(boolean query_h_approve) {
         this.query_h_approve = query_h_approve;
+    }
+
+    public boolean isQuery_h_transfer() {
+        return query_h_transfer;
+    }
+
+    public void setQuery_h_transfer(boolean query_h_transfer) {
+        this.query_h_transfer = query_h_transfer;
     }
 
     public boolean isQuery_h_mortgage() {
@@ -542,12 +662,44 @@ public class Employee {
         this.query_h_mortgage = query_h_mortgage;
     }
 
+    public boolean isQuery_h_guarantee() {
+        return query_h_guarantee;
+    }
+
+    public void setQuery_h_guarantee(boolean query_h_guarantee) {
+        this.query_h_guarantee = query_h_guarantee;
+    }
+
     public boolean isQuery_h_loan() {
         return query_h_loan;
     }
 
     public void setQuery_h_loan(boolean query_h_loan) {
         this.query_h_loan = query_h_loan;
+    }
+
+    public boolean isQuery_h_charge() {
+        return query_h_charge;
+    }
+
+    public void setQuery_h_charge(boolean query_h_charge) {
+        this.query_h_charge = query_h_charge;
+    }
+
+    public boolean isQuery_h_mortgage_manage() {
+        return query_h_mortgage_manage;
+    }
+
+    public void setQuery_h_mortgage_manage(boolean query_h_mortgage_manage) {
+        this.query_h_mortgage_manage = query_h_mortgage_manage;
+    }
+
+    public boolean isQuery_h_chargeback() {
+        return query_h_chargeback;
+    }
+
+    public void setQuery_h_chargeback(boolean query_h_chargeback) {
+        this.query_h_chargeback = query_h_chargeback;
     }
 
     public boolean isEdit_m_order_receive() {
@@ -614,14 +766,6 @@ public class Employee {
         this.edit_h_order_receive = edit_h_order_receive;
     }
 
-    public boolean isEdit_h_view() {
-        return edit_h_view;
-    }
-
-    public void setEdit_h_view(boolean edit_h_view) {
-        this.edit_h_view = edit_h_view;
-    }
-
     public boolean isEdit_h_sign() {
         return edit_h_sign;
     }
@@ -638,12 +782,28 @@ public class Employee {
         this.edit_h_ordering = edit_h_ordering;
     }
 
+    public boolean isEdit_h_zjsj() {
+        return edit_h_zjsj;
+    }
+
+    public void setEdit_h_zjsj(boolean edit_h_zjsj) {
+        this.edit_h_zjsj = edit_h_zjsj;
+    }
+
     public boolean isEdit_h_approve() {
         return edit_h_approve;
     }
 
     public void setEdit_h_approve(boolean edit_h_approve) {
         this.edit_h_approve = edit_h_approve;
+    }
+
+    public boolean isEdit_h_transfer() {
+        return edit_h_transfer;
+    }
+
+    public void setEdit_h_transfer(boolean edit_h_transfer) {
+        this.edit_h_transfer = edit_h_transfer;
     }
 
     public boolean isEdit_h_mortgage() {
@@ -654,12 +814,44 @@ public class Employee {
         this.edit_h_mortgage = edit_h_mortgage;
     }
 
+    public boolean isEdit_h_guarantee() {
+        return edit_h_guarantee;
+    }
+
+    public void setEdit_h_guarantee(boolean edit_h_guarantee) {
+        this.edit_h_guarantee = edit_h_guarantee;
+    }
+
     public boolean isEdit_h_loan() {
         return edit_h_loan;
     }
 
     public void setEdit_h_loan(boolean edit_h_loan) {
         this.edit_h_loan = edit_h_loan;
+    }
+
+    public boolean isEdit_h_charge() {
+        return edit_h_charge;
+    }
+
+    public void setEdit_h_charge(boolean edit_h_charge) {
+        this.edit_h_charge = edit_h_charge;
+    }
+
+    public boolean isEdit_h_mortgage_manage() {
+        return edit_h_mortgage_manage;
+    }
+
+    public void setEdit_h_mortgage_manage(boolean edit_h_mortgage_manage) {
+        this.edit_h_mortgage_manage = edit_h_mortgage_manage;
+    }
+
+    public boolean isEdit_h_chargeback() {
+        return edit_h_chargeback;
+    }
+
+    public void setEdit_h_chargeback(boolean edit_h_chargeback) {
+        this.edit_h_chargeback = edit_h_chargeback;
     }
 
     public boolean isDelete_h_loan() {
@@ -775,71 +967,4 @@ public class Employee {
     }
 
     public Employee(){}
-
-    public Employee(String id){
-        this.id = id;
-        this.account = "";
-        this.password = "";
-        this.name = "";
-        this.department = null;
-        this.phone = "";
-        this.handle_m_order_receive = false;
-        this.handle_m_view = false;
-        this.handle_m_sign = false;
-        this.handle_m_ordering = false;
-        this.handle_m_approve = false;
-        this.handle_m_mortgage = false;
-        this.handle_m_loan = false;
-        this.handle_h_order_receive = false;
-        this.handle_h_view = false;
-        this.handle_h_sign = false;
-        this.handle_h_ordering = false;
-        this.handle_h_approve = false;
-        this.handle_h_mortgage = false;
-        this.handle_h_loan = false;
-        this.query_m_status = false;
-        this.query_m_order_receive = false;
-        this.query_m_view = false;
-        this.query_m_sign = false;
-        this.query_m_ordering = false;
-        this.query_m_approve = false;
-        this.query_m_mortgage = false;
-        this.query_m_loan = false;
-        this.query_h_status = false;
-        this.query_h_order_receive = false;
-        this.query_h_view = false;
-        this.query_h_sign = false;
-        this.query_h_ordering = false;
-        this.query_h_approve = false;
-        this.query_h_mortgage = false;
-        this.query_h_loan = false;
-        this.edit_m_order_receive = false;
-        this.edit_m_view = false;
-        this.edit_m_sign = false;
-        this.edit_m_ordering = false;
-        this.edit_m_approve = false;
-        this.edit_m_mortgage = false;
-        this.edit_m_loan = false;
-        this.edit_h_order_receive = false;
-        this.edit_h_view = false;
-        this.edit_h_sign = false;
-        this.edit_h_ordering = false;
-        this.edit_h_approve = false;
-        this.edit_h_mortgage = false;
-        this.edit_h_loan = false;
-        this.delete_m_loan = false;
-        this.delete_h_loan = false;
-        this.manage_department_add = false;
-        this.manage_department_edit = false;
-        this.manage_department_delete = false;
-        this.manage_department_query = false;
-        this.manage_account_add = false;
-        this.manage_account_edit = false;
-        this.manage_account_delete = false;
-        this.manage_account_query = false;
-        this.manage_authority = false;
-        this.manage_notice_add = false;
-        this.manage_notice_edit = false;
-        this.manage_notice_delete = false;
-    }
 }

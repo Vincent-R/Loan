@@ -11,6 +11,6 @@ public interface EmployeeDao extends JpaRepository<Employee, String>{
     Employee findOneByAccount(String account);
 
     @Modifying
-    @Query("delete from Employee e where e.id=:id")
+    @Query("delete from Employee e where e.id=?1")
     int deleteById(String id);
 }
