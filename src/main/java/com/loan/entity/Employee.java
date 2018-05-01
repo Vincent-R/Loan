@@ -28,7 +28,7 @@ public class Employee {
 
     @Basic
     @Column(name = "role")
-    private String role;
+    private int role;
 
     @Basic
     @Column(name = "phone")
@@ -326,6 +326,74 @@ public class Employee {
     @Column(name = "manage_notice_delete")
     private boolean manage_notice_delete;
 
+    @Basic
+    @Column(name = "assign_m_view")
+    private boolean assign_m_view;
+
+    @Basic
+    @Column(name = "assign_m_sign")
+    private boolean assign_m_sign;
+
+    @Basic
+    @Column(name = "assign_m_ordering")
+    private boolean assign_m_ordering;
+
+    @Basic
+    @Column(name = "assign_m_approve")
+    private boolean assign_m_approve;
+
+    @Basic
+    @Column(name = "assign_m_mortgage")
+    private boolean assign_m_mortgage;
+
+    @Basic
+    @Column(name = "assign_m_loan")
+    private boolean assign_m_loan;
+
+    @Basic
+    @Column(name = "assign_h_sign")
+    private boolean assign_h_sign;
+
+    @Basic
+    @Column(name = "assign_h_ordering")
+    private boolean assign_h_ordering;
+
+    @Basic
+    @Column(name = "assign_h_zjsj")
+    private boolean assign_h_zjsj;
+
+    @Basic
+    @Column(name = "assign_h_approve")
+    private boolean assign_h_approve;
+
+    @Basic
+    @Column(name = "assign_h_transfer")
+    private boolean assign_h_transfer;
+
+    @Basic
+    @Column(name = "assign_h_mortgage")
+    private boolean assign_h_mortgage;
+
+    @Basic
+    @Column(name = "assign_h_guarantee")
+    private boolean assign_h_guarantee;
+
+    @Basic
+    @Column(name = "assign_h_loan")
+    private boolean assign_h_loan;
+
+    @Basic
+    @Column(name = "assign_h_charge")
+    private boolean assign_h_charge;
+
+    @Basic
+    @Column(name = "assign_h_mortgage_manage")
+    private boolean assign_h_mortgage_manage;
+
+    @Basic
+    @Column(name = "assign_h_chargeback")
+    private boolean assign_h_chargeback;
+
     public String getId() {
         return id;
     }
@@ -366,11 +434,11 @@ public class Employee {
         this.department = department;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 
@@ -966,5 +1034,139 @@ public class Employee {
         this.manage_notice_delete = manage_notice_delete;
     }
 
-    public Employee(){}
+    public boolean isAssign_m_view() {
+        return assign_m_view;
+    }
+
+    public void setAssign_m_view(boolean assign_m_view) {
+        this.assign_m_view = assign_m_view;
+    }
+
+    public boolean isAssign_m_sign() {
+        return assign_m_sign;
+    }
+
+    public void setAssign_m_sign(boolean assign_m_sign) {
+        this.assign_m_sign = assign_m_sign;
+    }
+
+    public boolean isAssign_m_ordering() {
+        return assign_m_ordering;
+    }
+
+    public void setAssign_m_ordering(boolean assign_m_ordering) {
+        this.assign_m_ordering = assign_m_ordering;
+    }
+
+    public boolean isAssign_m_approve() {
+        return assign_m_approve;
+    }
+
+    public void setAssign_m_approve(boolean assign_m_approve) {
+        this.assign_m_approve = assign_m_approve;
+    }
+
+    public boolean isAssign_m_mortgage() {
+        return assign_m_mortgage;
+    }
+
+    public void setAssign_m_mortgage(boolean assign_m_mortgage) {
+        this.assign_m_mortgage = assign_m_mortgage;
+    }
+
+    public boolean isAssign_m_loan() {
+        return assign_m_loan;
+    }
+
+    public void setAssign_m_loan(boolean assign_m_loan) {
+        this.assign_m_loan = assign_m_loan;
+    }
+
+    public boolean isAssign_h_sign() {
+        return assign_h_sign;
+    }
+
+    public void setAssign_h_sign(boolean assign_h_sign) {
+        this.assign_h_sign = assign_h_sign;
+    }
+
+    public boolean isAssign_h_ordering() {
+        return assign_h_ordering;
+    }
+
+    public void setAssign_h_ordering(boolean assign_h_ordering) {
+        this.assign_h_ordering = assign_h_ordering;
+    }
+
+    public boolean isAssign_h_zjsj() {
+        return assign_h_zjsj;
+    }
+
+    public void setAssign_h_zjsj(boolean assign_h_zjsj) {
+        this.assign_h_zjsj = assign_h_zjsj;
+    }
+
+    public boolean isAssign_h_approve() {
+        return assign_h_approve;
+    }
+
+    public void setAssign_h_approve(boolean assign_h_approve) {
+        this.assign_h_approve = assign_h_approve;
+    }
+
+    public boolean isAssign_h_transfer() {
+        return assign_h_transfer;
+    }
+
+    public void setAssign_h_transfer(boolean assign_h_transfer) {
+        this.assign_h_transfer = assign_h_transfer;
+    }
+
+    public boolean isAssign_h_mortgage() {
+        return assign_h_mortgage;
+    }
+
+    public void setAssign_h_mortgage(boolean assign_h_mortgage) {
+        this.assign_h_mortgage = assign_h_mortgage;
+    }
+
+    public boolean isAssign_h_guarantee() {
+        return assign_h_guarantee;
+    }
+
+    public void setAssign_h_guarantee(boolean assign_h_guarantee) {
+        this.assign_h_guarantee = assign_h_guarantee;
+    }
+
+    public boolean isAssign_h_loan() {
+        return assign_h_loan;
+    }
+
+    public void setAssign_h_loan(boolean assign_h_loan) {
+        this.assign_h_loan = assign_h_loan;
+    }
+
+    public boolean isAssign_h_charge() {
+        return assign_h_charge;
+    }
+
+    public void setAssign_h_charge(boolean assign_h_charge) {
+        this.assign_h_charge = assign_h_charge;
+    }
+
+    public boolean isAssign_h_mortgage_manage() {
+        return assign_h_mortgage_manage;
+    }
+
+    public void setAssign_h_mortgage_manage(boolean assign_h_mortgage_manage) {
+        this.assign_h_mortgage_manage = assign_h_mortgage_manage;
+    }
+
+    public boolean isAssign_h_chargeback() {
+        return assign_h_chargeback;
+    }
+
+    public void setAssign_h_chargeback(boolean assign_h_chargeback) {
+        this.assign_h_chargeback = assign_h_chargeback;
+    }
 }
