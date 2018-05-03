@@ -9,27 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/")
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping(value = "/getDepartment/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "department/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Department> getEmployee(@PathVariable("departmentId") int departmentId){
-        Department department = departmentService.findOneById(departmentId);
-        DataReturn<Department> result = null;
-        if(department == null){
-            result = new DataReturn<>(Constant.RESULT_ERROR, "部门不存在" , null);
-            return result;
+        if("".equals(departmentId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "部门ID不合法" , null);
         }
-        result = new DataReturn<>(Constant.RESULT_OK, "" , department);
-        return result;
+        Department department = departmentService.findOneById(departmentId);
+        if(department == null){
+            return new DataReturn<>(Constant.RESULT_ERROR, "部门不存在" , null);
+        }
+        return new DataReturn<>(Constant.RESULT_OK, "" , department);
     }
 
-    @RequestMapping(value = "/updateDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "updateDepartment", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<Integer> updateDepartment(@RequestParam(value = "newDepartment", defaultValue = "") String newDepartment){
+        if("".equals(newDepartment)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入部门不合法" , null);
+        }
         Department department = JSON.parseObject(newDepartment, Department.class);
         department = departmentService.save(department);
         if(null == department){
@@ -38,9 +41,12 @@ public class DepartmentController {
         return new DataReturn<>(Constant.RESULT_OK, "更新部门信息成功", department.getId());
     }
 
-    @RequestMapping(value = "/saveDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "saveDepartment", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<Integer> saveDepartment(@RequestParam(value = "newDepartment", defaultValue = "") String newDepartment){
+        if("".equals(newDepartment)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入部门不合法" , null);
+        }
         Department department = JSON.parseObject(newDepartment, Department.class);
         department = departmentService.save(department);
         if(null == department){
@@ -49,10 +55,13 @@ public class DepartmentController {
         return new DataReturn<>(Constant.RESULT_OK, "创建新部门成功", department.getId());
     }
 
-    @RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteDepartment/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<Integer> deleteDepartment(@RequestParam(value = "id", defaultValue = "") int id){
-        int result = departmentService.deleteById(id);
+    public DataReturn<Integer> deleteDepartment(@PathVariable("departmentId") int departmentId){
+        if("".equals(departmentId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "部门ID不合法" , null);
+        }
+        int result = departmentService.deleteById(departmentId);
         if(1 != result ){
             return new DataReturn<>(Constant.RESULT_ERROR, "删除部门失败", 0);
         }

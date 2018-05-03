@@ -22,7 +22,7 @@ public class MortgageHouseServiceImpl implements MortgageHouseService {
     }
 
     @Override
-    public MortgageHouse findById(String id) {
+    public MortgageHouse findOneById(String id) {
         return mortgageHouseDao.findOne(id);
     }
 

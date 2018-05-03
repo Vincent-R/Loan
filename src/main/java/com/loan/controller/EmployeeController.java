@@ -13,47 +13,49 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<Employee> employeeLogin(@RequestParam(value = "userName", defaultValue = "") String userName,
                                               @RequestParam(value = "userPassword", defaultValue = "") String userPassword, HttpServletResponse httpServletResponse){
+        if("".equals(userName)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "请输入正确的用户名称" , null);
+        }
         Employee employee = employeeService.findOneByAccount(userName);
-        DataReturn<Employee> result = null;
         if(employee == null){
-            result = new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
-            return result;
+            return new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
         }
         if(!userPassword.equals(employee.getPassword())){
-            result = new DataReturn<>(Constant.RESULT_ERROR, "密码错误" , null);
-            return result;
+            return new DataReturn<>(Constant.RESULT_ERROR, "密码错误" , null);
         }
         httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId()));
-        result = new DataReturn<>(Constant.RESULT_OK, "" , employee);
-        return result;
+        return new DataReturn<>(Constant.RESULT_OK, "" , employee);
     }
 
-    @RequestMapping(value = "/getEmployee/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "employee/{userId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Employee> getEmployee(@PathVariable("userId") String userId){
-        Employee employee = employeeService.findOneById(userId);
-        DataReturn<Employee> result = null;
-        if(employee == null){
-            result = new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
-            return result;
+        if("".equals(userId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "用户ID不合法" , null);
         }
-        result = new DataReturn<>(Constant.RESULT_OK, "" , employee);
-        return result;
+        Employee employee = employeeService.findOneById(userId);
+        if(employee == null){
+            return new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
+        }
+        return new DataReturn<>(Constant.RESULT_OK, "" , employee);
     }
 
-    @RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "updateEmployee", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<String> updateEmployee(@RequestParam(value = "newEmployee", defaultValue = "") String newEmployee){
+        if("".equals(newEmployee)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入用户不合法" , null);
+        }
         Employee employee = JSON.parseObject(newEmployee, Employee.class);
         employee = employeeService.save(employee);
         if(null == employee){
@@ -62,9 +64,12 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "更新用户成功", employee.getId());
     }
 
-    @RequestMapping(value = "/saveEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "saveEmployee", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<String> saveEmployee(@RequestParam(value = "newEmployee", defaultValue = "") String newEmployee){
+        if("".equals(newEmployee)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入用户不合法" , null);
+        }
         Employee employee = JSON.parseObject(newEmployee, Employee.class);
         employee.setId(UUID.randomUUID().toString().replace("-",""));
         employee = employeeService.save(employee);
@@ -74,10 +79,13 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "创建新用户成功", employee.getId());
     }
 
-    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteEmployee/{userId}", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<Integer> deleteEmployee(@RequestParam(value = "id", defaultValue = "") String id){
-        int result = employeeService.deleteById(id);
+    public DataReturn<Integer> deleteEmployee(@PathVariable("userId") String userId){
+        if("".equals(userId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "用户ID不合法" , null);
+        }
+        int result = employeeService.deleteById(userId);
         if(1 != result ){
             return new DataReturn<>(Constant.RESULT_ERROR, "删除用户失败", 0);
         }

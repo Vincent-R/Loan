@@ -1,13 +1,7 @@
 package com.loan;
 
-import com.loan.entity.Announcement;
-import com.loan.entity.Employee;
-import com.loan.entity.MortgageCheckList;
-import com.loan.entity.MortgageHouse;
-import com.loan.service.AnnouncementService;
-import com.loan.service.DepartmentService;
-import com.loan.service.EmployeeService;
-import com.loan.service.MortgageCheckListService;
+import com.loan.entity.*;
+import com.loan.service.*;
 import com.loan.util.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +28,20 @@ public class ServiceTest {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private MortgageRecordService mortgageRecordService;
+
+    @Test
+    public void recordTest(){
+        //新建record
+//        MortgageRecord mortgageRecord = new MortgageRecord();
+//        mortgageRecord.setId(UUID.randomUUID().toString().replace("-",""));
+//        mortgageRecordService.save(mortgageRecord);
+
+        MortgageRecord record = mortgageRecordService.findOneById("4b5e4cbdaca140f0a91ac52618ff3359");
+        System.out.println(record.getId());
+    }
 
     @Test
     public void mortgageCheckListServiceTest(){

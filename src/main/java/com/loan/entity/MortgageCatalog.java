@@ -32,12 +32,12 @@ public class MortgageCatalog {
     private String clerk_phone;
 
     @Basic
-    @Column(name = "has_client_idCard")
-    private boolean has_client_idCard;
+    @Column(name = "has_client_id_card")
+    private boolean has_client_id_card;
 
     @Basic
-    @Column(name = "client_idCard_dpr")
-    private String client_idCard_dpr;
+    @Column(name = "client_id_card_dpr")
+    private String client_id_card_dpr;
 
     @Basic
     @Column(name = "has_client_account")
@@ -52,12 +52,12 @@ public class MortgageCatalog {
     private String client_account_dpr;
 
     @Basic
-    @Column(name = "has_client_spouse_idCard")
-    private boolean has_client_spouse_idCard;
+    @Column(name = "has_client_spouse_id_card")
+    private boolean has_client_spouse_id_card;
 
     @Basic
-    @Column(name = "client_spouse_idCard_dpr")
-    private String client_spouse_idCard_dpr;
+    @Column(name = "client_spouse_id_card_dpr")
+    private String client_spouse_id_card_dpr;
 
     @Basic
     @Column(name = "has_client_spouse_account")
@@ -219,20 +219,20 @@ public class MortgageCatalog {
         this.clerk_phone = clerk_phone;
     }
 
-    public boolean isHas_client_idCard() {
-        return has_client_idCard;
+    public boolean isHas_client_id_card() {
+        return has_client_id_card;
     }
 
-    public void setHas_client_idCard(boolean has_client_idCard) {
-        this.has_client_idCard = has_client_idCard;
+    public void setHas_client_id_card(boolean has_client_id_card) {
+        this.has_client_id_card = has_client_id_card;
     }
 
-    public String getClient_idCard_dpr() {
-        return client_idCard_dpr;
+    public String getClient_id_card_dpr() {
+        return client_id_card_dpr;
     }
 
-    public void setClient_idCard_dpr(String client_idCard_dpr) {
-        this.client_idCard_dpr = client_idCard_dpr;
+    public void setClient_id_card_dpr(String client_id_card_dpr) {
+        this.client_id_card_dpr = client_id_card_dpr;
     }
 
     public boolean isHas_client_account() {
@@ -259,20 +259,20 @@ public class MortgageCatalog {
         this.client_account_dpr = client_account_dpr;
     }
 
-    public boolean isHas_client_spouse_idCard() {
-        return has_client_spouse_idCard;
+    public boolean isHas_client_spouse_id_card() {
+        return has_client_spouse_id_card;
     }
 
-    public void setHas_client_spouse_idCard(boolean has_client_spouse_idCard) {
-        this.has_client_spouse_idCard = has_client_spouse_idCard;
+    public void setHas_client_spouse_id_card(boolean has_client_spouse_id_card) {
+        this.has_client_spouse_id_card = has_client_spouse_id_card;
     }
 
-    public String getClient_spouse_idCard_dpr() {
-        return client_spouse_idCard_dpr;
+    public String getClient_spouse_id_card_dpr() {
+        return client_spouse_id_card_dpr;
     }
 
-    public void setClient_spouse_idCard_dpr(String client_spouse_idCard_dpr) {
-        this.client_spouse_idCard_dpr = client_spouse_idCard_dpr;
+    public void setClient_spouse_id_card_dpr(String client_spouse_id_card_dpr) {
+        this.client_spouse_id_card_dpr = client_spouse_id_card_dpr;
     }
 
     public boolean isHas_client_spouse_account() {

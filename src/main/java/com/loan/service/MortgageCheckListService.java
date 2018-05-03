@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MortgageCheckListService {
 
-    MortgageCheckList findById(String id);
+    MortgageCheckList findOneById(String id);
 
     MortgageCheckList save(MortgageCheckList mortgageCheckList);
 

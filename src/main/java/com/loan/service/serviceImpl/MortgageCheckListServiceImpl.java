@@ -22,7 +22,7 @@ public class MortgageCheckListServiceImpl implements MortgageCheckListService {
     }
 
     @Override
-    public MortgageCheckList findById(String id) {
+    public MortgageCheckList findOneById(String id) {
         return mortgageCheckListDao.findOne(id);
     }
 

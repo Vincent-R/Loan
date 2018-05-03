@@ -52,8 +52,8 @@ public class MortgageForm {
     private int proposer_household_type;
 
     @Basic
-    @Column(name = "proposer_idCard")
-    private String proposer_idCard;
+    @Column(name = "proposer_id_card")
+    private String proposer_id_card;
 
     @Basic
     @Column(name = "proposer_inhabiting_info")
@@ -120,12 +120,12 @@ public class MortgageForm {
     private String proposer_work_address;
 
     @Basic
-    @Column(name = "proposer_work_infoOne")
-    private String proposer_work_infoOne;
+    @Column(name = "proposer_work_info_one")
+    private String proposer_work_info_one;
 
     @Basic
-    @Column(name = "proposer_work_infoTwo")
-    private String proposer_work_infoTwo;
+    @Column(name = "proposer_work_info_two")
+    private String proposer_work_info_two;
 
     @Basic
     @Column(name = "loan_amount")
@@ -255,12 +255,12 @@ public class MortgageForm {
         this.proposer_household_type = proposer_household_type;
     }
 
-    public String getProposer_idCard() {
-        return proposer_idCard;
+    public String getProposer_id_card() {
+        return proposer_id_card;
     }
 
-    public void setProposer_idCard(String proposer_idCard) {
-        this.proposer_idCard = proposer_idCard;
+    public void setProposer_id_card(String proposer_id_card) {
+        this.proposer_id_card = proposer_id_card;
     }
 
     public String getProposer_inhabiting_info() {
@@ -391,20 +391,20 @@ public class MortgageForm {
         this.proposer_work_address = proposer_work_address;
     }
 
-    public String getProposer_work_infoOne() {
-        return proposer_work_infoOne;
+    public String getProposer_work_info_one() {
+        return proposer_work_info_one;
     }
 
-    public void setProposer_work_infoOne(String proposer_work_infoOne) {
-        this.proposer_work_infoOne = proposer_work_infoOne;
+    public void setProposer_work_info_one(String proposer_work_info_one) {
+        this.proposer_work_info_one = proposer_work_info_one;
     }
 
-    public String getProposer_work_infoTwo() {
-        return proposer_work_infoTwo;
+    public String getProposer_work_info_two() {
+        return proposer_work_info_two;
     }
 
-    public void setProposer_work_infoTwo(String proposer_work_infoTwo) {
-        this.proposer_work_infoTwo = proposer_work_infoTwo;
+    public void setProposer_work_info_two(String proposer_work_info_two) {
+        this.proposer_work_info_two = proposer_work_info_two;
     }
 
     public String getLoan_amount() {

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MortgageHouseService {
 
-    MortgageHouse findById(String id);
+    MortgageHouse findOneById(String id);
 
     MortgageHouse save(MortgageHouse mortgageHouse);
 
