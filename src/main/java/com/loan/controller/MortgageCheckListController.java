@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/checklist")
 public class MortgageCheckListController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class MortgageCheckListController {
     private MortgageHouseService mortgageHouseService;
 
     @ResponseBody
-    @RequestMapping(value = "checklist/{checklistId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{checklistId}", method = RequestMethod.GET)
     public DataReturn<MortgageCheckList> getCheckList(@PathVariable("checklistId") String checklistId){
         if("".equals(checklistId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "客户交接表ID不合法" , null);
@@ -49,7 +49,7 @@ public class MortgageCheckListController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "saveCheckList", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public DataReturn<String> saveCheckList(@RequestParam(value = "checklist", defaultValue = "") String checklist, @RequestParam(value = "houses", defaultValue = "") String houses){
         if("".equals(checklist)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入客户交接表不合法" , null);
@@ -61,14 +61,14 @@ public class MortgageCheckListController {
             //添加客户交接表
             mortgageCheckList = JSON.parseObject(checklist, MortgageCheckList.class);
             mortgageCheckList.setId(UUID.randomUUID().toString().replace("-",""));
-            mortgageCheckList = mortgageCheckListService.save(mortgageCheckList);
             //添加房产信息
             List<MortgageHouse> mortgageHouses = JSONArray.parseArray(houses, MortgageHouse.class);
             for (MortgageHouse house: mortgageHouses) {
                 house.setId(UUID.randomUUID().toString().replace("-",""));
                 house.setChecklist_id(mortgageCheckList.getId());
-                mortgageHouseService.save(house);
             }
+            mortgageCheckList.setMortgageHouses(mortgageHouses);
+            mortgageCheckList = mortgageCheckListService.save(mortgageCheckList);
             mortgageRecord.setChecklist_id(mortgageCheckList.getId());
             //启动新的流程
             Map<String, Object> variableMap = new HashMap<>();

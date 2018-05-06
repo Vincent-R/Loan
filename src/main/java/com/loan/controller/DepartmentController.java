@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/department")
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping(value = "department/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Department> getEmployee(@PathVariable("departmentId") int departmentId){
         if("".equals(departmentId)){
@@ -27,7 +27,7 @@ public class DepartmentController {
         return new DataReturn<>(Constant.RESULT_OK, "" , department);
     }
 
-    @RequestMapping(value = "updateDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<Integer> updateDepartment(@RequestParam(value = "newDepartment", defaultValue = "") String newDepartment){
         if("".equals(newDepartment)){
@@ -41,7 +41,7 @@ public class DepartmentController {
         return new DataReturn<>(Constant.RESULT_OK, "更新部门信息成功", department.getId());
     }
 
-    @RequestMapping(value = "saveDepartment", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<Integer> saveDepartment(@RequestParam(value = "newDepartment", defaultValue = "") String newDepartment){
         if("".equals(newDepartment)){
@@ -55,7 +55,7 @@ public class DepartmentController {
         return new DataReturn<>(Constant.RESULT_OK, "创建新部门成功", department.getId());
     }
 
-    @RequestMapping(value = "deleteDepartment/{departmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Integer> deleteDepartment(@PathVariable("departmentId") int departmentId){
         if("".equals(departmentId)){

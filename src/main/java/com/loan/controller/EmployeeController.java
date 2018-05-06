@@ -13,31 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    @ResponseBody
-    public DataReturn<Employee> employeeLogin(@RequestParam(value = "userName", defaultValue = "") String userName,
-                                              @RequestParam(value = "userPassword", defaultValue = "") String userPassword, HttpServletResponse httpServletResponse){
-        if("".equals(userName)){
-            return new DataReturn<>(Constant.RESULT_ERROR, "请输入正确的用户名称" , null);
-        }
-        Employee employee = employeeService.findOneByAccount(userName);
-        if(employee == null){
-            return new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
-        }
-        if(!userPassword.equals(employee.getPassword())){
-            return new DataReturn<>(Constant.RESULT_ERROR, "密码错误" , null);
-        }
-        httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId()));
-        return new DataReturn<>(Constant.RESULT_OK, "" , employee);
-    }
-
-    @RequestMapping(value = "employee/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Employee> getEmployee(@PathVariable("userId") String userId){
         if("".equals(userId)){
@@ -50,7 +32,7 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "" , employee);
     }
 
-    @RequestMapping(value = "updateEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<String> updateEmployee(@RequestParam(value = "newEmployee", defaultValue = "") String newEmployee){
         if("".equals(newEmployee)){
@@ -64,7 +46,7 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "更新用户成功", employee.getId());
     }
 
-    @RequestMapping(value = "saveEmployee", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public DataReturn<String> saveEmployee(@RequestParam(value = "newEmployee", defaultValue = "") String newEmployee){
         if("".equals(newEmployee)){
@@ -79,7 +61,7 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "创建新用户成功", employee.getId());
     }
 
-    @RequestMapping(value = "deleteEmployee/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{userId}", method = RequestMethod.GET)
     @ResponseBody
     public DataReturn<Integer> deleteEmployee(@PathVariable("userId") String userId){
         if("".equals(userId)){

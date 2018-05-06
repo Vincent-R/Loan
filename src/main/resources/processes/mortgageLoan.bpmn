@@ -6,10 +6,7 @@
         <activiti:formProperty id="loanId" name="Loan Id" readable="true" required="true" type="string" variable="loanId" writable="true"/>
       </extensionElements>
     </startEvent>
-    <userTask activiti:candidateGroups="receiver" activiti:exclusive="true" id="receive" name="Receive Task"/>
-    <sequenceFlow id="_4" sourceRef="start" targetRef="receive"/>
     <userTask activiti:candidateGroups="viewer" activiti:exclusive="true" id="view" name="View Task"/>
-    <sequenceFlow id="_6" sourceRef="receive" targetRef="view"/>
     <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="Visa Task"/>
     <sequenceFlow id="_8" sourceRef="view" targetRef="visa"/>
     <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="Order Task"/>
@@ -36,6 +33,7 @@
     <sequenceFlow id="_11" sourceRef="mortgage" targetRef="loan"/>
     <endEvent id="end" name="End Event"/>
     <sequenceFlow id="_2" sourceRef="loan" targetRef="end"/>
+    <sequenceFlow id="_4" sourceRef="start" targetRef="view"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="mortgageLoan">
@@ -43,12 +41,6 @@
         <dc:Bounds height="32.0" width="32.0" x="105.0" y="125.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="receive" id="Shape-receive">
-        <dc:Bounds height="55.0" width="85.0" x="240.0" y="115.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="view" id="Shape-view">
@@ -129,16 +121,8 @@
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="start" targetElement="receive">
-        <di:waypoint x="136.9687194226713" y="140.0"/>
-        <di:waypoint x="185.0" y="140.0"/>
-        <di:waypoint x="240.0" y="140.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="receive" targetElement="view">
-        <di:waypoint x="325.0" y="142.5"/>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="start" targetElement="view">
+        <di:waypoint x="137.0" y="141.0"/>
         <di:waypoint x="380.0" y="142.5"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>

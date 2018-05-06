@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/empty")
 public class EmptyController {
@@ -37,7 +40,11 @@ public class EmptyController {
     @ResponseBody
     @RequestMapping(value = "/m/checklist", method = RequestMethod.GET)
     public MortgageCheckList getEmptyCheckList(){
-        return new MortgageCheckList();
+        MortgageCheckList mortgageCheckList = new MortgageCheckList();
+        List<MortgageHouse> mortgageHouseList = new ArrayList<>();
+        mortgageHouseList.add(new MortgageHouse());
+        mortgageCheckList.setMortgageHouses(mortgageHouseList);
+        return mortgageCheckList;
     }
 
     @ResponseBody
