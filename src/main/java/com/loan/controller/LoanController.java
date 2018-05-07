@@ -19,16 +19,16 @@ public class LoanController {
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
-    public DataReturn<Employee> employeeLogin(@RequestParam(value = "userName", defaultValue = "") String userName,
-                                              @RequestParam(value = "userPassword", defaultValue = "") String userPassword, HttpServletResponse httpServletResponse){
-        if("".equals(userName)){
+    public DataReturn<Employee> employeeLogin(@RequestParam(value = "name", defaultValue = "") String name,
+                                              @RequestParam(value = "password", defaultValue = "") String password, HttpServletResponse httpServletResponse){
+        if("".equals(name)){
             return new DataReturn<>(Constant.RESULT_ERROR, "请输入正确的用户名称" , null);
         }
-        Employee employee = employeeService.findOneByAccount(userName);
+        Employee employee = employeeService.findOneByAccount(name);
         if(employee == null){
             return new DataReturn<>(Constant.RESULT_ERROR, "账户不存在" , null);
         }
-        if(!userPassword.equals(employee.getPassword())){
+        if(!password.equals(employee.getPassword())){
             return new DataReturn<>(Constant.RESULT_ERROR, "密码错误" , null);
         }
         httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId()));
