@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "loan_mortgage_forms", schema = "loan")
+@Table(name = "loan_mortgage_form", schema = "loan")
 public class MortgageForm {
 
     @Id
@@ -21,15 +21,15 @@ public class MortgageForm {
 
     @Basic
     @Column(name = "proposer_gender")
-    private String proposer_gender;
+    private int proposer_gender;
 
     @Basic
     @Column(name = "proposer_marriage_state")
-    private String proposer_marriage_state;
+    private int proposer_marriage_state;
 
     @Basic
     @Column(name = "proposer_family")
-    private String proposer_family;
+    private int proposer_family;
 
     @Basic
     @Column(name = "proposer_family_num")
@@ -69,11 +69,11 @@ public class MortgageForm {
 
     @Basic
     @Column(name = "proposer_lodging_info")
-    private String proposer_lodging_info;
+    private int proposer_lodging_info;
 
     @Basic
-    @Column(name = "has_proposer_loan")
-    private boolean has_proposer_loan;
+    @Column(name = "proposer_loan_state")
+    private int proposer_loan_state;
 
     @Basic
     @Column(name = "proposer_job_type")
@@ -97,7 +97,7 @@ public class MortgageForm {
 
     @Basic
     @Column(name = "proposer_spouse_paper_type")
-    private String proposer_spouse_paper_type;
+    private int proposer_spouse_paper_type;
 
     @Basic
     @Column(name = "proposer_spouse_paper_id")
@@ -108,24 +108,36 @@ public class MortgageForm {
     private boolean has_proposer_spouse_together;
 
     @Basic
-    @Column(name = "proposer_work_place")
-    private String proposer_work_place;
+    @Column(name = "proposer_company")
+    private String proposer_company;
 
     @Basic
-    @Column(name = "proposer_work_site")
-    private int proposer_work_site;
+    @Column(name = "proposer_company_address")
+    private String proposer_company_address;
 
     @Basic
-    @Column(name = "proposer_work_address")
-    private String proposer_work_address;
+    @Column(name = "proposer_company_type")
+    private int proposer_company_type;
 
     @Basic
-    @Column(name = "proposer_work_info_one")
-    private String proposer_work_info_one;
+    @Column(name = "proposer_company_duty")
+    private int proposer_company_duty;
 
     @Basic
-    @Column(name = "proposer_work_info_two")
-    private String proposer_work_info_two;
+    @Column(name = "proposer_business_license")
+    private String proposer_business_license;
+
+    @Basic
+    @Column(name = "proposer_business_address")
+    private String proposer_business_address;
+
+    @Basic
+    @Column(name = "proposer_business")
+    private String proposer_business;
+
+    @Basic
+    @Column(name = "proposer_business_card")
+    private String proposer_business_card;
 
     @Basic
     @Column(name = "loan_amount")
@@ -145,7 +157,7 @@ public class MortgageForm {
 
     @Basic
     @Column(name = "loan_repayment_type")
-    private String loan_repayment_type;
+    private int loan_repayment_type;
 
     @Basic
     @Column(name = "loan_other")
@@ -157,7 +169,7 @@ public class MortgageForm {
 
     @Basic
     @Column(name = "loan_contact_rela")
-    private String loan_contact_rela;
+    private int loan_contact_rela;
 
     @Basic
     @Column(name = "loan_contact_tele")
@@ -191,27 +203,27 @@ public class MortgageForm {
         this.proposer_name = proposer_name;
     }
 
-    public String getProposer_gender() {
+    public int getProposer_gender() {
         return proposer_gender;
     }
 
-    public void setProposer_gender(String proposer_gender) {
+    public void setProposer_gender(int proposer_gender) {
         this.proposer_gender = proposer_gender;
     }
 
-    public String getProposer_marriage_state() {
+    public int getProposer_marriage_state() {
         return proposer_marriage_state;
     }
 
-    public void setProposer_marriage_state(String proposer_marriage_state) {
+    public void setProposer_marriage_state(int proposer_marriage_state) {
         this.proposer_marriage_state = proposer_marriage_state;
     }
 
-    public String getProposer_family() {
+    public int getProposer_family() {
         return proposer_family;
     }
 
-    public void setProposer_family(String proposer_family) {
+    public void setProposer_family(int proposer_family) {
         this.proposer_family = proposer_family;
     }
 
@@ -287,20 +299,20 @@ public class MortgageForm {
         this.proposer_local_resident = proposer_local_resident;
     }
 
-    public String getProposer_lodging_info() {
+    public int getProposer_lodging_info() {
         return proposer_lodging_info;
     }
 
-    public void setProposer_lodging_info(String proposer_lodging_info) {
+    public void setProposer_lodging_info(int proposer_lodging_info) {
         this.proposer_lodging_info = proposer_lodging_info;
     }
 
-    public boolean isHas_proposer_loan() {
-        return has_proposer_loan;
+    public int getProposer_loan_state() {
+        return proposer_loan_state;
     }
 
-    public void setHas_proposer_loan(boolean has_proposer_loan) {
-        this.has_proposer_loan = has_proposer_loan;
+    public void setProposer_loan_state(int proposer_loan_state) {
+        this.proposer_loan_state = proposer_loan_state;
     }
 
     public int getProposer_job_type() {
@@ -343,11 +355,11 @@ public class MortgageForm {
         this.proposer_spouse_phone = proposer_spouse_phone;
     }
 
-    public String getProposer_spouse_paper_type() {
+    public int getProposer_spouse_paper_type() {
         return proposer_spouse_paper_type;
     }
 
-    public void setProposer_spouse_paper_type(String proposer_spouse_paper_type) {
+    public void setProposer_spouse_paper_type(int proposer_spouse_paper_type) {
         this.proposer_spouse_paper_type = proposer_spouse_paper_type;
     }
 
@@ -367,44 +379,68 @@ public class MortgageForm {
         this.has_proposer_spouse_together = has_proposer_spouse_together;
     }
 
-    public String getProposer_work_place() {
-        return proposer_work_place;
+    public String getProposer_company() {
+        return proposer_company;
     }
 
-    public void setProposer_work_place(String proposer_work_place) {
-        this.proposer_work_place = proposer_work_place;
+    public void setProposer_company(String proposer_company) {
+        this.proposer_company = proposer_company;
     }
 
-    public int getProposer_work_site() {
-        return proposer_work_site;
+    public String getProposer_company_address() {
+        return proposer_company_address;
     }
 
-    public void setProposer_work_site(int proposer_work_site) {
-        this.proposer_work_site = proposer_work_site;
+    public void setProposer_company_address(String proposer_company_address) {
+        this.proposer_company_address = proposer_company_address;
     }
 
-    public String getProposer_work_address() {
-        return proposer_work_address;
+    public int getProposer_company_type() {
+        return proposer_company_type;
     }
 
-    public void setProposer_work_address(String proposer_work_address) {
-        this.proposer_work_address = proposer_work_address;
+    public void setProposer_company_type(int proposer_company_type) {
+        this.proposer_company_type = proposer_company_type;
     }
 
-    public String getProposer_work_info_one() {
-        return proposer_work_info_one;
+    public int getProposer_company_duty() {
+        return proposer_company_duty;
     }
 
-    public void setProposer_work_info_one(String proposer_work_info_one) {
-        this.proposer_work_info_one = proposer_work_info_one;
+    public void setProposer_company_duty(int proposer_company_duty) {
+        this.proposer_company_duty = proposer_company_duty;
     }
 
-    public String getProposer_work_info_two() {
-        return proposer_work_info_two;
+    public String getProposer_business_license() {
+        return proposer_business_license;
     }
 
-    public void setProposer_work_info_two(String proposer_work_info_two) {
-        this.proposer_work_info_two = proposer_work_info_two;
+    public void setProposer_business_license(String proposer_business_license) {
+        this.proposer_business_license = proposer_business_license;
+    }
+
+    public String getProposer_business_address() {
+        return proposer_business_address;
+    }
+
+    public void setProposer_business_address(String proposer_business_address) {
+        this.proposer_business_address = proposer_business_address;
+    }
+
+    public String getProposer_business() {
+        return proposer_business;
+    }
+
+    public void setProposer_business(String proposer_business) {
+        this.proposer_business = proposer_business;
+    }
+
+    public String getProposer_business_card() {
+        return proposer_business_card;
+    }
+
+    public void setProposer_business_card(String proposer_business_card) {
+        this.proposer_business_card = proposer_business_card;
     }
 
     public String getLoan_amount() {
@@ -439,11 +475,11 @@ public class MortgageForm {
         this.loan_purpose = loan_purpose;
     }
 
-    public String getLoan_repayment_type() {
+    public int getLoan_repayment_type() {
         return loan_repayment_type;
     }
 
-    public void setLoan_repayment_type(String loan_repayment_type) {
+    public void setLoan_repayment_type(int loan_repayment_type) {
         this.loan_repayment_type = loan_repayment_type;
     }
 
@@ -463,11 +499,11 @@ public class MortgageForm {
         this.loan_contact_name = loan_contact_name;
     }
 
-    public String getLoan_contact_rela() {
+    public int getLoan_contact_rela() {
         return loan_contact_rela;
     }
 
-    public void setLoan_contact_rela(String loan_contact_rela) {
+    public void setLoan_contact_rela(int loan_contact_rela) {
         this.loan_contact_rela = loan_contact_rela;
     }
 

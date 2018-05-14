@@ -30,4 +30,16 @@ public class MortgageCheckListServiceImpl implements MortgageCheckListService {
     public List<MortgageCheckList> findAll() {
         return mortgageCheckListDao.findAll();
     }
+
+    @Transactional
+    @Override
+    public void deleteOneById(String id) {
+        mortgageCheckListDao.delete(id);
+    }
+
+    @Transactional
+    @Override
+    public int deleteById(String id) {
+        return mortgageCheckListDao.deleteById(id);
+    }
 }

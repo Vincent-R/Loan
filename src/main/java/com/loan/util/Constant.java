@@ -13,7 +13,16 @@ public class Constant {
     public static final int ORDER_REPORT_STATE_COMPLETE = 1;
     public static final int ORDER_REPORT_STATE_UNCOMPLETE = 2;
 
-    public static final int ORDER_REPORT_TYPE_NONE = 0;
+    public static final int ORDER_REPORT_TYPE_CEPING = 0;
     public static final int ORDER_REPORT_TYPE_ZHENGPING = 1;
-    public static final int ORDER_REPORT_TYPE_CEPING = 2;
+
+    public static final String VIEWOFFICER = "viewOfficer";
+    public static final String VISAOFFICER = "visaOfficer";
+    public static final String ORDEROFFICER = "orderOfficer";
+    public static final String APPROVEOFFICER = "approveOfficer";
+    public static final String MORTGAGEOFFICER = "mortgageOfficer";
+    public static final String CHARGEOFFICER = "chargeOfficer";
+    public static final String LOANOFFICER = "loanOfficer";
+
+    public static final String LOANID = "loanId";
 }

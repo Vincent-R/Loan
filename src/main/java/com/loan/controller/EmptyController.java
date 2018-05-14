@@ -72,32 +72,8 @@ public class EmptyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/m/visa", method = RequestMethod.GET)
-    public MortgageVisa getEmptyVisa(){
-        return new MortgageVisa();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/m/order", method = RequestMethod.GET)
-    public MortgageOrder getEmptyOrder(){
-        return new MortgageOrder();
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/m/approve", method = RequestMethod.GET)
     public MortgageApprove getEmptyApprove(){
         return new MortgageApprove();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/m/mortgage", method = RequestMethod.GET)
-    public MortgageMortgage getEmptyMortgage(){
-        return new MortgageMortgage();
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/m/loan", method = RequestMethod.GET)
-    public MortgageLoan getEmptyLoan(){
-        return new MortgageLoan();
     }
 }

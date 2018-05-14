@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "loan_mortgage_checklists")
+@Table(name = "loan_mortgage_checklist", schema = "loan")
 public class MortgageCheckList {
     @Id
     @Column(name = "id")
@@ -34,7 +34,7 @@ public class MortgageCheckList {
 
     @Basic
     @Column(name = "client_work_type")
-    private String client_work_type;//客户工作类型
+    private int client_work_type;//客户工作类型
 
     @Basic
     @Column(name = "client_work_unit")
@@ -42,7 +42,7 @@ public class MortgageCheckList {
 
     @Basic
     @Column(name = "loan_type")
-    private String loan_type;//客户贷款种类
+    private int loan_type;//客户贷款种类
 
     @Basic
     @Column(name = "loan_amount")
@@ -54,15 +54,15 @@ public class MortgageCheckList {
 
     @Basic
     @Column(name = "checklist_source")
-    private String checklist_source;//单子来源渠道
+    private int checklist_source;//单子来源渠道
 
     @Basic
     @Column(name = "agent_name")
     private String agent_name;//中介名称
 
     @Basic
-    @Column(name = "remarks")
-    private String remarks;//其他备注事项
+    @Column(name = "remark")
+    private String remark;//其他备注事项
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn(name = "checklist_id")
@@ -116,11 +116,11 @@ public class MortgageCheckList {
         this.client_id_number = client_id_number;
     }
 
-    public String getClient_work_type() {
+    public int getClient_work_type() {
         return client_work_type;
     }
 
-    public void setClient_work_type(String client_work_type) {
+    public void setClient_work_type(int client_work_type) {
         this.client_work_type = client_work_type;
     }
 
@@ -132,11 +132,11 @@ public class MortgageCheckList {
         this.client_work_unit = client_work_unit;
     }
 
-    public String getLoan_type() {
+    public int getLoan_type() {
         return loan_type;
     }
 
-    public void setLoan_type(String loan_type) {
+    public void setLoan_type(int loan_type) {
         this.loan_type = loan_type;
     }
 
@@ -156,11 +156,11 @@ public class MortgageCheckList {
         this.loan_period = loan_period;
     }
 
-    public String getChecklist_source() {
+    public int getChecklist_source() {
         return checklist_source;
     }
 
-    public void setChecklist_source(String checklist_source) {
+    public void setChecklist_source(int checklist_source) {
         this.checklist_source = checklist_source;
     }
 
@@ -172,12 +172,12 @@ public class MortgageCheckList {
         this.agent_name = agent_name;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public void setMortgageHouses(List<MortgageHouse> mortgageHouses) {

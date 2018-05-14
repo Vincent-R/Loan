@@ -12,48 +12,48 @@ public class MortgageApprove {
     private String id;
 
     @Basic
-    @Column(name = "has_data_complete")
-    private boolean has_data_complete;
+    @Column(name = "approve_state")
+    private int approve_state;
 
     @Basic
-    @Column(name = "sub_branch_state")
-    private int sub_branch_state;
-
-    @Basic
-    @Column(name = "approval_time")
-    private Date approval_time;
+    @Column(name = "approve_time")
+    private Date approve_time;
 
     @Basic
     @Column(name = "amount")
     private String amount;
 
     @Basic
-    @Column(name = "year")
-    private String year;
+    @Column(name = "period")
+    private String period;
 
     @Basic
     @Column(name = "rate")
     private String rate;
 
     @Basic
-    @Column(name = "note")
-    private String note;
+    @Column(name = "condition")
+    private String condition;
 
     @Basic
-    @Column(name = "branch_state")
-    private int branch_state;
+    @Column(name = "remark")
+    private String remark;
 
     @Basic
-    @Column(name = "reason")
-    private String reason;
+    @Column(name = "fail_reason")
+    private int fail_reason;
 
     @Basic
-    @Column(name = "report_state")
-    private int report_state;
+    @Column(name = "fail_reason_other")
+    private String fail_reason_other;
 
-    @OneToOne
-    @JoinColumn(name = "report_id")
-    private MortgageReport report;
+    @Basic
+    @Column(name = "later_action")
+    private int later_action;
+
+    @Basic
+    @Column(name = "loan_id")
+    private String loan_id;
 
     public String getId() {
         return id;
@@ -63,28 +63,20 @@ public class MortgageApprove {
         this.id = id;
     }
 
-    public boolean isHas_data_complete() {
-        return has_data_complete;
+    public int getApprove_state() {
+        return approve_state;
     }
 
-    public void setHas_data_complete(boolean has_data_complete) {
-        this.has_data_complete = has_data_complete;
+    public void setApprove_state(int approve_state) {
+        this.approve_state = approve_state;
     }
 
-    public int getSub_branch_state() {
-        return sub_branch_state;
+    public Date getApprove_time() {
+        return approve_time;
     }
 
-    public void setSub_branch_state(int sub_branch_state) {
-        this.sub_branch_state = sub_branch_state;
-    }
-
-    public Date getApproval_time() {
-        return approval_time;
-    }
-
-    public void setApproval_time(Date approval_time) {
-        this.approval_time = approval_time;
+    public void setApprove_time(Date approve_time) {
+        this.approve_time = approve_time;
     }
 
     public String getAmount() {
@@ -95,12 +87,12 @@ public class MortgageApprove {
         this.amount = amount;
     }
 
-    public String getYear() {
-        return year;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public String getRate() {
@@ -111,43 +103,51 @@ public class MortgageApprove {
         this.rate = rate;
     }
 
-    public String getNote() {
-        return note;
+    public String getCondition() {
+        return condition;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
-    public int getBranch_state() {
-        return branch_state;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setBranch_state(int branch_state) {
-        this.branch_state = branch_state;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
-    public String getReason() {
-        return reason;
+    public int getFail_reason() {
+        return fail_reason;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setFail_reason(int fail_reason) {
+        this.fail_reason = fail_reason;
     }
 
-    public int getReport_state() {
-        return report_state;
+    public String getFail_reason_other() {
+        return fail_reason_other;
     }
 
-    public void setReport_state(int report_state) {
-        this.report_state = report_state;
+    public void setFail_reason_other(String fail_reason_other) {
+        this.fail_reason_other = fail_reason_other;
     }
 
-    public MortgageReport getReport() {
-        return report;
+    public int getLater_action() {
+        return later_action;
     }
 
-    public void setReport(MortgageReport report) {
-        this.report = report;
+    public void setLater_action(int later_action) {
+        this.later_action = later_action;
+    }
+
+    public String getLoan_id() {
+        return loan_id;
+    }
+
+    public void setLoan_id(String loan_id) {
+        this.loan_id = loan_id;
     }
 }

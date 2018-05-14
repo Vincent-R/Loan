@@ -3,7 +3,7 @@ package com.loan.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "loan_mortgage_houses")
+@Table(name = "loan_mortgage_house")
 public class MortgageHouse {
     @Id
     @Column(name = "id")

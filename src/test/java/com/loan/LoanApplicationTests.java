@@ -195,24 +195,24 @@
 //	}
 //
 //	/**
-//	 * 查询历史任务
-//	 */
-//	@Test
-//	public void findHistoryTask(){
-//		String taskAssignee = "receiver";
-//		List<HistoricTaskInstance> list = historyService//与历史数据（历史表）相关的Service
-//				.createHistoricTaskInstanceQuery()//创建历史任务实例查询
-//				.taskCandidateGroup(taskAssignee)//指定历史任务的办理人
-//				.list();
-//		if(list!=null && list.size()>0){
-//			for(HistoricTaskInstance pi:list){
-//				System.out.println("流程实例ID:"+pi.getId());//流程实例ID
-//				System.out.println("流程定义ID:"+pi.getProcessDefinitionId());//流程定义ID
-//				System.out.println("流程名称:"+pi.getName());
-//				System.out.println("代理人:"+pi.getAssignee());
-//			}
-//		}
-//	}
+////	 * 查询历史任务
+////	 */
+////	@Test
+////	public void findHistoryTask(){
+////		String taskAssignee = "receiver";
+////		List<HistoricTaskInstance> list = historyService//与历史数据（历史表）相关的Service
+////				.createHistoricTaskInstanceQuery()//创建历史任务实例查询
+////				.taskCandidateGroup(taskAssignee)//指定历史任务的办理人
+////				.list();
+////		if(list!=null && list.size()>0){
+////			for(HistoricTaskInstance pi:list){
+////				System.out.println("流程实例ID:"+pi.getId());//流程实例ID
+////				System.out.println("流程定义ID:"+pi.getProcessDefinitionId());//流程定义ID
+////				System.out.println("流程名称:"+pi.getName());
+////				System.out.println("代理人:"+pi.getAssignee());
+////			}
+////		}
+////	}
 //
 //	/**
 //	 * 查询当前任务

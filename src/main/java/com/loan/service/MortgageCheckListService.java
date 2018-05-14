@@ -11,4 +11,8 @@ public interface MortgageCheckListService {
     MortgageCheckList save(MortgageCheckList mortgageCheckList);
 
     List<MortgageCheckList> findAll();
+
+    void deleteOneById(String id);
+
+    int deleteById(String id);
 }

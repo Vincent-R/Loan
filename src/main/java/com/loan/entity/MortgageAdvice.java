@@ -27,8 +27,8 @@ public class MortgageAdvice {
     private String proposed_amount;
 
     @Basic
-    @Column(name = "proposed_period")
-    private String proposed_period;
+    @Column(name = "proposed_time")
+    private Date proposed_time;
 
     @Basic
     @Column(name = "rate")
@@ -36,11 +36,11 @@ public class MortgageAdvice {
 
     @Basic
     @Column(name = "repayment_type")
-    private String repayment_type;
+    private int repayment_type;
 
     @Basic
     @Column(name = "client_purpose_type")
-    private String client_purpose_type;
+    private int client_purpose_type;
 
     @Basic
     @Column(name = "client_purpose")
@@ -90,12 +90,12 @@ public class MortgageAdvice {
         this.proposed_amount = proposed_amount;
     }
 
-    public String getProposed_period() {
-        return proposed_period;
+    public Date getProposed_time() {
+        return proposed_time;
     }
 
-    public void setProposed_period(String proposed_period) {
-        this.proposed_period = proposed_period;
+    public void setProposed_time(Date proposed_time) {
+        this.proposed_time = proposed_time;
     }
 
     public String getRate() {
@@ -106,19 +106,19 @@ public class MortgageAdvice {
         this.rate = rate;
     }
 
-    public String getRepayment_type() {
+    public int getRepayment_type() {
         return repayment_type;
     }
 
-    public void setRepayment_type(String repayment_type) {
+    public void setRepayment_type(int repayment_type) {
         this.repayment_type = repayment_type;
     }
 
-    public String getClient_purpose_type() {
+    public int getClient_purpose_type() {
         return client_purpose_type;
     }
 
-    public void setClient_purpose_type(String client_purpose_type) {
+    public void setClient_purpose_type(int client_purpose_type) {
         this.client_purpose_type = client_purpose_type;
     }
 
