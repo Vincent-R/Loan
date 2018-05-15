@@ -9,9 +9,8 @@ public class Constant {
     public static final String stringKey = "loan";
 
     //order环节
-    public static final int ORDER_REPORT_STATE_NONE = 0;
+    public static final int ORDER_REPORT_STATE_UNCOMPLETE = 0;
     public static final int ORDER_REPORT_STATE_COMPLETE = 1;
-    public static final int ORDER_REPORT_STATE_UNCOMPLETE = 2;
 
     public static final int ORDER_REPORT_TYPE_CEPING = 0;
     public static final int ORDER_REPORT_TYPE_ZHENGPING = 1;

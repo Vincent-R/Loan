@@ -81,10 +81,10 @@ public class ServiceTest {
 //        mortgageCheckListService.save(mortgageCheckList);
 
         //删除CheckList,可同时删除Houses内容(delete由JPA提供)
-//        mortgageCheckListService.deleteOneById("ca95a4b7400f49e19eca6165d9714708");
+        mortgageCheckListService.deleteOneById("c231e971702e49ae9a342ec4f335dc62");
 
         //删除CheckList,不能同时删除Houses内容(delete自定义)
-        mortgageCheckListService.deleteById("c231e971702e49ae9a342ec4f335dc62");
+//        mortgageCheckListService.deleteById("c231e971702e49ae9a342ec4f335dc62");
     }
 
     @Test

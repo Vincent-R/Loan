@@ -35,7 +35,7 @@ public class MortgageCheckListController {
     @ResponseBody
     @RequestMapping(value = "/{checklistId}", method = RequestMethod.GET)
     public DataReturn<MortgageCheckList> getCheckList(@PathVariable("checklistId") String checklistId){
-        if(null==checklistId && "".equals(checklistId)){
+        if(null==checklistId || "".equals(checklistId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "客户交接表ID不合法" , null);
         }
         MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(checklistId);
@@ -47,9 +47,13 @@ public class MortgageCheckListController {
 
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public DataReturn<String> saveCheckList(@RequestParam(value = "checklist", defaultValue = "") String checklist, @RequestParam(value = "houses", defaultValue = "") String houses){
+    public DataReturn<String> saveCheckList(@RequestParam(value = "checklist", defaultValue = "") String checklist,
+                                            @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
         if("".equals(checklist)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入客户交接表不合法" , null);
+        }
+        if("".equals(employeeId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入的业务员ID不合法" , null);
         }
         MortgageCheckList mortgageCheckList = null;
         MortgageRecord mortgageRecord = new MortgageRecord();//新建抵押贷款单子
@@ -59,14 +63,14 @@ public class MortgageCheckListController {
             mortgageCheckList = JSON.parseObject(checklist, MortgageCheckList.class);
             mortgageCheckList.setId(UUID.randomUUID().toString().replace("-",""));
             //添加房产信息
-            List<MortgageHouse> mortgageHouses = JSONArray.parseArray(houses, MortgageHouse.class);
+            List<MortgageHouse> mortgageHouses = mortgageCheckList.getMortgageHouses();//JSONArray.parseArray(houses, MortgageHouse.class);
             for (MortgageHouse house: mortgageHouses) {
                 house.setId(UUID.randomUUID().toString().replace("-",""));
                 house.setChecklist_id(mortgageCheckList.getId());
             }
-            mortgageCheckList.setMortgageHouses(mortgageHouses);
             mortgageCheckList = mortgageCheckListService.save(mortgageCheckList);
             mortgageRecord.setChecklist(mortgageCheckList.getId());
+            mortgageRecord.setChecklist_operator(employeeId);
             //启动新的流程
             Map<String, Object> variableMap = new HashMap<>();
             variableMap.put("loanId", mortgageRecord.getId());

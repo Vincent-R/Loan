@@ -6,7 +6,7 @@
         <activiti:formProperty id="loanId" name="Loan Id" readable="true" required="true" type="string" variable="loanId" writable="true"/>
       </extensionElements>
     </startEvent>
-    <userTask activiti:candidateGroups="vieweOfficer" activiti:exclusive="true" id="view" name="View Task">
+    <userTask activiti:candidateGroups="viewOfficer" activiti:exclusive="true" id="view" name="View Task">
       <extensionElements>
         <activiti:formProperty id="giveup" name="Give Up" readable="true" required="true" type="enum" variable="giveup" writable="true">
           <activiti:value id="no" name="No"/>

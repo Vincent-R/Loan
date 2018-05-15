@@ -54,9 +54,19 @@ public class EmptyController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/m/advice", method = RequestMethod.GET)
+    public MortgageAdvice getEmptyAdvice(){
+        return new MortgageAdvice();
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/m/catalog", method = RequestMethod.GET)
     public MortgageCatalog getEmptyCatalog(){
-        return new MortgageCatalog();
+        MortgageCatalog mortgageCatalog = new MortgageCatalog();
+        List<MortgageCatalogOther> mortgageCatalogOthers = new ArrayList<>();
+        mortgageCatalogOthers.add(new MortgageCatalogOther());
+        mortgageCatalog.setMortgageCatalogOthers(mortgageCatalogOthers);
+        return mortgageCatalog;
     }
 
     @ResponseBody
@@ -66,9 +76,9 @@ public class EmptyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/m/advice", method = RequestMethod.GET)
-    public MortgageAdvice getEmptyAdvice(){
-        return new MortgageAdvice();
+    @RequestMapping(value = "/m/report", method = RequestMethod.GET)
+    public MortgageReport getEmptyReport(){
+        return new MortgageReport();
     }
 
     @ResponseBody

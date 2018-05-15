@@ -132,6 +132,10 @@ public class MortgageRecord {
     private String charge_operator;
 
     @Basic
+    @Column(name = "process_id")
+    private String process_id;
+
+    @Basic
     @Column(name = "record_state")
     private int record_state;
 
@@ -381,6 +385,14 @@ public class MortgageRecord {
 
     public void setCharge_operator(String charge_operator) {
         this.charge_operator = charge_operator;
+    }
+
+    public String getProcess_id() {
+        return process_id;
+    }
+
+    public void setProcess_id(String process_id) {
+        this.process_id = process_id;
     }
 
     public int getRecord_state() {
