@@ -7,4 +7,6 @@ public interface MortgageFormService {
     MortgageForm findOneById(String id);
 
     MortgageForm save(MortgageForm mortgageForm);
+
+    void deleteOneById(String id);
 }

@@ -7,4 +7,6 @@ public interface MortgageCatalogService {
     MortgageCatalog findOneById(String id);
 
     MortgageCatalog save(MortgageCatalog mortgageCatalog);
+
+    void deleteOneById(String id);
 }

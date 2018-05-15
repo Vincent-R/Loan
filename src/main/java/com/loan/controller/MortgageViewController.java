@@ -78,9 +78,8 @@ public class MortgageViewController {
 
     @ResponseBody
     @RequestMapping(value = "/suspend", method = RequestMethod.POST)
-    public DataReturn<String> suspendRecord(@RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                         @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(taskId) || "".equals(employeeId)){
+    public DataReturn<String> suspendRecord(@RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
         try {

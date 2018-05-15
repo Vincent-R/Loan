@@ -23,4 +23,10 @@ public class MortgageCatalogServiceImpl implements MortgageCatalogService{
     public MortgageCatalog save(MortgageCatalog mortgageCatalog) {
         return mortgageCatalogDao.save(mortgageCatalog);
     }
+
+    @Transactional
+    @Override
+    public void deleteOneById(String id) {
+        mortgageCatalogDao.delete(id);
+    }
 }

@@ -7,4 +7,6 @@ public interface MortgageApproveService {
     MortgageApprove findOneById(String id);
 
     MortgageApprove save(MortgageApprove mortgageApprove);
+
+    void deleteById(String id);
 }

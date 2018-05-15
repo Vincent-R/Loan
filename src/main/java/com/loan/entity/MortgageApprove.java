@@ -31,9 +31,9 @@ public class MortgageApprove {
     @Column(name = "rate")
     private String rate;
 
-    @Basic
-    @Column(name = "condition")
-    private String condition;
+    @ManyToOne
+    @JoinColumn(name = "loan_condition")
+    private MortgageLoanCondition loan_condition;
 
     @Basic
     @Column(name = "remark")
@@ -103,12 +103,12 @@ public class MortgageApprove {
         this.rate = rate;
     }
 
-    public String getCondition() {
-        return condition;
+    public MortgageLoanCondition getLoan_condition() {
+        return loan_condition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setLoan_condition(MortgageLoanCondition loan_condition) {
+        this.loan_condition = loan_condition;
     }
 
     public String getRemark() {

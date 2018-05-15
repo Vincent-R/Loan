@@ -23,4 +23,10 @@ public class MortgageApproveServiceImpl implements MortgageApproveService {
     public MortgageApprove save(MortgageApprove mortgageApprove) {
         return mortgageApproveDao.save(mortgageApprove);
     }
+
+    @Transactional
+    @Override
+    public void deleteById(String id) {
+        mortgageApproveDao.delete(id);
+    }
 }

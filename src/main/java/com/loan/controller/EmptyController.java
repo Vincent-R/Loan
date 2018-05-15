@@ -1,6 +1,8 @@
 package com.loan.controller;
 
 import com.loan.entity.*;
+import com.loan.service.MortgageLoanConditionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/empty")
 public class EmptyController {
+
+    @Autowired
+    private MortgageLoanConditionService mortgageLoanConditionService;
 
     @ResponseBody
     @RequestMapping(value = "/announcement", method = RequestMethod.GET)
@@ -85,5 +90,11 @@ public class EmptyController {
     @RequestMapping(value = "/m/approve", method = RequestMethod.GET)
     public MortgageApprove getEmptyApprove(){
         return new MortgageApprove();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/m/conditions", method = RequestMethod.GET)
+    public List<MortgageLoanCondition> getEmptyLoanConditions(){
+        return mortgageLoanConditionService.findAll();
     }
 }

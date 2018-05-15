@@ -82,9 +82,8 @@ public class MortgageOrderController {
     @RequestMapping(value = "/report/save", method = RequestMethod.POST)
     public DataReturn<String> saveReport(@RequestParam(value = "type") int type,
                                          @RequestParam(value = "report", defaultValue = "") String report,
-                                         @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                         @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(taskId) || "".equals(report) || "".equals(employeeId)){
+                                         @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(taskId) || "".equals(report)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
         MortgageReport mortgageReport = null;

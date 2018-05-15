@@ -26,4 +26,10 @@ public class MortgageReportServiceImpl implements MortgageReportService{
     public MortgageReport save(MortgageReport mortgageReport) {
         return mortgageReportDao.save(mortgageReport);
     }
+
+    @Transactional
+    @Override
+    public void deleteOneById(String id) {
+        mortgageReportDao.delete(id);
+    }
 }

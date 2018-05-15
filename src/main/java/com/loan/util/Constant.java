@@ -8,12 +8,25 @@ public class Constant {
     public static final long AUTHORIZE_NOTIME = 0;//0分钟
     public static final String stringKey = "loan";
 
-    //order环节
+    //order
     public static final int ORDER_REPORT_STATE_UNCOMPLETE = 0;
     public static final int ORDER_REPORT_STATE_COMPLETE = 1;
 
     public static final int ORDER_REPORT_TYPE_CEPING = 0;
     public static final int ORDER_REPORT_TYPE_ZHENGPING = 1;
+
+    //Approve
+    public static final int APPROVE_FAIL = 0;
+    public static final int APPROVE_PASS = 1;
+
+    public static final int APPROVE_ACTION_RETRY = 0;
+    public static final int APPROVE_ACTION_CHANGEBANK = 1;
+    public static final int APPROVE_ACTION_GIVEUP = 2;
+
+    public static final String APPROVE_RESULT_PASS = "0";
+    public static final String APPROVE_RESULT_REAPPLY = "1";
+    public static final String APPROVE_RESULT_CHANGEBANK = "2";
+    public static final String APPROVE_RESULT_ABANDON = "3";
 
     public static final String VIEWOFFICER = "viewOfficer";
     public static final String VISAOFFICER = "visaOfficer";

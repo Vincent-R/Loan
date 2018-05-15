@@ -23,4 +23,9 @@ public class MortgageFormServiceImpl implements MortgageFormService {
     public MortgageForm save(MortgageForm mortgageForm) {
         return mortgageFormDao.save(mortgageForm);
     }
+
+    @Override
+    public void deleteOneById(String id) {
+        mortgageFormDao.delete(id);
+    }
 }

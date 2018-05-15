@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.jws.Oneway;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,13 +25,45 @@ public class ServiceTest {
     private EmployeeService employeeService;
 
     @Autowired
-    private MortgageCheckListService mortgageCheckListService;
-
-    @Autowired
     private DepartmentService departmentService;
 
     @Autowired
+    private MortgageCheckListService mortgageCheckListService;
+
+    @Autowired
     private MortgageRecordService mortgageRecordService;
+
+    @Autowired
+    private MortgageApproveService mortgageApproveService;
+
+    @Autowired
+    private MortgageLoanConditionService mortgageLoanConditionService;
+
+    @Test
+    public void mortgageLoanConditionServiceTest(){
+        //添加放款条件
+//        MortgageLoanCondition mortgageLoanCondition = new MortgageLoanCondition();
+//        mortgageLoanCondition.setId(UUID.randomUUID().toString().replace("-",""));
+//        mortgageLoanCondition.setContent("见他项权证放款");
+//        mortgageLoanCondition.setNeed_guarantee(false);
+//        mortgageLoanConditionService.save(mortgageLoanCondition);
+//
+//        MortgageLoanCondition mortgageLoanCondition1 = new MortgageLoanCondition();
+//        mortgageLoanCondition1.setId(UUID.randomUUID().toString().replace("-",""));
+//        mortgageLoanCondition1.setContent("见担保函放款");
+//        mortgageLoanCondition1.setNeed_guarantee(true);
+//        mortgageLoanConditionService.save(mortgageLoanCondition1);
+
+        //添加审批结果表
+//        MortgageApprove mortgageApprove = new MortgageApprove();
+//        mortgageApprove.setId(UUID.randomUUID().toString().replace("-",""));
+//        MortgageLoanCondition mortgageLoanCondition = mortgageLoanConditionService.findOneById("abf2727c653342ca9c7a2a9ec8660f04");
+//        mortgageApprove.setLoan_condition(mortgageLoanCondition);
+//        mortgageApproveService.save(mortgageApprove);
+
+        //删除审批表
+        mortgageApproveService.deleteById("0ad6c5bc541a4c1a93e399ec94d8ccde");
+    }
 
     @Test
     public void mortgageRecordServiceTest(){

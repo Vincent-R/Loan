@@ -7,4 +7,6 @@ public interface MortgageReportService {
     MortgageReport findOneById(String id);
 
     MortgageReport save(MortgageReport mortgageReport);
+
+    void deleteOneById(String id);
 }
