@@ -124,12 +124,20 @@ public class MortgageRecord {
     private String mortgage_operator;
 
     @Basic
+    @Column(name = "charge_skip")
+    private boolean charge_skip;
+
+    @Basic
     @Column(name = "charge_finish_time")
     private Date charge_finish_time;
 
     @Basic
     @Column(name = "charge_operator")
     private String charge_operator;
+
+    @Basic
+    @Column(name = "loan_operator")
+    private String loan_operator;
 
     @Basic
     @Column(name = "process_id")
@@ -371,6 +379,14 @@ public class MortgageRecord {
         this.mortgage_operator = mortgage_operator;
     }
 
+    public boolean isCharge_skip() {
+        return charge_skip;
+    }
+
+    public void setCharge_skip(boolean charge_skip) {
+        this.charge_skip = charge_skip;
+    }
+
     public Date getCharge_finish_time() {
         return charge_finish_time;
     }
@@ -385,6 +401,14 @@ public class MortgageRecord {
 
     public void setCharge_operator(String charge_operator) {
         this.charge_operator = charge_operator;
+    }
+
+    public String getLoan_operator() {
+        return loan_operator;
+    }
+
+    public void setLoan_operator(String loan_operator) {
+        this.loan_operator = loan_operator;
     }
 
     public String getProcess_id() {

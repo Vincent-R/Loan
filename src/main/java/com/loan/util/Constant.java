@@ -28,6 +28,13 @@ public class Constant {
     public static final String APPROVE_RESULT_CHANGEBANK = "2";
     public static final String APPROVE_RESULT_ABANDON = "3";
 
+    //Mortgage
+    public static final String MORTGAGE_CHARGE_YES = "yes";
+    public static final String MORTGAGE_CHARGE_NO = "no";
+
+    public static final int LOANRECORD_COMPLETE = 1;
+    public static final int LOANRECORD_ABANDON = 2;
+
     public static final String VIEWOFFICER = "viewOfficer";
     public static final String VISAOFFICER = "visaOfficer";
     public static final String ORDEROFFICER = "orderOfficer";
