@@ -64,10 +64,6 @@ public class MortgageRecord {
     private String order_evaluate_company;
 
     @Basic
-    @Column(name = "order_report_state")
-    private int order_report_state;
-
-    @Basic
     @Column(name = "order_report_type")
     private int order_report_type;
 
@@ -257,14 +253,6 @@ public class MortgageRecord {
 
     public void setOrder_evaluate_company(String order_evaluate_company) {
         this.order_evaluate_company = order_evaluate_company;
-    }
-
-    public int getOrder_report_state() {
-        return order_report_state;
-    }
-
-    public void setOrder_report_state(int order_report_state) {
-        this.order_report_state = order_report_state;
     }
 
     public int getOrder_report_type() {

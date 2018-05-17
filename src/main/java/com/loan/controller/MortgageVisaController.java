@@ -145,7 +145,7 @@ public class MortgageVisaController {
         try {
             finishTime = sdf.parse(time);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间有误", "");
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
