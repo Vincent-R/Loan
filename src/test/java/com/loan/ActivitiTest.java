@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,13 +37,13 @@ public class ActivitiTest {
 
     @Test
 	public void startProcess(){
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("subProcessTest");
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
 		System.out.println(processInstance.getId());
 	}
 
 	@Test
 	public void getTaskTest(){
-		List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("subProcessTest").list();
+		List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("myProcess").list();
 				//.taskCandidateGroup("viewer").list();//所有未安排的面谈任务
 		for (Task task:tasks) {
 			System.out.println(task.getId() + " - " + task.getName());
@@ -50,8 +52,15 @@ public class ActivitiTest {
 	}
 
 	@Test
+	public void completeTaskTestWithVariable(){
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("charge","yes");
+    	taskService.complete("32511", map);
+	}
+
+	@Test
 	public void completeTaskTest(){
-    	taskService.complete("12511");
+		taskService.complete("40002");
 	}
 
     @Test
