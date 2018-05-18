@@ -83,7 +83,7 @@ public class MortgageApproveController {
         try {
             finishTime = sdf.parse(time);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间有误", "");
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
@@ -154,8 +154,7 @@ public class MortgageApproveController {
                 mortgageRecord.setVisa_operator(null);
                 mortgageRecord.setOrder_finish_time(null);
                 mortgageRecord.setOrder_evaluate_company(null);
-                mortgageRecord.setOrder_report_state(0);
-                mortgageRecord.setOrder_report_type(0);
+                mortgageRecord.setOrder_report_type(Constant.ORDER_REPORT_TYPE_CEPING);
                 mortgageReportService.deleteOneById(mortgageRecord.getOrder_report());
                 mortgageRecord.setOrder_report(null);
                 mortgageRecord.setOrder_operator(null);

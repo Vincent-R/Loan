@@ -44,7 +44,7 @@ public class MortgageOrderController {
         try {
             finishTime = sdf.parse(time);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间有误", "");
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
@@ -99,7 +99,6 @@ public class MortgageOrderController {
             mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
             mortgageReport = mortgageReportService.save(mortgageReport);
             //修改贷款记录
-            mortgageRecord.setOrder_report_state(Constant.ORDER_REPORT_STATE_COMPLETE);
             mortgageRecord.setOrder_report_type(type);
             mortgageRecord.setOrder_report(mortgageReport.getId());
             if(Constant.ORDER_REPORT_TYPE_ZHENGPING == type){
