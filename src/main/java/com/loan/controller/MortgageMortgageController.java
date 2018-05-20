@@ -33,7 +33,6 @@ public class MortgageMortgageController {
         }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date finishTime = null;
-        boolean needGuarantee = false;
         try {
             finishTime = sdf.parse(time);
         }catch (Exception e){
@@ -48,23 +47,16 @@ public class MortgageMortgageController {
             mortgageRecord.setMortgage_finish_time(finishTime);
             mortgageRecord.setMortgage_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确定抵押状态失败", false);
+            }
             if(!mortgageRecord.isMortgage_need_guarantee()){
-                needGuarantee = true;
-                Map<String, Object> map = new HashMap<>();
-                if(mortgageRecord.isCharge_skip()){
-                    map.put("charge", Constant.MORTGAGE_CHARGE_NO);
-                }else {
-                    map.put("charge", Constant.MORTGAGE_CHARGE_YES);
-                }
-                taskService.complete(taskId, map);
+                taskService.complete(taskId);
             }
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "确定抵押状态失败", false);
         }
-        if(null == mortgageRecord){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定抵押状态失败", false);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "确定抵押状态成功", needGuarantee);
+        return new DataReturn<>(Constant.RESULT_OK, "确定抵押状态成功", mortgageRecord.isMortgage_need_guarantee());
     }
 
     @ResponseBody
@@ -98,18 +90,12 @@ public class MortgageMortgageController {
             mortgageRecord.setMortgage_g_stamp_time(stampFinishTime);
             mortgageRecord.setMortgage_g_time(guaranteeFinishTime);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
-            //mortgage task完成
-            Map<String, Object> map = new HashMap<>();
-            if(mortgageRecord.isCharge_skip()){
-                map.put("charge", Constant.MORTGAGE_CHARGE_NO);
-            }else {
-                map.put("charge", Constant.MORTGAGE_CHARGE_YES);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确定担保失败", "");
             }
-            taskService.complete(taskId, map);
+            //mortgage task完成
+            taskService.complete(taskId);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定担保失败", "");
-        }
-        if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "确定担保失败", "");
         }
         return new DataReturn<>(Constant.RESULT_OK, "确定担保成功", mortgageRecord.getId());

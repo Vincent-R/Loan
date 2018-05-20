@@ -45,13 +45,41 @@ public class MortgageChargeController {
             mortgageRecord.setCharge_finish_time(finishTime);
             mortgageRecord.setCharge_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
+            }
             taskService.complete(taskId);
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
         }
-        if(null == mortgageRecord){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
-        }
         return new DataReturn<>(Constant.RESULT_OK, "确定收费状态成功", mortgageRecord.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/skip", method = RequestMethod.POST)
+    public DataReturn<String> skipCharge(@RequestParam(value = "taskId", defaultValue = "") String taskId,
+                                         @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
+        if("".equals(taskId) || "".equals(employeeId)){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , "");
+        }
+        MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
+        if(null == mortgageRecord){
+            return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
+        }
+        try {
+            //修改贷款记录
+            if(mortgageRecord.isCharge_skip()){
+                return new DataReturn<>(Constant.RESULT_ERROR, "已跳过第一次收费", "");
+            }
+            mortgageRecord.setCharge_skip(true);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "跳过收费失败", "");
+            }
+            taskService.complete(taskId);
+        }catch (Exception e){
+            return new DataReturn<>(Constant.RESULT_ERROR, "跳过收费失败", "");
+        }
+        return new DataReturn<>(Constant.RESULT_OK, "跳过收费成功", mortgageRecord.getId());
     }
 }

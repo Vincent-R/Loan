@@ -8,6 +8,9 @@ import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/loan")
 public class MortgageLoanController {
@@ -33,13 +36,19 @@ public class MortgageLoanController {
             mortgageRecord.setLoan_operator(employeeId);
             mortgageRecord.setRecord_state(Constant.LOANRECORD_COMPLETE);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确定放款状态失败", "");
+            }
+            Map<String, Object> map = new HashMap<>();
+            if(mortgageRecord.isCharge_skip()){
+                map.put("skipCharge", Constant.CHARGE_YES);
+            }else {
+                map.put("skipCharge", Constant.CHARGE_NO);
+            }
             taskService.complete(taskId);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
+            return new DataReturn<>(Constant.RESULT_ERROR, "确定放款状态失败", "");
         }
-        if(null == mortgageRecord){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "确定收费状态成功", mortgageRecord.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "确定放款状态成功", mortgageRecord.getId());
     }
 }

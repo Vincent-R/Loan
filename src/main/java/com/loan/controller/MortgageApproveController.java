@@ -7,6 +7,7 @@ import com.loan.entity.MortgageReport;
 import com.loan.service.*;
 import com.loan.util.Constant;
 import com.loan.util.DataReturn;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,9 @@ public class MortgageApproveController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private RuntimeService runtimeService;
+
     /**
      * 完成资料收集
      **/
@@ -58,11 +62,10 @@ public class MortgageApproveController {
             mortgageRecord.setApprove_data_complete(true);
             mortgageRecord.setApprove_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
-
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确认资料收齐失败", "");
+            }
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确认资料收齐失败", "");
-        }
-        if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "确认资料收齐失败", "");
         }
         return new DataReturn<>(Constant.RESULT_OK, "确认资料收齐成功", mortgageRecord.getId());
@@ -96,10 +99,10 @@ public class MortgageApproveController {
             //修改贷款记录
             mortgageRecord.setApprove_time(finishTime);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确认报审时间失败", "");
+            }
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确认报审时间失败", "");
-        }
-        if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "确认报审时间失败", "");
         }
         return new DataReturn<>(Constant.RESULT_OK, "确认报审时间成功", mortgageRecord.getId());
@@ -112,7 +115,6 @@ public class MortgageApproveController {
         if("".equals(taskId) || "".equals(approve)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
-        MortgageApprove mortgageApprove = null;
         String loanId = taskService.getVariable(taskId, Constant.LOANID).toString();
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(loanId);
         if(null == mortgageRecord){
@@ -125,19 +127,28 @@ public class MortgageApproveController {
             return new DataReturn<>(Constant.RESULT_ERROR, "请先提交审批", "");
         }
         try {
-            mortgageApprove = JSON.parseObject(approve, MortgageApprove.class);
-            if(mortgageApprove.getApprove_state() == Constant.APPROVE_PASS){
+            MortgageApprove mortgageApprove = JSON.parseObject(approve, MortgageApprove.class);
+            if(mortgageApprove.getApprove_state() == Constant.APPROVE_PASS){//审批通过
                 mortgageApprove.setId(UUID.randomUUID().toString().replace("-",""));
                 mortgageApprove.setLoan_id(loanId);
                 mortgageApprove = mortgageApproveService.save(mortgageApprove);
+                if(null == mortgageApprove){
+                    return new DataReturn<>(Constant.RESULT_ERROR, "添加审批信息失败", "");
+                }
                 mortgageRecord.setApprove_pass(true);
                 mortgageRecord.setMortgage_need_guarantee(mortgageApprove.getLoan_condition().isNeed_guarantee());
-                mortgageRecordService.save(mortgageRecord);
-            }else if(mortgageApprove.getLater_action() == Constant.APPROVE_ACTION_RETRY){
+                mortgageRecord = mortgageRecordService.save(mortgageRecord);
+                if(null == mortgageRecord){
+                    return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
+                }
+            }else if(mortgageApprove.getLater_action() == Constant.APPROVE_ACTION_RETRY){//重新审批
                 mortgageRecord.setApprove_data_complete(false);
                 mortgageRecord.setApprove_time(null);
                 mortgageRecord.setApprove_operator(null);
-                mortgageRecordService.save(mortgageRecord);
+                mortgageRecord = mortgageRecordService.save(mortgageRecord);
+                if(null == mortgageRecord){
+                    return new DataReturn<>(Constant.RESULT_ERROR, "修改重新审批信息失败", "");
+                }
                 Map<String, Object> map = new HashMap<>();
                 map.put("approveResult", Constant.APPROVE_RESULT_REAPPLY);
                 taskService.complete(taskId, map);
@@ -162,24 +173,27 @@ public class MortgageApproveController {
                 mortgageRecord.setApprove_time(null);
                 mortgageRecord.setApprove_operator(null);
                 mortgageRecord.setApprove_zp(null);
-                mortgageRecordService.save(mortgageRecord);
+                mortgageRecord = mortgageRecordService.save(mortgageRecord);
+                if(null == mortgageRecord){
+                    return new DataReturn<>(Constant.RESULT_ERROR, "修改换行信息失败", "");
+                }
                 Map<String, Object> map = new HashMap<>();
                 map.put("approveResult", Constant.APPROVE_RESULT_CHANGEBANK);
                 taskService.complete(taskId, map);
                 return new DataReturn<>(Constant.RESULT_OK, "换行", "");
             }else if(mortgageApprove.getLater_action() == Constant.APPROVE_ACTION_GIVEUP){
-                Map<String, Object> map = new HashMap<>();
-                map.put("approveResult", Constant.APPROVE_RESULT_ABANDON);
-                taskService.complete(taskId, map);
+                runtimeService.deleteProcessInstance(mortgageRecord.getProcess_id(),"approve");
+                mortgageRecord.setRecord_state(Constant.LOANRECORD_ABANDON);
+                mortgageRecord = mortgageRecordService.save(mortgageRecord);
+                if(null == mortgageRecord){
+                    return new DataReturn<>(Constant.RESULT_ERROR, "修改废单信息失败", "");
+                }
                 return new DataReturn<>(Constant.RESULT_OK, "废单", "");
             }
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "确定审批状态失败", "");
         }
-        if(null == mortgageApprove){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定审批状态失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "确定审批状态成功", mortgageApprove.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "确定审批状态成功", mortgageRecord.getId());
     }
 
     @ResponseBody
@@ -189,7 +203,6 @@ public class MortgageApproveController {
         if("".equals(taskId) || "".equals(report)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
-        MortgageReport mortgageReport = null;
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
@@ -204,12 +217,18 @@ public class MortgageApproveController {
             return new DataReturn<>(Constant.RESULT_ERROR, "请先填写审批结果", "");
         }
         try {
-            mortgageReport = JSON.parseObject(report, MortgageReport.class);
+            MortgageReport mortgageReport = JSON.parseObject(report, MortgageReport.class);
             mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
             mortgageReport = mortgageReportService.save(mortgageReport);
+            if(null == mortgageReport){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
+            }
             //修改贷款记录
             mortgageRecord.setApprove_zp(mortgageReport.getId());
-            mortgageRecordService.save(mortgageRecord);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
+            }
             //approve task完成
             Map<String, Object> map = new HashMap<>();
             map.put("approveResult", Constant.APPROVE_RESULT_PASS);
@@ -217,10 +236,7 @@ public class MortgageApproveController {
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
         }
-        if(null == mortgageReport){
-            return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "添加报告成功", mortgageReport.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "添加报告成功", mortgageRecord.getId());
     }
 
     @ResponseBody

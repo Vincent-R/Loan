@@ -120,6 +120,10 @@ public class MortgageRecord {
     private String mortgage_operator;
 
     @Basic
+    @Column(name = "charge_skip")
+    private boolean charge_skip;
+
+    @Basic
     @Column(name = "charge_finish_time")
     private Date charge_finish_time;
 
@@ -361,6 +365,14 @@ public class MortgageRecord {
 
     public void setMortgage_operator(String mortgage_operator) {
         this.mortgage_operator = mortgage_operator;
+    }
+
+    public boolean isCharge_skip() {
+        return charge_skip;
+    }
+
+    public void setCharge_skip(boolean charge_skip) {
+        this.charge_skip = charge_skip;
     }
 
     public Date getCharge_finish_time() {

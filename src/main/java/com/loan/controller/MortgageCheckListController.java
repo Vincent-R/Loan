@@ -55,12 +55,10 @@ public class MortgageCheckListController {
         if("".equals(employeeId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入的业务员ID不合法" , null);
         }
-        MortgageCheckList mortgageCheckList = null;
         MortgageRecord mortgageRecord = new MortgageRecord();//新建抵押贷款单子
-        mortgageRecord.setId(UUID.randomUUID().toString().replace("-",""));
         try {
             //添加客户交接表
-            mortgageCheckList = JSON.parseObject(checklist, MortgageCheckList.class);
+            MortgageCheckList mortgageCheckList = JSON.parseObject(checklist, MortgageCheckList.class);
             mortgageCheckList.setId(UUID.randomUUID().toString().replace("-",""));
             //添加房产信息
             List<MortgageHouse> mortgageHouses = mortgageCheckList.getMortgageHouses();//JSONArray.parseArray(houses, MortgageHouse.class);
@@ -69,19 +67,23 @@ public class MortgageCheckListController {
                 house.setChecklist_id(mortgageCheckList.getId());
             }
             mortgageCheckList = mortgageCheckListService.save(mortgageCheckList);
+            if(null == mortgageCheckList){
+                return new DataReturn<>(Constant.RESULT_ERROR, "客户交接失败", "");
+            }
+            mortgageRecord.setId(UUID.randomUUID().toString().replace("-",""));
             mortgageRecord.setChecklist(mortgageCheckList.getId());
             mortgageRecord.setChecklist_operator(employeeId);
             //启动新的流程
             Map<String, Object> variableMap = new HashMap<>();
             variableMap.put("loanId", mortgageRecord.getId());
             mortgageRecord.setProcess_id(activitiService.startProcessInstance("mortgageLoan", variableMap));
-            mortgageRecordService.save(mortgageRecord);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加贷款记录失败", "");
+            }
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "客户交接失败", "");
         }
-        if(null == mortgageCheckList){
-            return new DataReturn<>(Constant.RESULT_ERROR, "客户交接失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "客户交接成功", mortgageCheckList.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "客户交接成功", mortgageRecord.getId());
     }
 }

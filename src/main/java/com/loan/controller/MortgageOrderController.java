@@ -56,10 +56,10 @@ public class MortgageOrderController {
             mortgageRecord.setOrder_evaluate_company(company);
             mortgageRecord.setOrder_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "确定下单状态失败", "");
+            }
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "确定下单状态失败", "");
-        }
-        if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "确定下单状态失败", "");
         }
         return new DataReturn<>(Constant.RESULT_OK, "确定下单状态成功", mortgageRecord.getId());
@@ -86,7 +86,6 @@ public class MortgageOrderController {
         if("".equals(taskId) || "".equals(report)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
-        MortgageReport mortgageReport = null;
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
@@ -95,24 +94,27 @@ public class MortgageOrderController {
             return new DataReturn<>(Constant.RESULT_ERROR, "请先确定下单状态", "");
         }
         try {
-            mortgageReport = JSON.parseObject(report, MortgageReport.class);
+            MortgageReport mortgageReport = JSON.parseObject(report, MortgageReport.class);
             mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
             mortgageReport = mortgageReportService.save(mortgageReport);
+            if(null == mortgageReport){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
+            }
             //修改贷款记录
             mortgageRecord.setOrder_report_type(type);
             mortgageRecord.setOrder_report(mortgageReport.getId());
             if(Constant.ORDER_REPORT_TYPE_ZHENGPING == type){
                 mortgageRecord.setApprove_zp(mortgageReport.getId());
             }
-            mortgageRecordService.save(mortgageRecord);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
+            }
             //order task完成
             taskService.complete(taskId);
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
         }
-        if(null == mortgageReport){
-            return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "添加报告成功", mortgageReport.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "添加报告成功", mortgageRecord.getId());
     }
 }

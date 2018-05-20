@@ -1,7 +1,11 @@
 package com.loan.controller;
 
+import com.loan.entity.Bank;
 import com.loan.entity.Employee;
+import com.loan.entity.MortgageLoanCondition;
+import com.loan.service.BankService;
 import com.loan.service.EmployeeService;
+import com.loan.service.MortgageLoanConditionService;
 import com.loan.util.Constant;
 import com.loan.util.DataReturn;
 import com.loan.util.TokenSecurity;
@@ -9,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
@@ -16,6 +21,12 @@ public class LoanController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private BankService bankService;
+
+    @Autowired
+    private MortgageLoanConditionService mortgageLoanConditionService;
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseBody
@@ -33,5 +44,17 @@ public class LoanController {
         }
         httpServletResponse.setHeader("token", TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId()));
         return new DataReturn<>(Constant.RESULT_OK, "" , employee);
+    }
+
+    @RequestMapping(value = "banks", method = RequestMethod.GET)
+    @ResponseBody
+    public DataReturn<List<Bank>> getAllBank(){
+        return new DataReturn<>(Constant.RESULT_OK, "" , bankService.findAll());
+    }
+
+    @RequestMapping(value = "loanConditions", method = RequestMethod.GET)
+    @ResponseBody
+    public DataReturn<List<MortgageLoanCondition>> getAllLoanCondition(){
+        return new DataReturn<>(Constant.RESULT_OK, "" , mortgageLoanConditionService.findAll());
     }
 }

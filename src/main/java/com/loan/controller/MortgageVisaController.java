@@ -56,14 +56,13 @@ public class MortgageVisaController {
         if("".equals(catalog) || "".equals(taskId) || "".equals(employeeId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
-        MortgageCatalog mortgageCatalog = null;
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
         }
         try {
             //添加资料目录表
-            mortgageCatalog = JSON.parseObject(catalog, MortgageCatalog.class);
+            MortgageCatalog mortgageCatalog = JSON.parseObject(catalog, MortgageCatalog.class);
             mortgageCatalog.setId(UUID.randomUUID().toString().replace("-",""));
             //添加额外的资料目录信息
             List<MortgageCatalogOther> mortgageCatalogOthers = mortgageCatalog.getMortgageCatalogOthers();
@@ -72,16 +71,19 @@ public class MortgageVisaController {
                 mortgageCatalogOther.setCatalog(mortgageCatalog.getId());
             }
             mortgageCatalog = mortgageCatalogService.save(mortgageCatalog);
+            if(null == mortgageCatalog){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加资料目录表失败", "");
+            }
             mortgageRecord.setCatalog(mortgageCatalog.getId());
             mortgageRecord.setCatalog_operator(employeeId);
-            mortgageRecordService.save(mortgageRecord);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
+            }
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加资料目录表失败", "");
         }
-        if(null == mortgageCatalog){
-            return new DataReturn<>(Constant.RESULT_ERROR, "添加资料目录表失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "添加资料目录表成功", mortgageCatalog.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "添加资料目录表成功", mortgageRecord.getId());
     }
 
     @ResponseBody
@@ -105,7 +107,6 @@ public class MortgageVisaController {
         if("".equals(form) || "".equals(taskId) || "".equals(employeeId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
-        MortgageForm mortgageForm = null;
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
@@ -115,20 +116,23 @@ public class MortgageVisaController {
         }
         try {
             //添加个人申请表
-            mortgageForm = JSON.parseObject(form, MortgageForm.class);
+            MortgageForm mortgageForm = JSON.parseObject(form, MortgageForm.class);
             mortgageForm.setId(UUID.randomUUID().toString().replace("-",""));
             mortgageForm = mortgageFormService.save(mortgageForm);
+            if(null == mortgageForm){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加个人申请表失败", "");
+            }
             //修改贷款记录
             mortgageRecord.setForm(mortgageForm.getId());
             mortgageRecord.setForm_operator(employeeId);
-            mortgageRecordService.save(mortgageRecord);
+            mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
+            }
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加个人申请表失败", "");
         }
-        if(null == mortgageForm){
-            return new DataReturn<>(Constant.RESULT_ERROR, "添加个人申请表失败", "");
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "添加个人申请表成功", mortgageForm.getId());
+        return new DataReturn<>(Constant.RESULT_OK, "添加个人申请表成功", mortgageRecord.getId());
     }
 
     @ResponseBody
@@ -162,12 +166,12 @@ public class MortgageVisaController {
             mortgageRecord.setVisa_address(address);
             mortgageRecord.setVisa_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
+            if(null == mortgageRecord){
+                return new DataReturn<>(Constant.RESULT_ERROR, "添加面签信息失败", "");
+            }
             //visa task完成
             taskService.complete(taskId);
         }catch (Exception e){
-            return new DataReturn<>(Constant.RESULT_ERROR, "添加面签信息失败", "");
-        }
-        if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加面签信息失败", "");
         }
         return new DataReturn<>(Constant.RESULT_OK, "添加面签信息成功", mortgageRecord.getId());
