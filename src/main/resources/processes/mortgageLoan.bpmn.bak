@@ -16,6 +16,7 @@
           <activiti:value id="0" name="pass"/>
           <activiti:value id="1" name="reapply"/>
           <activiti:value id="2" name="changeBank"/>
+          <activiti:value id="3" name="abandon"/>
         </activiti:formProperty>
       </extensionElements>
     </userTask>

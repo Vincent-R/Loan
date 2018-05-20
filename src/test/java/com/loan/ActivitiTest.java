@@ -3,6 +3,7 @@ package com.loan;
 import com.loan.entity.MortgageRecord;
 import com.loan.service.MortgageRecordService;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
@@ -35,6 +36,9 @@ public class ActivitiTest {
     @Autowired
     private MortgageRecordService mortgageRecordService;
 
+    @Autowired
+	private ProcessEngine processEngine;
+
     @Test
 	public void startProcess(){
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
@@ -55,12 +59,12 @@ public class ActivitiTest {
 	public void completeTaskTestWithVariable(){
     	Map<String, Object> map = new HashMap<>();
     	map.put("charge","yes");
-    	taskService.complete("32511", map);
+    	taskService.complete("57504", map);
 	}
 
 	@Test
 	public void completeTaskTest(){
-		taskService.complete("40002");
+		taskService.complete("65003");
 	}
 
     @Test
@@ -71,6 +75,12 @@ public class ActivitiTest {
             //MortgageRecord mortgageRecord = mortgageRecordService.findOneById(task.getProcessVariables().get("loanId").toString());
         }
     }
+
+	@Test
+	public void deleteProcessTest(){
+    	//删除一个流程实例，参数：流程id，删除原因
+		runtimeService.deleteProcessInstance("50008","hah");
+	}
 
     @Test
     public void getNowProcess(){
