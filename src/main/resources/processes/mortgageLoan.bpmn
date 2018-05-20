@@ -22,7 +22,7 @@
     <sequenceFlow id="_12" sourceRef="order" targetRef="approve"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="_13" name="ExclusiveGateway"/>
     <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
-    <sequenceFlow id="_7" name="pass" sourceRef="_13" targetRef="mortgage">
+    <sequenceFlow id="_7" name="Pass" sourceRef="_13" targetRef="mortgage">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='0'}]]></conditionExpression>
     </sequenceFlow>
     <userTask activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="LoanTask">
@@ -36,10 +36,10 @@
     <endEvent id="end" name="End Event"/>
     <sequenceFlow id="_4" sourceRef="start" targetRef="view"/>
     <sequenceFlow id="_9" sourceRef="approve" targetRef="_13"/>
-    <sequenceFlow id="_14" name="changeBank" sourceRef="_13" targetRef="visa">
+    <sequenceFlow id="_14" name="ChangeBank" sourceRef="_13" targetRef="visa">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='2'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_15" name="reapply" sourceRef="_13" targetRef="approve">
+    <sequenceFlow id="_15" name="Reapply" sourceRef="_13" targetRef="approve">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='1'}]]></conditionExpression>
     </sequenceFlow>
     <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
@@ -50,10 +50,10 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="_5" name="ExclusiveGateway"/>
     <sequenceFlow id="_6" sourceRef="loan" targetRef="_5"/>
     <sequenceFlow id="_8" sourceRef="postCharge" targetRef="end"/>
-    <sequenceFlow id="_16" name="charge" sourceRef="_5" targetRef="postCharge">
+    <sequenceFlow id="_16" name="Charge" sourceRef="_5" targetRef="postCharge">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${skipCharge=='yes'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_17" name="notCharge" sourceRef="_5" targetRef="end">
+    <sequenceFlow id="_17" name="NotCharge" sourceRef="_5" targetRef="end">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${skipCharge=='no'}]]></conditionExpression>
     </sequenceFlow>
   </process>

@@ -56,13 +56,13 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="_15" name="ExclusiveGateway"/>
     <sequenceFlow id="_16" sourceRef="approve" targetRef="_15"/>
     <parallelGateway gatewayDirection="Unspecified" id="_17" name="ParallelGateway"/>
-    <sequenceFlow id="_18" name="pass" sourceRef="_15" targetRef="_17">
+    <sequenceFlow id="_18" name="Pass" sourceRef="_15" targetRef="_17">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='0'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_19" name="reapply" sourceRef="_15" targetRef="approve">
+    <sequenceFlow id="_19" name="Reapply" sourceRef="_15" targetRef="approve">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='1'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_2" name="changeBank" sourceRef="_15" targetRef="visa">
+    <sequenceFlow id="_2" name="ChangeBank" sourceRef="_15" targetRef="visa">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='2'}]]></conditionExpression>
     </sequenceFlow>
     <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
