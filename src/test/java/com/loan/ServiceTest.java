@@ -39,6 +39,42 @@
 //    @Autowired
 //    private MortgageLoanConditionService mortgageLoanConditionService;
 //
+//    @Autowired
+//    private BankService bankService;
+//
+//    @Autowired
+//    private EvaluateCompanyService evaluateCompanyService;
+//
+//    @Test
+//    public void evaluateCompanyServiceTest(){
+//        EvaluateCompany evaluateCompany = new EvaluateCompany();
+//        evaluateCompany.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany.setName("评估公司一");
+//        evaluateCompany.setAddress("武汉市洪山区八一路1号");
+//        evaluateCompanyService.save(evaluateCompany);
+//
+//        EvaluateCompany evaluateCompany2 = new EvaluateCompany();
+//        evaluateCompany2.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany2.setName("评估公司二");
+//        evaluateCompany2.setAddress("武汉市洪山区八一路2号");
+//        evaluateCompanyService.save(evaluateCompany2);
+//
+//        EvaluateCompany evaluateCompany3 = new EvaluateCompany();
+//        evaluateCompany3.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany3.setName("评估公司三");
+//        evaluateCompany3.setAddress("武汉市洪山区八一路3号");
+//        evaluateCompanyService.save(evaluateCompany3);
+//    }
+//
+//    @Test
+//    public void bankServiceTest(){
+////        Bank bank = new Bank();
+////        bank.setId(UUID.randomUUID().toString().replace("-",""));
+////        bank.setName("工商银行");
+////        bank.setAddress("武汉市洪山区珞喻路3号");
+////        bankService.save(bank);
+//    }
+//
 //    @Test
 //    public void mortgageLoanConditionServiceTest(){
 //        //添加放款条件

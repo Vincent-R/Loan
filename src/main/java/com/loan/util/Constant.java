@@ -41,5 +41,15 @@ public class Constant {
     public static final String CHARGEOFFICER = "chargeOfficer";
     public static final String LOANOFFICER = "loanOfficer";
 
+    public static final String VIEWTASK = "ViewTask";
+    public static final String VISATASK = "VisaTask";
+    public static final String ORDERTASK = "OrderTask";
+    public static final String APPROVETASK = "ApproveTask";
+    public static final String MORTGAGETASK = "MortgageTask";
+    public static final String CHARGETASK = "ChargeTask";
+    public static final String LOANTASK = "LoanTask";
+
     public static final String LOANID = "loanId";
+    public static final String MORTGAGELOAN = "mortgageLoan";
+    public static final String HOUSELOAN = "houseLoan";
 }

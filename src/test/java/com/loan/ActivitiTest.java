@@ -2,6 +2,7 @@
 //
 //import com.loan.entity.MortgageRecord;
 //import com.loan.service.MortgageRecordService;
+//import com.loan.util.Constant;
 //import org.activiti.engine.HistoryService;
 //import org.activiti.engine.ProcessEngine;
 //import org.activiti.engine.RuntimeService;
@@ -40,6 +41,11 @@
 //	private ProcessEngine processEngine;
 //
 //    @Test
+//    public void claimTaskTest(){
+//        taskService.claim("77516", "0c5b8e0e3ab34e26817251cbe93907ae");
+//    }
+//
+//    @Test
 //	public void startProcess(){
 //		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
 //		System.out.println(processInstance.getId());
@@ -47,7 +53,7 @@
 //
 //	@Test
 //	public void getTaskTest(){
-//		List<Task> tasks = taskService.createTaskQuery().processDefinitionKey("myProcess").list();
+//		List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee("0c5b8e0e3ab34e26817251cbe93907ae").taskName(Constant.VIEWTASK).list();
 //				//.taskCandidateGroup("viewer").list();//所有未安排的面谈任务
 //		for (Task task:tasks) {
 //			System.out.println(task.getId() + " - " + task.getName());

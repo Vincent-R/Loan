@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1526746333430" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="houseLoan" isClosed="false" isExecutable="true" name="House Loan" processType="None">
+  <process id="houseLoan" isClosed="false" isExecutable="true" name="HouseLoan" processType="None">
     <startEvent activiti:initiator="userId" id="start" name="Start Event">
       <extensionElements>
         <activiti:formProperty id="loanId" name="Loan Id" readable="true" required="true" type="string" variable="loanId" writable="true"/>
       </extensionElements>
     </startEvent>
     <endEvent id="end" name="End Event"/>
-    <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="Visa Task"/>
-    <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="Order Task">
+    <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="VisaTask"/>
+    <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="OrderTask">
       <extensionElements>
         <activiti:formProperty id="orderPass" name="Order Pass" readable="true" required="true" type="enum" variable="orderPass" writable="true">
           <activiti:value id="yes" name="OrderYes"/>
@@ -16,7 +16,7 @@
         </activiti:formProperty>
       </extensionElements>
     </userTask>
-    <userTask activiti:candidateGroups="chargeBackOfficer" activiti:exclusive="true" id="chargeBack" name="ChargeBack Task"/>
+    <userTask activiti:candidateGroups="chargeBackOfficer" activiti:exclusive="true" id="chargeBack" name="ChargeBackTask"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="_5" name="ExclusiveGateway"/>
     <sequenceFlow id="_6" sourceRef="start" targetRef="visa"/>
     <sequenceFlow id="_7" sourceRef="visa" targetRef="order"/>
@@ -24,7 +24,7 @@
     <sequenceFlow id="_9" name="OrderPassNO" sourceRef="_5" targetRef="chargeBack">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${orderPass=='no'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="zjsjOfficer" activiti:exclusive="true" id="zjsj" name="ZJSJ Task">
+    <userTask activiti:candidateGroups="zjsjOfficer" activiti:exclusive="true" id="zjsj" name="ZJSJTask">
       <extensionElements>
         <activiti:formProperty id="zjsjPass" name="ZJSJ Pass" readable="true" required="true" type="enum" variable="zjsjPass" writable="true">
           <activiti:value id="yes" name="ZJSJYes"/>
@@ -41,7 +41,7 @@
     <sequenceFlow id="_12" name="ZJSJPassNo" sourceRef="_10" targetRef="chargeBack">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${zjsjPass=='no'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="approveOfficer" activiti:exclusive="true" id="approve" name="Approve Task">
+    <userTask activiti:candidateGroups="approveOfficer" activiti:exclusive="true" id="approve" name="ApproveTask">
       <extensionElements>
         <activiti:formProperty id="approveResult" name="ApproveResult" readable="true" required="true" type="enum" variable="approveResult" writable="true">
           <activiti:value id="0" name="ApprovePass"/>
@@ -65,11 +65,11 @@
     <sequenceFlow id="_2" name="changeBank" sourceRef="_15" targetRef="visa">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='2'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="Mortgage Task"/>
-    <userTask activiti:candidateGroups="transferOfficer" activiti:exclusive="true" id="transfer" name="Transfer Task"/>
-    <userTask activiti:candidateGroups="guaranteeOfficer" activiti:exclusive="true" id="guarantee" name="Guarantee Task"/>
-    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="preCharge" name="PreCharge Task"/>
-    <userTask activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="Loan Task">
+    <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
+    <userTask activiti:candidateGroups="transferOfficer" activiti:exclusive="true" id="transfer" name="TransferTask"/>
+    <userTask activiti:candidateGroups="guaranteeOfficer" activiti:exclusive="true" id="guarantee" name="GuaranteeTask"/>
+    <userTask activiti:async="true" activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
+    <userTask activiti:async="true" activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="LoanTask">
       <extensionElements>
         <activiti:formProperty id="skipCharge" name="SkipCharge" readable="true" required="true" type="enum" variable="skipCharge" writable="true">
           <activiti:value id="yes" name="SkipYes"/>
@@ -79,7 +79,7 @@
     </userTask>
     <exclusiveGateway gatewayDirection="Unspecified" id="_24" name="ExclusiveGateway"/>
     <parallelGateway gatewayDirection="Unspecified" id="_25" name="ParallelGateway"/>
-    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="postCharge" name="PostCharge Task"/>
+    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="postCharge" name="ChargeTask"/>
     <sequenceFlow id="_13" sourceRef="_17" targetRef="mortgage"/>
     <sequenceFlow id="_20" sourceRef="mortgage" targetRef="transfer"/>
     <sequenceFlow id="_21" sourceRef="transfer" targetRef="guarantee"/>
@@ -298,7 +298,7 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_29" id="BPMNEdge__29" sourceElement="_25" targetElement="_23">
+      <bpmndi:BPMNEdge bpmnElement="_29" id="BPMNEdge__29" sourceElement="_25" targetElement="loan">
         <omgdi:waypoint x="466.0" y="450.0"/>
         <omgdi:waypoint x="425.0" y="450.0"/>
         <omgdi:waypoint x="410.0" y="450.0"/>
@@ -360,7 +360,7 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_31" id="BPMNEdge__31" sourceElement="_24" targetElement="_27">
+      <bpmndi:BPMNEdge bpmnElement="_31" id="BPMNEdge__31" sourceElement="_24" targetElement="postCharge">
         <omgdi:waypoint x="256.0" y="450.0"/>
         <omgdi:waypoint x="210.0" y="450.0"/>
         <omgdi:waypoint x="100.0" y="450.0"/>
@@ -368,7 +368,7 @@
           <omgdc:Bounds height="0.0" width="2.0" x="0.0" y="5.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_30" id="BPMNEdge__30" sourceElement="_23" targetElement="_24">
+      <bpmndi:BPMNEdge bpmnElement="_30" id="BPMNEdge__30" sourceElement="loan" targetElement="_24">
         <omgdi:waypoint x="325.0" y="450.0"/>
         <omgdi:waypoint x="290.0" y="450.0"/>
         <omgdi:waypoint x="286.0" y="450.0"/>
@@ -392,7 +392,7 @@
           <omgdc:Bounds height="0.0" width="-68.0" x="0.0" y="4.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_32" id="BPMNEdge__32" sourceElement="_27" targetElement="end">
+      <bpmndi:BPMNEdge bpmnElement="_32" id="BPMNEdge__32" sourceElement="postCharge" targetElement="end">
         <omgdi:waypoint x="56.0" y="480.0"/>
         <omgdi:waypoint x="56.0" y="595.0"/>
         <bpmndi:BPMNLabel>

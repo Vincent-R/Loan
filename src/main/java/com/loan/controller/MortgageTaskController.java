@@ -42,7 +42,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getViewTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.VIEWOFFICER).list();//所有未安排的面谈任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VIEWOFFICER).list();//所有未安排的面谈任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -60,7 +60,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/view/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeViewTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.VIEWOFFICER).list();//某一业务员的面谈任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.VIEWTASK).list();//某一业务员的面谈任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -78,7 +78,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/visa", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getVisaTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.VISAOFFICER).list();//所有未安排的面签任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VISAOFFICER).list();//所有未安排的面签任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -102,7 +102,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/visa/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeVisaTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.VISAOFFICER).list();//某一业务员的面签任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.VISATASK).list();//某一业务员的面签任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -126,7 +126,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public DataReturn<List<MObjOrder>> getOrderTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.ORDEROFFICER).list();//所有未安排的下单任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.ORDEROFFICER).list();//所有未安排的下单任务
         List<MObjOrder> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjOrder mObjOrder = new MObjOrder();
@@ -150,7 +150,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/order/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjOrder>> getEmployeeOrderTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.ORDEROFFICER).list();//某一业务员的下单任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.ORDERTASK).list();//某一业务员的下单任务
         List<MObjOrder> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjOrder mObjOrder = new MObjOrder();
@@ -174,7 +174,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/approve", method = RequestMethod.GET)
     public DataReturn<List<MObjApprove>> getApproveTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.APPROVEOFFICER).list();//所有未安排的审批任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.APPROVEOFFICER).list();//所有未安排的审批任务
         List<MObjApprove> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjApprove mObjApprove = new MObjApprove();
@@ -205,7 +205,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/approve/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjApprove>> getEmployeeApproveTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.APPROVEOFFICER).list();//某一业务员的审批任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.APPROVETASK).list();//某一业务员的审批任务
         List<MObjApprove> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjApprove mObjApprove = new MObjApprove();
@@ -236,7 +236,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/mortgage", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getMortgageTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.MORTGAGEOFFICER).list();//所有未安排的抵押任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.MORTGAGEOFFICER).list();//所有未安排的抵押任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -258,7 +258,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/mortgage/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeMortgageTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.MORTGAGEOFFICER).list();//某一业务员的抵押任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.MORTGAGETASK).list();//某一业务员的抵押任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -280,7 +280,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/charge", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getChargeTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.CHARGEOFFICER).list();//所有未安排的收费任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.CHARGEOFFICER).list();//所有未安排的收费任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -298,7 +298,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/charge/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeChargeTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.CHARGEOFFICER).list();//某一业务员的收费任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.CHARGETASK).list();//某一业务员的收费任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -316,7 +316,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/loan", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getLoanTasks(){
-        List<Task> tasks = taskService.createTaskQuery().taskCandidateGroup(Constant.LOANOFFICER).list();//所有未安排的放款任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.LOANOFFICER).list();//所有未安排的放款任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -334,7 +334,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/loan/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeLoanTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).taskCandidateGroup(Constant.LOANOFFICER).list();//某一业务员的放款任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.LOANTASK).list();//某一业务员的放款任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
@@ -352,7 +352,7 @@ public class MortgageTaskController {
     @ResponseBody
     @RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getEmployeeAllTasks(@PathVariable("employeeId") String employeeId){
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(employeeId).list();//某一业务员的所有任务
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).list();//某一业务员的所有任务
         List<MObjCommon> results = new ArrayList<>();
         for (Task task:tasks) {
             MObjCommon mObjCommon = new MObjCommon();
