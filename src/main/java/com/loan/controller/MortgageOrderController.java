@@ -1,6 +1,7 @@
 package com.loan.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.loan.entity.MortgageForm;
 import com.loan.entity.MortgageRecord;
 import com.loan.entity.MortgageReport;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,9 +36,8 @@ public class MortgageOrderController {
     @RequestMapping(value = "/state/save", method = RequestMethod.POST)
     public DataReturn<String> saveOrderState(@RequestParam(value = "time", defaultValue = "") String time,
                                              @RequestParam(value = "company", defaultValue = "") String company,
-                                             @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                             @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(time) || "".equals(company) || "".equals(taskId) || "".equals(employeeId)){
+                                             @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(time) || "".equals(company) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -54,7 +55,6 @@ public class MortgageOrderController {
             //修改贷款记录
             mortgageRecord.setOrder_finish_time(finishTime);
             mortgageRecord.setOrder_evaluate_company(company);
-            mortgageRecord.setOrder_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "确定下单状态失败", "");
@@ -66,25 +66,20 @@ public class MortgageOrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/report/{reportId}", method = RequestMethod.GET)
-    public DataReturn<MortgageReport> getForm(@PathVariable("reportId") String reportId){
-        if(null == reportId || "".equals(reportId)){
-            return new DataReturn<>(Constant.RESULT_ERROR, "报告ID不合法" , null);
-        }
-        MortgageReport mortgageReport = mortgageReportService.findOneById(reportId);
-        if(mortgageReport == null){
-            return new DataReturn<>(Constant.RESULT_ERROR, "报告不存在" , null);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "" , mortgageReport);
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/report/save", method = RequestMethod.POST)
-    public DataReturn<String> saveReport(@RequestParam(value = "type") int type,
-                                         @RequestParam(value = "report", defaultValue = "") String report,
+    public DataReturn<String> saveReport(@RequestParam(value = "time", defaultValue = "") String time,
+                                         @RequestParam(value = "type") int type,
+                                         @RequestParam(value = "reports", defaultValue = "") String reports,
                                          @RequestParam(value = "taskId", defaultValue = "") String taskId){
-        if("".equals(taskId) || "".equals(report)){
+        if("".equals(time) || "".equals(reports) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date finishTime = null;
+        try {
+            finishTime = sdf.parse(time);
+        }catch (Exception e){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
@@ -94,17 +89,20 @@ public class MortgageOrderController {
             return new DataReturn<>(Constant.RESULT_ERROR, "请先确定下单状态", "");
         }
         try {
-            MortgageReport mortgageReport = JSON.parseObject(report, MortgageReport.class);
-            mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
-            mortgageReport = mortgageReportService.save(mortgageReport);
-            if(null == mortgageReport){
+            List<MortgageReport> mortgageReports = JSONArray.parseArray(reports, MortgageReport.class);
+            for (MortgageReport mortgageReport: mortgageReports) {
+                mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
+                mortgageReport.setReport_type(type);
+                mortgageReport.setLoan_id(mortgageRecord.getId());
+            }
+            mortgageReports = mortgageReportService.saveAll(mortgageReports);
+            if(null == mortgageReports){
                 return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
             }
             //修改贷款记录
-            mortgageRecord.setOrder_report_type(type);
-            mortgageRecord.setOrder_report(mortgageReport.getId());
+            mortgageRecord.setOrder_report_finish_time(finishTime);
             if(Constant.ORDER_REPORT_TYPE_ZHENGPING == type){
-                mortgageRecord.setApprove_zp(mortgageReport.getId());
+                mortgageRecord.setApprove_zp_finish_time(finishTime);
             }
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){

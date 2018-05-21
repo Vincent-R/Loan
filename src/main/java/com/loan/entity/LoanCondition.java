@@ -3,8 +3,8 @@ package com.loan.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "loan_mortgage_loan_condition", schema = "loan")
-public class MortgageLoanCondition {
+@Table(name = "loan_condition", schema = "loan")
+public class LoanCondition {
     @Id
     @Column(name = "id")
     private String id;

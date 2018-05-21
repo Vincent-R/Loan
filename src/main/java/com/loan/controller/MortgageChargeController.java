@@ -24,9 +24,8 @@ public class MortgageChargeController {
     @ResponseBody
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
     public DataReturn<String> confirmChargeTime(@RequestParam(value = "time", defaultValue = "") String time,
-                                                 @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                                 @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(time) || "".equals(taskId) || "".equals(employeeId)){
+                                                @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(time) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , "");
         }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -43,7 +42,6 @@ public class MortgageChargeController {
         try {
             //修改贷款记录
             mortgageRecord.setCharge_finish_time(finishTime);
-            mortgageRecord.setCharge_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "确定收费状态失败", "");
@@ -57,9 +55,8 @@ public class MortgageChargeController {
 
     @ResponseBody
     @RequestMapping(value = "/skip", method = RequestMethod.POST)
-    public DataReturn<String> skipCharge(@RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                         @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(taskId) || "".equals(employeeId)){
+    public DataReturn<String> skipCharge(@RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());

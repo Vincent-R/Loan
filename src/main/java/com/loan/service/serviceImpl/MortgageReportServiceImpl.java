@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class MortgageReportServiceImpl implements MortgageReportService{
 
@@ -25,6 +27,17 @@ public class MortgageReportServiceImpl implements MortgageReportService{
     @Override
     public MortgageReport save(MortgageReport mortgageReport) {
         return mortgageReportDao.save(mortgageReport);
+    }
+
+    @Override
+    public List<MortgageReport> saveAll(List<MortgageReport> mortgageReports) {
+        return mortgageReportDao.save(mortgageReports);
+    }
+
+    @Transactional
+    @Override
+    public int deleteAllByLoanId(String loanId) {
+        return mortgageReportDao.deleteAllByLoanId(loanId);
     }
 
     @Transactional

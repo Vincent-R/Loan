@@ -7,10 +7,14 @@
       </extensionElements>
     </startEvent>
     <userTask activiti:candidateGroups="viewOfficer" activiti:exclusive="true" id="view" name="ViewTask"/>
-    <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="VisaTask"/>
-    <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="OrderTask"/>
+    <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="VisaTask">
+      <extensionElements>
+        <activiti:formProperty id="visaOperator" name="VisaOperator" readable="true" required="true" type="string" variable="visaOperator" writable="true"/>
+      </extensionElements>
+    </userTask>
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="order" name="OrderTask"/>
     <sequenceFlow id="_10" sourceRef="visa" targetRef="order"/>
-    <userTask activiti:candidateGroups="approveOfficer" activiti:exclusive="true" id="approve" name="ApproveTask">
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="approve" name="ApproveTask">
       <extensionElements>
         <activiti:formProperty id="approveResult" name="Approve Result" readable="true" required="true" type="enum" variable="approveResult" writable="true">
           <activiti:value id="0" name="pass"/>
@@ -21,11 +25,11 @@
     </userTask>
     <sequenceFlow id="_12" sourceRef="order" targetRef="approve"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="_13" name="ExclusiveGateway"/>
-    <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
     <sequenceFlow id="_7" name="Pass" sourceRef="_13" targetRef="mortgage">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='0'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="LoanTask">
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="loan" name="LoanTask">
       <extensionElements>
         <activiti:formProperty id="skipCharge" name="Skip Charge" readable="true" required="true" type="enum" variable="skipCharge" writable="true">
           <activiti:value id="yes" name="SkipYes"/>
@@ -42,11 +46,11 @@
     <sequenceFlow id="_15" name="Reapply" sourceRef="_13" targetRef="approve">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='1'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
     <sequenceFlow id="_21" sourceRef="preCharge" targetRef="loan"/>
     <sequenceFlow id="_3" sourceRef="view" targetRef="visa"/>
     <sequenceFlow id="_11" sourceRef="mortgage" targetRef="preCharge"/>
-    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="postCharge" name="ChargeTask"/>
+    <userTask activiti:assignee="${visaOperator}" activiti:exclusive="true" id="postCharge" name="ChargeTask"/>
     <exclusiveGateway gatewayDirection="Unspecified" id="_5" name="ExclusiveGateway"/>
     <sequenceFlow id="_6" sourceRef="loan" targetRef="_5"/>
     <sequenceFlow id="_8" sourceRef="postCharge" targetRef="end"/>

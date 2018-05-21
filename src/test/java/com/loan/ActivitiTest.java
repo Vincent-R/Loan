@@ -42,12 +42,14 @@
 //
 //    @Test
 //    public void claimTaskTest(){
-//        taskService.claim("77516", "0c5b8e0e3ab34e26817251cbe93907ae");
+//        taskService.claim("95002", "0c5b8e0e3ab34e26817251cbe93907ae");
 //    }
 //
 //    @Test
 //	public void startProcess(){
-//		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myProcess");
+//        Map<String, Object> variables = new HashMap<>();
+//        variables.put("loanId","test");
+//		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("mortgageLoan", variables);
 //		System.out.println(processInstance.getId());
 //	}
 //
@@ -64,13 +66,13 @@
 //	@Test
 //	public void completeTaskTestWithVariable(){
 //    	Map<String, Object> map = new HashMap<>();
-//    	map.put("charge","yes");
-//    	taskService.complete("57504", map);
+//    	map.put("visaOperator","0c5b8e0e3ab34e26817251cbe93907ae");
+//    	taskService.complete("95002", map);
 //	}
 //
 //	@Test
 //	public void completeTaskTest(){
-//		taskService.complete("65003");
+//		taskService.complete("90016");
 //	}
 //
 //    @Test

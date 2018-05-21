@@ -183,9 +183,9 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjApprove.setName(mortgageCheckList.getClient_name());
             mObjApprove.setPhone(mortgageCheckList.getClient_phone());
-            if(Constant.ORDER_REPORT_TYPE_CEPING == mortgageRecord.getOrder_report_type()){
+            if(null == mortgageRecord.getApprove_zp_finish_time() || "".equals(mortgageRecord.getApprove_zp_finish_time())){
                 mObjApprove.setReport_type("预评");
-            }else if(Constant.ORDER_REPORT_TYPE_ZHENGPING == mortgageRecord.getOrder_report_type()){
+            }else{
                 mObjApprove.setReport_type("正评");
             }
             if(!mortgageRecord.isApprove_data_complete()){
@@ -214,9 +214,9 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjApprove.setName(mortgageCheckList.getClient_name());
             mObjApprove.setPhone(mortgageCheckList.getClient_phone());
-            if(Constant.ORDER_REPORT_TYPE_CEPING == mortgageRecord.getOrder_report_type()){
+            if(null == mortgageRecord.getApprove_zp_finish_time() || "".equals(mortgageRecord.getApprove_zp_finish_time())){
                 mObjApprove.setReport_type("预评");
-            }else if(Constant.ORDER_REPORT_TYPE_ZHENGPING == mortgageRecord.getOrder_report_type()){
+            }else{
                 mObjApprove.setReport_type("正评");
             }
             if(!mortgageRecord.isApprove_data_complete()){

@@ -12,8 +12,8 @@ public class MortgageReport {
     private String id;
 
     @Basic
-    @Column(name = "report_time")
-    private Date report_time;
+    @Column(name = "report_type")
+    private int report_type;
 
     @Basic
     @Column(name = "report_obligee")
@@ -55,6 +55,10 @@ public class MortgageReport {
     @Column(name = "report_first")
     private boolean report_first;
 
+    @Basic
+    @Column(name = "loan_id")
+    private String loan_id;
+
     public String getId() {
         return id;
     }
@@ -63,12 +67,12 @@ public class MortgageReport {
         this.id = id;
     }
 
-    public Date getReport_time() {
-        return report_time;
+    public int getReport_type() {
+        return report_type;
     }
 
-    public void setReport_time(Date report_time) {
-        this.report_time = report_time;
+    public void setReport_type(int report_type) {
+        this.report_type = report_type;
     }
 
     public String getReport_obligee() {
@@ -149,5 +153,13 @@ public class MortgageReport {
 
     public void setReport_first(boolean report_first) {
         this.report_first = report_first;
+    }
+
+    public String getLoan_id() {
+        return loan_id;
+    }
+
+    public void setLoan_id(String loan_id) {
+        this.loan_id = loan_id;
     }
 }

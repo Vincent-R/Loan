@@ -1,6 +1,7 @@
 package com.loan.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.loan.entity.MortgageApprove;
 import com.loan.entity.MortgageRecord;
 import com.loan.entity.MortgageReport;
@@ -13,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/approve")
@@ -60,7 +58,6 @@ public class MortgageApproveController {
         try {
             //修改贷款记录
             mortgageRecord.setApprove_data_complete(true);
-            mortgageRecord.setApprove_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "确认资料收齐失败", "");
@@ -144,7 +141,6 @@ public class MortgageApproveController {
             }else if(mortgageApprove.getLater_action() == Constant.APPROVE_ACTION_RETRY){//重新审批
                 mortgageRecord.setApprove_data_complete(false);
                 mortgageRecord.setApprove_time(null);
-                mortgageRecord.setApprove_operator(null);
                 mortgageRecord = mortgageRecordService.save(mortgageRecord);
                 if(null == mortgageRecord){
                     return new DataReturn<>(Constant.RESULT_ERROR, "修改重新审批信息失败", "");
@@ -156,23 +152,19 @@ public class MortgageApproveController {
             }else if(mortgageApprove.getLater_action() == Constant.APPROVE_ACTION_CHANGEBANK){
                 mortgageCatalogService.deleteOneById(mortgageRecord.getCatalog());
                 mortgageRecord.setCatalog(null);
-                mortgageRecord.setCatalog_operator(null);
                 mortgageFormService.deleteOneById(mortgageRecord.getForm());
                 mortgageRecord.setForm(null);
-                mortgageRecord.setForm_operator(null);
                 mortgageRecord.setVisa_finish_time(null);
                 mortgageRecord.setVisa_address(null);
                 mortgageRecord.setVisa_operator(null);
                 mortgageRecord.setOrder_finish_time(null);
                 mortgageRecord.setOrder_evaluate_company(null);
-                mortgageRecord.setOrder_report_type(Constant.ORDER_REPORT_TYPE_CEPING);
-                mortgageReportService.deleteOneById(mortgageRecord.getOrder_report());
-                mortgageRecord.setOrder_report(null);
-                mortgageRecord.setOrder_operator(null);
+                mortgageRecord.setOrder_report_finish_time(null);
+                mortgageReportService.deleteAllByLoanId(mortgageRecord.getId());
                 mortgageRecord.setApprove_data_complete(false);
                 mortgageRecord.setApprove_time(null);
-                mortgageRecord.setApprove_operator(null);
-                mortgageRecord.setApprove_zp(null);
+                mortgageRecord.setApprove_pass(false);
+                mortgageRecord.setApprove_zp_finish_time(null);
                 mortgageRecord = mortgageRecordService.save(mortgageRecord);
                 if(null == mortgageRecord){
                     return new DataReturn<>(Constant.RESULT_ERROR, "修改换行信息失败", "");
@@ -198,10 +190,18 @@ public class MortgageApproveController {
 
     @ResponseBody
     @RequestMapping(value = "/report/save", method = RequestMethod.POST)
-    public DataReturn<String> saveReport(@RequestParam(value = "report", defaultValue = "") String report,
+    public DataReturn<String> saveReport(@RequestParam(value = "time", defaultValue = "") String time,
+                                         @RequestParam(value = "reports", defaultValue = "") String reports,
                                          @RequestParam(value = "taskId", defaultValue = "") String taskId){
-        if("".equals(taskId) || "".equals(report)){
+        if("".equals(time) || "".equals(reports) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date finishTime = null;
+        try {
+            finishTime = sdf.parse(time);
+        }catch (Exception e){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
@@ -217,14 +217,18 @@ public class MortgageApproveController {
             return new DataReturn<>(Constant.RESULT_ERROR, "请先填写审批结果", "");
         }
         try {
-            MortgageReport mortgageReport = JSON.parseObject(report, MortgageReport.class);
-            mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
-            mortgageReport = mortgageReportService.save(mortgageReport);
-            if(null == mortgageReport){
+            List<MortgageReport> mortgageReports = JSONArray.parseArray(reports, MortgageReport.class);
+            for (MortgageReport mortgageReport: mortgageReports) {
+                mortgageReport.setId(UUID.randomUUID().toString().replace("-",""));
+                mortgageReport.setReport_type(Constant.ORDER_REPORT_TYPE_ZHENGPING);
+                mortgageReport.setLoan_id(mortgageRecord.getId());
+            }
+            mortgageReports = mortgageReportService.saveAll(mortgageReports);
+            if(null == mortgageReports){
                 return new DataReturn<>(Constant.RESULT_ERROR, "添加报告失败", "");
             }
             //修改贷款记录
-            mortgageRecord.setApprove_zp(mortgageReport.getId());
+            mortgageRecord.setApprove_zp_finish_time(finishTime);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
@@ -258,7 +262,7 @@ public class MortgageApproveController {
         if(!mortgageRecord.isApprove_pass()){
             return new DataReturn<>(Constant.RESULT_ERROR, "请先填写审批结果", "");
         }
-        if(null == mortgageRecord.getApprove_zp() || "".equals(mortgageRecord.getApprove_zp())){
+        if(null == mortgageRecord.getApprove_zp_finish_time() || "".equals(mortgageRecord.getApprove_zp_finish_time())){
             return new DataReturn<>(Constant.RESULT_ERROR, "请先添加正评", "");
         }
         try {

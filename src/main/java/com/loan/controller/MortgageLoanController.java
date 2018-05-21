@@ -22,9 +22,8 @@ public class MortgageLoanController {
 
     @ResponseBody
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
-    public DataReturn<String> confirmLoan(@RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                          @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(taskId) || "".equals(employeeId)){
+    public DataReturn<String> confirmLoan(@RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
@@ -33,7 +32,6 @@ public class MortgageLoanController {
         }
         try {
             //修改贷款记录
-            mortgageRecord.setLoan_operator(employeeId);
             mortgageRecord.setRecord_state(Constant.LOANRECORD_COMPLETE);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){

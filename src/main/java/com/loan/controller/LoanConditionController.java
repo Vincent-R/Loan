@@ -1,7 +1,7 @@
 package com.loan.controller;
 
-import com.loan.entity.MortgageLoanCondition;
-import com.loan.service.MortgageLoanConditionService;
+import com.loan.entity.LoanCondition;
+import com.loan.service.LoanConditionService;
 import com.loan.util.Constant;
 import com.loan.util.DataReturn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/loanCondition")
-public class MortgageLoanConditionController {
+public class LoanConditionController {
 
     @Autowired
-    private MortgageLoanConditionService mortgageLoanConditionService;
+    private LoanConditionService loanConditionService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<List<MortgageLoanCondition>> getAllLoanCondition(){
-        return new DataReturn<>(Constant.RESULT_OK, "" , mortgageLoanConditionService.findAll());
+    public DataReturn<List<LoanCondition>> getAllLoanCondition(){
+        return new DataReturn<>(Constant.RESULT_OK, "" , loanConditionService.findAll());
     }
 }

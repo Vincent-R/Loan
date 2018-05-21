@@ -26,9 +26,8 @@ public class MortgageMortgageController {
     @ResponseBody
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
     public DataReturn<Boolean> confirmMortgageState(@RequestParam(value = "time", defaultValue = "") String time,
-                                                    @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                                    @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(time) || "".equals(taskId) || "".equals(employeeId)){
+                                                    @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(time) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , false);
         }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +44,6 @@ public class MortgageMortgageController {
         try {
             //修改贷款记录
             mortgageRecord.setMortgage_finish_time(finishTime);
-            mortgageRecord.setMortgage_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "确定抵押状态失败", false);

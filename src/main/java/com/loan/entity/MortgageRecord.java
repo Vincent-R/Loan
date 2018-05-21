@@ -32,16 +32,8 @@ public class MortgageRecord {
     private String catalog;
 
     @Basic
-    @Column(name = "catalog_operator")
-    private String catalog_operator;
-
-    @Basic
     @Column(name = "form")
     private String form;
-
-    @Basic
-    @Column(name = "form_operator")
-    private String form_operator;
 
     @Basic
     @Column(name = "visa_finish_time")
@@ -64,16 +56,8 @@ public class MortgageRecord {
     private String order_evaluate_company;
 
     @Basic
-    @Column(name = "order_report_type")
-    private int order_report_type;
-
-    @Basic
-    @Column(name = "order_report")
-    private String order_report;
-
-    @Basic
-    @Column(name = "order_operator")
-    private String order_operator;
+    @Column(name = "order_report_finish_time")
+    private Date order_report_finish_time;
 
     @Basic
     @Column(name = "approve_data_complete")
@@ -88,12 +72,8 @@ public class MortgageRecord {
     private boolean approve_pass;
 
     @Basic
-    @Column(name = "approve_zp")
-    private String approve_zp;
-
-    @Basic
-    @Column(name = "approve_operator")
-    private String approve_operator;
+    @Column(name = "approve_zp_finish_time")
+    private Date approve_zp_finish_time;
 
     @Basic
     @Column(name = "mortgage_finish_time")
@@ -116,10 +96,6 @@ public class MortgageRecord {
     private Date mortgage_g_time;
 
     @Basic
-    @Column(name = "mortgage_operator")
-    private String mortgage_operator;
-
-    @Basic
     @Column(name = "charge_skip")
     private boolean charge_skip;
 
@@ -128,20 +104,16 @@ public class MortgageRecord {
     private Date charge_finish_time;
 
     @Basic
-    @Column(name = "charge_operator")
-    private String charge_operator;
-
-    @Basic
-    @Column(name = "loan_operator")
-    private String loan_operator;
-
-    @Basic
     @Column(name = "process_id")
     private String process_id;
 
     @Basic
     @Column(name = "record_state")
     private int record_state;
+
+    @Basic
+    @Column(name = "abandon_time")
+    private Date abandon_time;
 
     public String getId() {
         return id;
@@ -157,10 +129,6 @@ public class MortgageRecord {
 
     public void setChecklist(String checklist) {
         this.checklist = checklist;
-    }
-
-    public String getCharge_operator() {
-        return charge_operator;
     }
 
     public void setChecklist_operator(String checklist_operator) {
@@ -191,28 +159,12 @@ public class MortgageRecord {
         this.catalog = catalog;
     }
 
-    public String getCatalog_operator() {
-        return catalog_operator;
-    }
-
-    public void setCatalog_operator(String catalog_operator) {
-        this.catalog_operator = catalog_operator;
-    }
-
     public String getForm() {
         return form;
     }
 
     public void setForm(String form) {
         this.form = form;
-    }
-
-    public String getForm_operator() {
-        return form_operator;
-    }
-
-    public void setForm_operator(String form_operator) {
-        this.form_operator = form_operator;
     }
 
     public Date getVisa_finish_time() {
@@ -255,28 +207,12 @@ public class MortgageRecord {
         this.order_evaluate_company = order_evaluate_company;
     }
 
-    public int getOrder_report_type() {
-        return order_report_type;
+    public Date getOrder_report_finish_time() {
+        return order_report_finish_time;
     }
 
-    public void setOrder_report_type(int order_report_type) {
-        this.order_report_type = order_report_type;
-    }
-
-    public String getOrder_report() {
-        return order_report;
-    }
-
-    public void setOrder_report(String order_report) {
-        this.order_report = order_report;
-    }
-
-    public String getOrder_operator() {
-        return order_operator;
-    }
-
-    public void setOrder_operator(String order_operator) {
-        this.order_operator = order_operator;
+    public void setOrder_report_finish_time(Date order_report_finish_time) {
+        this.order_report_finish_time = order_report_finish_time;
     }
 
     public boolean isApprove_data_complete() {
@@ -303,20 +239,12 @@ public class MortgageRecord {
         this.approve_pass = approve_pass;
     }
 
-    public String getApprove_zp() {
-        return approve_zp;
+    public Date getApprove_zp_finish_time() {
+        return approve_zp_finish_time;
     }
 
-    public void setApprove_zp(String approve_zp) {
-        this.approve_zp = approve_zp;
-    }
-
-    public String getApprove_operator() {
-        return approve_operator;
-    }
-
-    public void setApprove_operator(String approve_operator) {
-        this.approve_operator = approve_operator;
+    public void setApprove_zp_finish_time(Date approve_zp_finish_time) {
+        this.approve_zp_finish_time = approve_zp_finish_time;
     }
 
     public Date getMortgage_finish_time() {
@@ -359,14 +287,6 @@ public class MortgageRecord {
         this.mortgage_g_time = mortgage_g_time;
     }
 
-    public String getMortgage_operator() {
-        return mortgage_operator;
-    }
-
-    public void setMortgage_operator(String mortgage_operator) {
-        this.mortgage_operator = mortgage_operator;
-    }
-
     public boolean isCharge_skip() {
         return charge_skip;
     }
@@ -387,18 +307,6 @@ public class MortgageRecord {
         return checklist_operator;
     }
 
-    public void setCharge_operator(String charge_operator) {
-        this.charge_operator = charge_operator;
-    }
-
-    public String getLoan_operator() {
-        return loan_operator;
-    }
-
-    public void setLoan_operator(String loan_operator) {
-        this.loan_operator = loan_operator;
-    }
-
     public String getProcess_id() {
         return process_id;
     }
@@ -413,5 +321,13 @@ public class MortgageRecord {
 
     public void setRecord_state(int record_state) {
         this.record_state = record_state;
+    }
+
+    public Date getAbandon_time() {
+        return abandon_time;
+    }
+
+    public void setAbandon_time(Date abandon_time) {
+        this.abandon_time = abandon_time;
     }
 }

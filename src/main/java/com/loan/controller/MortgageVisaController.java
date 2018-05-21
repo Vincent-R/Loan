@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/visa")
@@ -75,7 +73,7 @@ public class MortgageVisaController {
                 return new DataReturn<>(Constant.RESULT_ERROR, "添加资料目录表失败", "");
             }
             mortgageRecord.setCatalog(mortgageCatalog.getId());
-            mortgageRecord.setCatalog_operator(employeeId);
+            mortgageRecord.setVisa_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
@@ -102,9 +100,8 @@ public class MortgageVisaController {
     @ResponseBody
     @RequestMapping(value = "/form/save", method = RequestMethod.POST)
     public DataReturn<String> saveForm(@RequestParam(value = "form", defaultValue = "") String form,
-                                       @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                       @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(form) || "".equals(taskId) || "".equals(employeeId)){
+                                       @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(form) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
@@ -124,7 +121,6 @@ public class MortgageVisaController {
             }
             //修改贷款记录
             mortgageRecord.setForm(mortgageForm.getId());
-            mortgageRecord.setForm_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
@@ -139,9 +135,8 @@ public class MortgageVisaController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public DataReturn<String> saveVisa(@RequestParam(value = "time", defaultValue = "") String time,
                                        @RequestParam(value = "address", defaultValue = "") String address,
-                                       @RequestParam(value = "taskId", defaultValue = "") String taskId,
-                                       @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
-        if("".equals(time) || "".equals(address) || "".equals(taskId) || "".equals(employeeId)){
+                                       @RequestParam(value = "taskId", defaultValue = "") String taskId){
+        if("".equals(time) || "".equals(address) || "".equals(taskId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
         }
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -152,7 +147,9 @@ public class MortgageVisaController {
             return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
-        if(null == mortgageRecord){
+        if(null == mortgageRecord.getVisa_operator() || "".equals(mortgageRecord.getVisa_operator())){
+            return new DataReturn<>(Constant.RESULT_ERROR, "请先确定面签业务员", "");
+        }else if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
         }
         if(null == mortgageRecord.getCatalog() || "".equals(mortgageRecord.getCatalog())){
@@ -164,13 +161,14 @@ public class MortgageVisaController {
             //修改贷款记录
             mortgageRecord.setVisa_finish_time(finishTime);
             mortgageRecord.setVisa_address(address);
-            mortgageRecord.setVisa_operator(employeeId);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "添加面签信息失败", "");
             }
             //visa task完成
-            taskService.complete(taskId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("visaOperator", mortgageRecord.getVisa_operator());
+            taskService.complete(taskId, map);
         }catch (Exception e){
             return new DataReturn<>(Constant.RESULT_ERROR, "添加面签信息失败", "");
         }

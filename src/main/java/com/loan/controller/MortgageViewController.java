@@ -12,6 +12,8 @@ import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -82,17 +84,28 @@ public class MortgageViewController {
 
     @ResponseBody
     @RequestMapping(value = "/suspend", method = RequestMethod.POST)
-    public DataReturn<String> suspendRecord(@RequestParam(value = "taskId", defaultValue = "") String taskId){
-        if("".equals(taskId)){
+    public DataReturn<String> suspendRecord(@RequestParam(value = "time", defaultValue = "") String time,
+                                            @RequestParam(value = "taskId", defaultValue = "") String taskId,
+                                            @RequestParam(value = "employeeId", defaultValue = "") String employeeId){
+        if("".equals(time) || "".equals(taskId) || "".equals(employeeId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "输入参数不合法" , null);
+        }
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date finishTime = null;
+        try {
+            finishTime = sdf.parse(time);
+        }catch (Exception e){
+            return new DataReturn<>(Constant.RESULT_ERROR, "输入时间格式有误", "");
         }
         MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(taskId, Constant.LOANID).toString());
         if(null == mortgageRecord){
             return new DataReturn<>(Constant.RESULT_ERROR, "贷款记录不存在", "");
         }
         try {
-            runtimeService.deleteProcessInstance(mortgageRecord.getProcess_id(),"order");
+            runtimeService.deleteProcessInstance(mortgageRecord.getProcess_id(),"View");
             mortgageRecord.setRecord_state(Constant.LOANRECORD_ABANDON);
+            mortgageRecord.setAdvice_operator(employeeId);
+            mortgageRecord.setAbandon_time(finishTime);
             mortgageRecord = mortgageRecordService.save(mortgageRecord);
             if(null == mortgageRecord){
                 return new DataReturn<>(Constant.RESULT_ERROR, "修改贷款记录信息失败", "");
