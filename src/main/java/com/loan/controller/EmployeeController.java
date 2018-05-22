@@ -2,6 +2,7 @@ package com.loan.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.loan.entity.Employee;
+import com.loan.model.EmployeeModel;
 import com.loan.service.EmployeeService;
 import com.loan.util.Constant;
 import com.loan.util.DataReturn;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -72,5 +74,11 @@ public class EmployeeController {
             return new DataReturn<>(Constant.RESULT_ERROR, "删除用户失败", 0);
         }
         return new DataReturn<>(Constant.RESULT_OK, "删除用户成功", 1);
+    }
+
+    @RequestMapping(value = "/allModel", method = RequestMethod.GET)
+    @ResponseBody
+    public DataReturn<List<EmployeeModel>> getAllEmployeeModel(){
+        return new DataReturn<>(Constant.RESULT_OK, "", employeeService.findAllIdName());
     }
 }

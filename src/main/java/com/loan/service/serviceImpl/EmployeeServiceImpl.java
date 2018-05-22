@@ -2,6 +2,7 @@ package com.loan.service.serviceImpl;
 
 import com.loan.dao.EmployeeDao;
 import com.loan.entity.Employee;
+import com.loan.model.EmployeeModel;
 import com.loan.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findAll() {
         return employeeDao.findAll();
+    }
+
+    @Override
+    public List<EmployeeModel> findAllIdName() {
+        return employeeDao.findAllIdName();
     }
 
     @Transactional

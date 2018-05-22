@@ -40,6 +40,35 @@ public class MortgageTaskController {
     private MortgageApproveService mortgageApproveService;
 
     @ResponseBody
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public DataReturn<List<MObjCommon>> getViewVisaTasks(){
+        List<Task> viewTasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VIEWOFFICER).list();//所有未安排的面谈任务
+        List<Task> visaTasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VISAOFFICER).list();//所有未安排的面签任务
+        List<MObjCommon> results = new ArrayList<>();
+        for (Task viewTask:viewTasks) {
+            MObjCommon mObjCommon = new MObjCommon();
+            mObjCommon.setTaskId(viewTask.getId());
+            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(viewTask.getId(), Constant.LOANID).toString());
+            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+            mObjCommon.setName(mortgageCheckList.getClient_name());
+            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setState("待分配面谈");
+            results.add(mObjCommon);
+        }
+        for (Task visaTask:visaTasks) {
+            MObjCommon mObjCommon = new MObjCommon();
+            mObjCommon.setTaskId(visaTask.getId());
+            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(visaTask.getId(),Constant.LOANID).toString());
+            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+            mObjCommon.setName(mortgageCheckList.getClient_name());
+            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setState("待分配面签");
+            results.add(mObjCommon);
+        }
+        return new DataReturn<>(Constant.RESULT_OK, "", results);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getViewTasks(){
         List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VIEWOFFICER).list();//所有未安排的面谈任务
@@ -51,7 +80,25 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
-            mObjCommon.setState("待填写面谈建议");
+            mObjCommon.setState("待分配面谈");
+            results.add(mObjCommon);
+        }
+        return new DataReturn<>(Constant.RESULT_OK, "", results);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/visa", method = RequestMethod.GET)
+    public DataReturn<List<MObjCommon>> getVisaTasks(){
+        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VISAOFFICER).list();//所有未安排的面签任务
+        List<MObjCommon> results = new ArrayList<>();
+        for (Task task:tasks) {
+            MObjCommon mObjCommon = new MObjCommon();
+            mObjCommon.setTaskId(task.getId());
+            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
+            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+            mObjCommon.setName(mortgageCheckList.getClient_name());
+            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setState("待分配面签");
             results.add(mObjCommon);
         }
         return new DataReturn<>(Constant.RESULT_OK, "", results);
@@ -70,30 +117,6 @@ public class MortgageTaskController {
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
             mObjCommon.setState("待填写面谈建议");
-            results.add(mObjCommon);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/visa", method = RequestMethod.GET)
-    public DataReturn<List<MObjCommon>> getVisaTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.VISAOFFICER).list();//所有未安排的面签任务
-        List<MObjCommon> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjCommon mObjCommon = new MObjCommon();
-            mObjCommon.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjCommon.setName(mortgageCheckList.getClient_name());
-            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
-            if(null==mortgageRecord.getCatalog()||"".equals(mortgageRecord.getCatalog())){
-                mObjCommon.setState("待填写资料目录表");
-            }else if(null==mortgageRecord.getForm()||"".equals(mortgageRecord.getForm())){
-                mObjCommon.setState("待填写个人申请表");
-            }else{
-                mObjCommon.setState("待确定签约状态");
-            }
             results.add(mObjCommon);
         }
         return new DataReturn<>(Constant.RESULT_OK, "", results);
@@ -123,29 +146,29 @@ public class MortgageTaskController {
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public DataReturn<List<MObjOrder>> getOrderTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.ORDEROFFICER).list();//所有未安排的下单任务
-        List<MObjOrder> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjOrder mObjOrder = new MObjOrder();
-            mObjOrder.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjOrder.setName(mortgageCheckList.getClient_name());
-            mObjOrder.setPhone(mortgageCheckList.getClient_phone());
-            mObjOrder.setVisa_finish_time(mortgageRecord.getVisa_finish_time());
-            mObjOrder.setClerk(employeeService.findOneById(mortgageRecord.getVisa_operator()).getName());
-            if(null==mortgageRecord.getOrder_finish_time()||"".equals(mortgageRecord.getOrder_finish_time())){
-                mObjOrder.setState("待评估下单");
-            }else{
-                mObjOrder.setState("待出报告");
-            }
-            results.add(mObjOrder);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/order", method = RequestMethod.GET)
+//    public DataReturn<List<MObjOrder>> getOrderTasks(){
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.ORDEROFFICER).list();//所有未安排的下单任务
+//        List<MObjOrder> results = new ArrayList<>();
+//        for (Task task:tasks) {
+//            MObjOrder mObjOrder = new MObjOrder();
+//            mObjOrder.setTaskId(task.getId());
+//            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
+//            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+//            mObjOrder.setName(mortgageCheckList.getClient_name());
+//            mObjOrder.setPhone(mortgageCheckList.getClient_phone());
+//            mObjOrder.setVisa_finish_time(mortgageRecord.getVisa_finish_time());
+//            mObjOrder.setClerk(employeeService.findOneById(mortgageRecord.getVisa_operator()).getName());
+//            if(null==mortgageRecord.getOrder_finish_time()||"".equals(mortgageRecord.getOrder_finish_time())){
+//                mObjOrder.setState("待评估下单");
+//            }else{
+//                mObjOrder.setState("待出报告");
+//            }
+//            results.add(mObjOrder);
+//        }
+//        return new DataReturn<>(Constant.RESULT_OK, "", results);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/order/{employeeId}", method = RequestMethod.GET)
@@ -171,36 +194,36 @@ public class MortgageTaskController {
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/approve", method = RequestMethod.GET)
-    public DataReturn<List<MObjApprove>> getApproveTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.APPROVEOFFICER).list();//所有未安排的审批任务
-        List<MObjApprove> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjApprove mObjApprove = new MObjApprove();
-            mObjApprove.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjApprove.setName(mortgageCheckList.getClient_name());
-            mObjApprove.setPhone(mortgageCheckList.getClient_phone());
-            if(null == mortgageRecord.getApprove_zp_finish_time() || "".equals(mortgageRecord.getApprove_zp_finish_time())){
-                mObjApprove.setReport_type("预评");
-            }else{
-                mObjApprove.setReport_type("正评");
-            }
-            if(!mortgageRecord.isApprove_data_complete()){
-                mObjApprove.setState("待确定资料目录表");
-            }else if(null==mortgageRecord.getApprove_time()||"".equals(mortgageRecord.getApprove_time())) {
-                mObjApprove.setState("待报审");
-            }else if(!mortgageRecord.isApprove_pass()) {
-                mObjApprove.setState("待确定审批状态");
-            }else{
-                mObjApprove.setState("待出正评");
-            }
-            results.add(mObjApprove);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/approve", method = RequestMethod.GET)
+//    public DataReturn<List<MObjApprove>> getApproveTasks(){
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.APPROVEOFFICER).list();//所有未安排的审批任务
+//        List<MObjApprove> results = new ArrayList<>();
+//        for (Task task:tasks) {
+//            MObjApprove mObjApprove = new MObjApprove();
+//            mObjApprove.setTaskId(task.getId());
+//            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
+//            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+//            mObjApprove.setName(mortgageCheckList.getClient_name());
+//            mObjApprove.setPhone(mortgageCheckList.getClient_phone());
+//            if(null == mortgageRecord.getApprove_zp_finish_time() || "".equals(mortgageRecord.getApprove_zp_finish_time())){
+//                mObjApprove.setReport_type("预评");
+//            }else{
+//                mObjApprove.setReport_type("正评");
+//            }
+//            if(!mortgageRecord.isApprove_data_complete()){
+//                mObjApprove.setState("待确定资料目录表");
+//            }else if(null==mortgageRecord.getApprove_time()||"".equals(mortgageRecord.getApprove_time())) {
+//                mObjApprove.setState("待报审");
+//            }else if(!mortgageRecord.isApprove_pass()) {
+//                mObjApprove.setState("待确定审批状态");
+//            }else{
+//                mObjApprove.setState("待出正评");
+//            }
+//            results.add(mObjApprove);
+//        }
+//        return new DataReturn<>(Constant.RESULT_OK, "", results);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/approve/{employeeId}", method = RequestMethod.GET)
@@ -233,27 +256,27 @@ public class MortgageTaskController {
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/mortgage", method = RequestMethod.GET)
-    public DataReturn<List<MObjCommon>> getMortgageTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.MORTGAGEOFFICER).list();//所有未安排的抵押任务
-        List<MObjCommon> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjCommon mObjCommon = new MObjCommon();
-            mObjCommon.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjCommon.setName(mortgageCheckList.getClient_name());
-            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
-            if(null==mortgageRecord.getMortgage_finish_time()||"".equals(mortgageRecord.getMortgage_finish_time())){
-                mObjCommon.setState("待确定抵押状态");
-            }else if(mortgageRecord.isMortgage_need_guarantee() &&(null==mortgageRecord.getMortgage_g_time()||"".equals(mortgageRecord.getMortgage_g_time()))){
-                mObjCommon.setState("待出具担保函");
-            }
-            results.add(mObjCommon);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/mortgage", method = RequestMethod.GET)
+//    public DataReturn<List<MObjCommon>> getMortgageTasks(){
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.MORTGAGEOFFICER).list();//所有未安排的抵押任务
+//        List<MObjCommon> results = new ArrayList<>();
+//        for (Task task:tasks) {
+//            MObjCommon mObjCommon = new MObjCommon();
+//            mObjCommon.setTaskId(task.getId());
+//            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
+//            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+//            mObjCommon.setName(mortgageCheckList.getClient_name());
+//            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+//            if(null==mortgageRecord.getMortgage_finish_time()||"".equals(mortgageRecord.getMortgage_finish_time())){
+//                mObjCommon.setState("待确定抵押状态");
+//            }else if(mortgageRecord.isMortgage_need_guarantee() &&(null==mortgageRecord.getMortgage_g_time()||"".equals(mortgageRecord.getMortgage_g_time()))){
+//                mObjCommon.setState("待出具担保函");
+//            }
+//            results.add(mObjCommon);
+//        }
+//        return new DataReturn<>(Constant.RESULT_OK, "", results);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/mortgage/{employeeId}", method = RequestMethod.GET)
@@ -277,23 +300,23 @@ public class MortgageTaskController {
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/charge", method = RequestMethod.GET)
-    public DataReturn<List<MObjCommon>> getChargeTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.CHARGEOFFICER).list();//所有未安排的收费任务
-        List<MObjCommon> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjCommon mObjCommon = new MObjCommon();
-            mObjCommon.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjCommon.setName(mortgageCheckList.getClient_name());
-            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
-            mObjCommon.setState("待确定收费状态");
-            results.add(mObjCommon);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/charge", method = RequestMethod.GET)
+//    public DataReturn<List<MObjCommon>> getChargeTasks(){
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.CHARGEOFFICER).list();//所有未安排的收费任务
+//        List<MObjCommon> results = new ArrayList<>();
+//        for (Task task:tasks) {
+//            MObjCommon mObjCommon = new MObjCommon();
+//            mObjCommon.setTaskId(task.getId());
+//            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
+//            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+//            mObjCommon.setName(mortgageCheckList.getClient_name());
+//            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+//            mObjCommon.setState("待确定收费状态");
+//            results.add(mObjCommon);
+//        }
+//        return new DataReturn<>(Constant.RESULT_OK, "", results);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/charge/{employeeId}", method = RequestMethod.GET)
@@ -313,23 +336,23 @@ public class MortgageTaskController {
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/loan", method = RequestMethod.GET)
-    public DataReturn<List<MObjCommon>> getLoanTasks(){
-        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.LOANOFFICER).list();//所有未安排的放款任务
-        List<MObjCommon> results = new ArrayList<>();
-        for (Task task:tasks) {
-            MObjCommon mObjCommon = new MObjCommon();
-            mObjCommon.setTaskId(task.getId());
-            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
-            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjCommon.setName(mortgageCheckList.getClient_name());
-            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
-            mObjCommon.setState("等待放款");
-            results.add(mObjCommon);
-        }
-        return new DataReturn<>(Constant.RESULT_OK, "", results);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/loan", method = RequestMethod.GET)
+//    public DataReturn<List<MObjCommon>> getLoanTasks(){
+//        List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskCandidateGroup(Constant.LOANOFFICER).list();//所有未安排的放款任务
+//        List<MObjCommon> results = new ArrayList<>();
+//        for (Task task:tasks) {
+//            MObjCommon mObjCommon = new MObjCommon();
+//            mObjCommon.setTaskId(task.getId());
+//            MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(), Constant.LOANID).toString());
+//            MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
+//            mObjCommon.setName(mortgageCheckList.getClient_name());
+//            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+//            mObjCommon.setState("等待放款");
+//            results.add(mObjCommon);
+//        }
+//        return new DataReturn<>(Constant.RESULT_OK, "", results);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/loan/{employeeId}", method = RequestMethod.GET)

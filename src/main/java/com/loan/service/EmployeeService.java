@@ -1,6 +1,7 @@
 package com.loan.service;
 
 import com.loan.entity.Employee;
+import com.loan.model.EmployeeModel;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface EmployeeService {
     List<Employee> findAll();
 
     Employee save(Employee employee);
+
+    List<EmployeeModel> findAllIdName();
 
     int deleteById(String id);
 }

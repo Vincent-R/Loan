@@ -3,11 +3,11 @@ package com.loan.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "loan_departments")
+@Table(name = "loan_department")
 public class Department {
     @Id
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Basic
     @Column(name = "name")
@@ -17,11 +17,11 @@ public class Department {
     @Column(name = "description")
     private String description;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

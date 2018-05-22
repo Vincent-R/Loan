@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "loan_employees", schema = "loan")
+@Table(name = "loan_employee", schema = "loan")
 public class Employee {
     @Id
     @Column(name = "id")
