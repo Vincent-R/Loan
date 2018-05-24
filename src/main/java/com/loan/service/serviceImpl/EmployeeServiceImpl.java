@@ -32,8 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeModel> findAllIdName() {
-        return employeeDao.findAllIdName();
+    public List<EmployeeModel> findAllIdName(String departmentId) {
+        return employeeDao.findAllIdName(departmentId);
     }
 
     @Transactional

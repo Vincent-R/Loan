@@ -13,7 +13,7 @@ public interface EmployeeDao extends JpaRepository<Employee, String>{
     @Query("select e from Employee e where e.account=?1")
     Employee findOneByAccount(String account);
 
-    @Query("select new com.loan.model.EmployeeModel(e.id, e.name) from Employee e where e.department=?1")
+    @Query("select new com.loan.model.EmployeeModel(e.id, e.name) from Employee e where e.department_id=?1")
     List<EmployeeModel> findAllIdName(String departmentId);
 
     @Modifying

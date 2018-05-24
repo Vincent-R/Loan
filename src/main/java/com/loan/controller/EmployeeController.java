@@ -76,9 +76,9 @@ public class EmployeeController {
         return new DataReturn<>(Constant.RESULT_OK, "删除用户成功", 1);
     }
 
-    @RequestMapping(value = "/allModel", method = RequestMethod.GET)
+    @RequestMapping(value = "/allModel/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<List<EmployeeModel>> getAllEmployeeModel(){
-        return new DataReturn<>(Constant.RESULT_OK, "", employeeService.findAllIdName());
+    public DataReturn<List<EmployeeModel>> getAllEmployeeModel(@PathVariable("departmentId") String departmentId){
+        return new DataReturn<>(Constant.RESULT_OK, "", employeeService.findAllIdName(departmentId));
     }
 }

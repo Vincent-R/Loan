@@ -22,9 +22,12 @@ public class Employee {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+//    @ManyToOne
+//    @JoinColumn(name = "department_id")
+//    private Department department;
+    @Basic
+    @Column(name = "department_id")
+    private String department_id;
 
     @Basic
     @Column(name = "role")
@@ -426,12 +429,12 @@ public class Employee {
         this.name = name;
     }
 
-    public Department getDepartment() {
-        return department;
+    public String getDepartment_id() {
+        return department_id;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartment_id(String department_id) {
+        this.department_id = department_id;
     }
 
     public int getRole() {

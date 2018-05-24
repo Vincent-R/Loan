@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1526746333430" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
   <process id="houseLoan" isClosed="false" isExecutable="true" name="HouseLoan" processType="None">
-    <startEvent activiti:initiator="userId" id="start" name="Start Event">
+    <startEvent id="start" name="StartEvent">
       <extensionElements>
-        <activiti:formProperty id="loanId" name="Loan Id" readable="true" required="true" type="string" variable="loanId" writable="true"/>
+        <activiti:formProperty id="loanId" name="LoanId" readable="true" required="true" type="string" variable="loanId" writable="true"/>
+        <activiti:formProperty id="checklistOfficer" name="ChecklistOfficer" readable="true" required="true" type="string" variable="checklistOfficer" writable="true"/>
       </extensionElements>
     </startEvent>
-    <endEvent id="end" name="End Event"/>
+    <endEvent id="end" name="EndEvent"/>
     <userTask activiti:candidateGroups="visaOfficer" activiti:exclusive="true" id="visa" name="VisaTask"/>
     <userTask activiti:candidateGroups="orderOfficer" activiti:exclusive="true" id="order" name="OrderTask">
       <extensionElements>
@@ -24,7 +25,7 @@
     <sequenceFlow id="_9" name="OrderPassNO" sourceRef="_5" targetRef="chargeBack">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${orderPass=='no'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="zjsjOfficer" activiti:exclusive="true" id="zjsj" name="ZJSJTask">
+    <userTask activiti:assignee="${visaOfficer}" activiti:exclusive="true" id="zjsj" name="ZJSJTask">
       <extensionElements>
         <activiti:formProperty id="zjsjPass" name="ZJSJ Pass" readable="true" required="true" type="enum" variable="zjsjPass" writable="true">
           <activiti:value id="yes" name="ZJSJYes"/>
@@ -41,7 +42,7 @@
     <sequenceFlow id="_12" name="ZJSJPassNo" sourceRef="_10" targetRef="chargeBack">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${zjsjPass=='no'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="approveOfficer" activiti:exclusive="true" id="approve" name="ApproveTask">
+    <userTask activiti:assignee="${visaOfficer}" activiti:exclusive="true" id="approve" name="ApproveTask">
       <extensionElements>
         <activiti:formProperty id="approveResult" name="ApproveResult" readable="true" required="true" type="enum" variable="approveResult" writable="true">
           <activiti:value id="0" name="ApprovePass"/>
@@ -65,11 +66,11 @@
     <sequenceFlow id="_2" name="ChangeBank" sourceRef="_15" targetRef="visa">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approveResult=='2'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask activiti:candidateGroups="mortgageOfficer" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
+    <userTask activiti:assignee="${transferOfficer}" activiti:exclusive="true" id="mortgage" name="MortgageTask"/>
     <userTask activiti:candidateGroups="transferOfficer" activiti:exclusive="true" id="transfer" name="TransferTask"/>
     <userTask activiti:candidateGroups="guaranteeOfficer" activiti:exclusive="true" id="guarantee" name="GuaranteeTask"/>
-    <userTask activiti:async="true" activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
-    <userTask activiti:async="true" activiti:candidateGroups="loanOfficer" activiti:exclusive="true" id="loan" name="LoanTask">
+    <userTask activiti:assignee="${checklistOfficer}" activiti:async="true" activiti:exclusive="true" id="preCharge" name="ChargeTask"/>
+    <userTask activiti:assignee="${visaOfficer}" activiti:async="true" activiti:exclusive="true" id="loan" name="LoanTask">
       <extensionElements>
         <activiti:formProperty id="skipCharge" name="SkipCharge" readable="true" required="true" type="enum" variable="skipCharge" writable="true">
           <activiti:value id="yes" name="SkipYes"/>
@@ -79,10 +80,7 @@
     </userTask>
     <exclusiveGateway gatewayDirection="Unspecified" id="_24" name="ExclusiveGateway"/>
     <parallelGateway gatewayDirection="Unspecified" id="_25" name="ParallelGateway"/>
-    <userTask activiti:candidateGroups="chargeOfficer" activiti:exclusive="true" id="postCharge" name="ChargeTask"/>
-    <sequenceFlow id="_13" sourceRef="_17" targetRef="mortgage"/>
-    <sequenceFlow id="_20" sourceRef="mortgage" targetRef="transfer"/>
-    <sequenceFlow id="_21" sourceRef="transfer" targetRef="guarantee"/>
+    <userTask activiti:assignee="${checklistOfficer}" activiti:exclusive="true" id="postCharge" name="ChargeTask"/>
     <sequenceFlow id="_22" sourceRef="_17" targetRef="preCharge"/>
     <sequenceFlow id="_26" sourceRef="guarantee" targetRef="_25"/>
     <sequenceFlow id="_28" sourceRef="preCharge" targetRef="_25"/>
@@ -95,6 +93,11 @@
     <sequenceFlow id="_33" name="SkipChargeNo" sourceRef="_24" targetRef="end">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${skipCharge=='no'}]]></conditionExpression>
     </sequenceFlow>
+    <userTask activiti:assignee="${orderOfficer}" activiti:exclusive="true" id="dataCheck" name="DataCheckTask"/>
+    <sequenceFlow id="_23" sourceRef="_17" targetRef="transfer"/>
+    <sequenceFlow id="_13" sourceRef="transfer" targetRef="dataCheck"/>
+    <sequenceFlow id="_20" sourceRef="dataCheck" targetRef="mortgage"/>
+    <sequenceFlow id="_21" sourceRef="mortgage" targetRef="guarantee"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="houseLoan">
@@ -165,19 +168,19 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="mortgage" id="Shape-mortgage">
-        <omgdc:Bounds height="55.0" width="85.0" x="820.0" y="360.0"/>
+        <omgdc:Bounds height="55.0" width="85.0" x="625.0" y="360.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="transfer" id="Shape-transfer">
-        <omgdc:Bounds height="55.0" width="85.0" x="680.0" y="360.0"/>
+        <omgdc:Bounds height="55.0" width="85.0" x="860.0" y="360.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="guarantee" id="Shape-guarantee">
-        <omgdc:Bounds height="55.0" width="85.0" x="535.0" y="360.0"/>
+        <omgdc:Bounds height="55.0" width="85.0" x="510.0" y="360.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
@@ -212,10 +215,15 @@
           <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_13" id="BPMNEdge__13" sourceElement="_17" targetElement="mortgage">
-        <omgdi:waypoint x="990.0" y="441.0"/>
-        <omgdi:waypoint x="990.0" y="420.0"/>
-        <omgdi:waypoint x="905.0" y="387.5"/>
+      <bpmndi:BPMNShape bpmnElement="dataCheck" id="Shape-dataCheck">
+        <omgdc:Bounds height="55.0" width="85.0" x="745.0" y="360.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_13" id="BPMNEdge__13" sourceElement="transfer" targetElement="dataCheck">
+        <omgdi:waypoint x="860.0" y="387.5"/>
+        <omgdi:waypoint x="830.0" y="387.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
@@ -260,9 +268,9 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_20" id="BPMNEdge__20" sourceElement="mortgage" targetElement="transfer">
-        <omgdi:waypoint x="820.0" y="387.5"/>
-        <omgdi:waypoint x="765.0" y="387.5"/>
+      <bpmndi:BPMNEdge bpmnElement="_20" id="BPMNEdge__20" sourceElement="dataCheck" targetElement="mortgage">
+        <omgdi:waypoint x="745.0" y="387.5"/>
+        <omgdi:waypoint x="710.0" y="387.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
@@ -275,15 +283,23 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_21" id="BPMNEdge__21" sourceElement="transfer" targetElement="guarantee">
-        <omgdi:waypoint x="680.0" y="387.5"/>
-        <omgdi:waypoint x="620.0" y="387.5"/>
+      <bpmndi:BPMNEdge bpmnElement="_21" id="BPMNEdge__21" sourceElement="mortgage" targetElement="guarantee">
+        <omgdi:waypoint x="625.0" y="387.5"/>
+        <omgdi:waypoint x="595.0" y="387.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_23" id="BPMNEdge__23" sourceElement="_17" targetElement="transfer">
+        <omgdi:waypoint x="990.0" y="441.0"/>
+        <omgdi:waypoint x="990.0" y="425.0"/>
+        <omgdi:waypoint x="945.0" y="387.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_26" id="BPMNEdge__26" sourceElement="guarantee" targetElement="_25">
-        <omgdi:waypoint x="535.0" y="387.5"/>
+        <omgdi:waypoint x="510.0" y="387.5"/>
         <omgdi:waypoint x="480.0" y="425.0"/>
         <omgdi:waypoint x="480.0" y="436.0"/>
         <bpmndi:BPMNLabel>

@@ -54,31 +54,31 @@ public class ServiceTest {
 //        department.setDescription("");
 //        departmentService.save(department);
 
-        List<DepartmentModel> departments = departmentService.findAllIdName();
-        for(DepartmentModel department:departments){
-            System.out.println(department.getId() + "----" + department.getName());
-        }
+//        List<DepartmentModel> departments = departmentService.findAllIdName();
+//        for(DepartmentModel department:departments){
+//            System.out.println(department.getId() + "----" + department.getName());
+//        }
     }
 
     @Test
     public void evaluateCompanyServiceTest(){
-        EvaluateCompany evaluateCompany = new EvaluateCompany();
-        evaluateCompany.setId(UUID.randomUUID().toString().replace("-",""));
-        evaluateCompany.setName("评估公司一");
-        evaluateCompany.setAddress("武汉市洪山区八一路1号");
-        evaluateCompanyService.save(evaluateCompany);
-
-        EvaluateCompany evaluateCompany2 = new EvaluateCompany();
-        evaluateCompany2.setId(UUID.randomUUID().toString().replace("-",""));
-        evaluateCompany2.setName("评估公司二");
-        evaluateCompany2.setAddress("武汉市洪山区八一路2号");
-        evaluateCompanyService.save(evaluateCompany2);
-
-        EvaluateCompany evaluateCompany3 = new EvaluateCompany();
-        evaluateCompany3.setId(UUID.randomUUID().toString().replace("-",""));
-        evaluateCompany3.setName("评估公司三");
-        evaluateCompany3.setAddress("武汉市洪山区八一路3号");
-        evaluateCompanyService.save(evaluateCompany3);
+//        EvaluateCompany evaluateCompany = new EvaluateCompany();
+//        evaluateCompany.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany.setName("评估公司一");
+//        evaluateCompany.setAddress("武汉市洪山区八一路1号");
+//        evaluateCompanyService.save(evaluateCompany);
+//
+//        EvaluateCompany evaluateCompany2 = new EvaluateCompany();
+//        evaluateCompany2.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany2.setName("评估公司二");
+//        evaluateCompany2.setAddress("武汉市洪山区八一路2号");
+//        evaluateCompanyService.save(evaluateCompany2);
+//
+//        EvaluateCompany evaluateCompany3 = new EvaluateCompany();
+//        evaluateCompany3.setId(UUID.randomUUID().toString().replace("-",""));
+//        evaluateCompany3.setName("评估公司三");
+//        evaluateCompany3.setAddress("武汉市洪山区八一路3号");
+//        evaluateCompanyService.save(evaluateCompany3);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ServiceTest {
 //        mortgageApproveService.save(mortgageApprove);
 
         //删除审批表
-        mortgageApproveService.deleteById("0ad6c5bc541a4c1a93e399ec94d8ccde");
+        //mortgageApproveService.deleteById("0ad6c5bc541a4c1a93e399ec94d8ccde");
     }
 
     @Test
@@ -123,8 +123,8 @@ public class ServiceTest {
 //        mortgageRecord.setId(UUID.randomUUID().toString().replace("-",""));
 //        mortgageRecordService.save(mortgageRecord);
 
-        MortgageRecord record = mortgageRecordService.findOneById("4b5e4cbdaca140f0a91ac52618ff3359");
-        System.out.println(record.getId());
+//        MortgageRecord record = mortgageRecordService.findOneById("4b5e4cbdaca140f0a91ac52618ff3359");
+//        System.out.println(record.getId());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class ServiceTest {
 //        mortgageCheckListService.save(mortgageCheckList);
 
         //删除CheckList,可同时删除Houses内容(delete由JPA提供)
-        mortgageCheckListService.deleteOneById("c231e971702e49ae9a342ec4f335dc62");
+        //mortgageCheckListService.deleteOneById("c231e971702e49ae9a342ec4f335dc62");
 
         //删除CheckList,不能同时删除Houses内容(delete自定义)
 //        mortgageCheckListService.deleteById("c231e971702e49ae9a342ec4f335dc62");
@@ -173,10 +173,10 @@ public class ServiceTest {
 
     @Test
     public void employeeServiceTest(){
-        List<EmployeeModel> employees = employeeService.findAllIdName();
-        for(EmployeeModel employee:employees){
-            System.out.println(employee.getId() + "----" + employee.getName());
-        }
+//        List<EmployeeModel> employees = employeeService.findAllIdName("0f165b4a1e8747a1a143fc23773f2a60");
+//        for(EmployeeModel employee:employees){
+//            System.out.println(employee.getId() + "----" + employee.getName());
+//        }
 
         //更新雇员信息
 //        Employee employee = employeeService.findOneByAccount("123456@qq.com");
@@ -226,9 +226,9 @@ public class ServiceTest {
 //        System.out.println(announcement.getId() + "-" + announcement.getTitle());
 
         //查询所有
-        List<Announcement> announcements = announcementService.findAll();
-        for (Announcement a: announcements) {
-            System.out.println(a.getId() + "-" + a.getTitle() + "-" + DateUtil.getDateString(a.getRelease_time()));
-        }
+//        List<Announcement> announcements = announcementService.findAll();
+//        for (Announcement a: announcements) {
+//            System.out.println(a.getId() + "-" + a.getTitle() + "-" + DateUtil.getDateString(a.getRelease_time()));
+//        }
     }
 }

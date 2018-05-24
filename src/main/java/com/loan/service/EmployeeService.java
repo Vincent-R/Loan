@@ -15,7 +15,7 @@ public interface EmployeeService {
 
     Employee save(Employee employee);
 
-    List<EmployeeModel> findAllIdName();
+    List<EmployeeModel> findAllIdName(String departmentId);
 
     int deleteById(String id);
 }
