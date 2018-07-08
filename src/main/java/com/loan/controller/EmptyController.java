@@ -27,27 +27,66 @@ public class EmptyController {
     @ResponseBody
     @RequestMapping(value = "/department", method = RequestMethod.GET)
     public Department getEmptyDepartment(){
-        return new Department();
+        Department department = new Department();
+        department.setId("");
+        department.setName("");
+        department.setDescription("");
+        return department;
     }
 
     @ResponseBody
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
     public Employee getEmptyEmployee(){
-        return new Employee();
+        Employee employee = new Employee();
+        employee.setAccount("");
+        employee.setDepartment_id("");
+        employee.setId("");
+        employee.setName("");
+        employee.setPassword("");
+        employee.setPhone("");
+        return employee;
     }
 
     @ResponseBody
     @RequestMapping(value = "/m/record", method = RequestMethod.GET)
     public MortgageRecord getEmptyRecord(){
-        return new MortgageRecord();
+        MortgageRecord mortgageRecord = new MortgageRecord();
+        mortgageRecord.setAdvice("");
+        mortgageRecord.setAdvice_operator("");
+        mortgageRecord.setCatalog("");
+        mortgageRecord.setChecklist("");
+        mortgageRecord.setChecklist_operator("");
+        mortgageRecord.setForm("");
+        mortgageRecord.setId("");
+        mortgageRecord.setOrder_evaluate_company("");
+        mortgageRecord.setProcess_id("");
+        mortgageRecord.setVisa_address("");
+        mortgageRecord.setVisa_operator("");
+        return mortgageRecord;
     }
 
     @ResponseBody
     @RequestMapping(value = "/m/checklist", method = RequestMethod.GET)
     public MortgageCheckList getEmptyCheckList(){
         MortgageCheckList mortgageCheckList = new MortgageCheckList();
+        mortgageCheckList.setAgent_name("");
+        mortgageCheckList.setClient_id_number("");
+        mortgageCheckList.setClient_id_type("");
+        mortgageCheckList.setClient_name("");
+        mortgageCheckList.setClient_phone("");
+        mortgageCheckList.setClient_work_unit("");
+        mortgageCheckList.setId("");
+        mortgageCheckList.setLoan_amount("");
+        mortgageCheckList.setLoan_period("");
+        mortgageCheckList.setRemark("");
         List<MortgageHouse> mortgageHouseList = new ArrayList<>();
-        mortgageHouseList.add(new MortgageHouse());
+        MortgageHouse mortgageHouse = new MortgageHouse();
+        mortgageHouse.setChecklist_id("");
+        mortgageHouse.setEnquiry_result("");
+        mortgageHouse.setTotal_price("");
+        mortgageHouse.setId("");
+        mortgageHouse.setArea("");
+        mortgageHouseList.add(mortgageHouse);
         mortgageCheckList.setMortgageHouses(mortgageHouseList);
         return mortgageCheckList;
     }
@@ -55,13 +94,21 @@ public class EmptyController {
     @ResponseBody
     @RequestMapping(value = "/m/house", method = RequestMethod.GET)
     public MortgageHouse getEmptyHouse(){
-        return new MortgageHouse();
+        MortgageHouse mortgageHouse = new MortgageHouse();
+        mortgageHouse.setId("");
+        mortgageHouse.setArea("");
+        mortgageHouse.setTotal_price("");
+        mortgageHouse.setEnquiry_result("");
+        mortgageHouse.setChecklist_id("");
+        return mortgageHouse;
     }
 
     @ResponseBody
     @RequestMapping(value = "/m/advice", method = RequestMethod.GET)
     public MortgageAdvice getEmptyAdvice(){
-        return new MortgageAdvice();
+        MortgageAdvice mortgageAdvice = new MortgageAdvice();
+        mortgageAdvice.setId("");
+        return mortgageAdvice;
     }
 
     @ResponseBody

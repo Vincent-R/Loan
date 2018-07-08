@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "loan_announcements")
+@Table(name = "loan_announcement")
 public class Announcement {
     @Id
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Basic
     @Column(name = "title")
@@ -16,7 +16,7 @@ public class Announcement {
 
     @Basic
     @Column(name = "release_time")
-    private Date release_time;
+    private String release_time;
 
     @Basic
     @Column(name = "image_url")
@@ -30,11 +30,11 @@ public class Announcement {
     @Column(name = "attachment_url")
     private String attachment_url;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,11 +46,11 @@ public class Announcement {
         this.title = title;
     }
 
-    public Date getRelease_time() {
+    public String getRelease_time() {
         return release_time;
     }
 
-    public void setRelease_time(Date release_time) {
+    public void setRelease_time(String release_time) {
         this.release_time = release_time;
     }
 

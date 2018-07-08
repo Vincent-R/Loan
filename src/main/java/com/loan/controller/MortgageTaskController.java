@@ -4,6 +4,7 @@ import com.loan.entity.*;
 import com.loan.returnObj.MObjApprove;
 import com.loan.returnObj.MObjCommon;
 import com.loan.returnObj.MObjOrder;
+import com.loan.returnObj.MObjVisa;
 import com.loan.service.*;
 import com.loan.util.Constant;
 import com.loan.util.DataReturn;
@@ -124,24 +125,25 @@ public class MortgageTaskController {
 
     @ResponseBody
     @RequestMapping(value = "/visa/{employeeId}", method = RequestMethod.GET)
-    public DataReturn<List<MObjCommon>> getEmployeeVisaTasks(@PathVariable("employeeId") String employeeId){
+    public DataReturn<List<MObjVisa>> getEmployeeVisaTasks(@PathVariable("employeeId") String employeeId){
         List<Task> tasks = taskService.createTaskQuery().processDefinitionKey(Constant.MORTGAGELOAN).taskAssignee(employeeId).taskName(Constant.VISATASK).list();//某一业务员的面签任务
-        List<MObjCommon> results = new ArrayList<>();
+        List<MObjVisa> results = new ArrayList<>();
         for (Task task:tasks) {
-            MObjCommon mObjCommon = new MObjCommon();
-            mObjCommon.setTaskId(task.getId());
+            MObjVisa mObjVisa = new MObjVisa();
+            mObjVisa.setTaskId(task.getId());
             MortgageRecord mortgageRecord = mortgageRecordService.findOneById(taskService.getVariable(task.getId(),Constant.LOANID).toString());
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
-            mObjCommon.setName(mortgageCheckList.getClient_name());
-            mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjVisa.setName(mortgageCheckList.getClient_name());
+            mObjVisa.setPhone(mortgageCheckList.getClient_phone());
+            mObjVisa.setLoan_type(mortgageCheckList.getLoan_type());
             if(null==mortgageRecord.getCatalog()||"".equals(mortgageRecord.getCatalog())){
-                mObjCommon.setState("待填写资料目录表");
+                mObjVisa.setState("待填写资料目录表");
             }else if(null==mortgageRecord.getForm()||"".equals(mortgageRecord.getForm())){
-                mObjCommon.setState("待填写个人申请表");
+                mObjVisa.setState("待填写个人申请表");
             }else{
-                mObjCommon.setState("待确定签约状态");
+                mObjVisa.setState("待确定签约状态");
             }
-            results.add(mObjCommon);
+            results.add(mObjVisa);
         }
         return new DataReturn<>(Constant.RESULT_OK, "", results);
     }

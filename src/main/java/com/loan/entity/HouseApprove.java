@@ -12,11 +12,11 @@ public class HouseApprove {
 
     @Basic
     @Column(name = "approve_state")
-    private int approve_state;
+    private String approve_state;
 
     @Basic
     @Column(name = "approve_time")
-    private Date approve_time;
+    private String approve_time;
 
     @Basic
     @Column(name = "amount")
@@ -40,7 +40,7 @@ public class HouseApprove {
 
     @Basic
     @Column(name = "fail_reason")
-    private int fail_reason;
+    private String fail_reason;
 
     @Basic
     @Column(name = "fail_reason_other")
@@ -48,7 +48,7 @@ public class HouseApprove {
 
     @Basic
     @Column(name = "later_action")
-    private int later_action;
+    private String later_action;
 
     @Basic
     @Column(name = "loan_id")
@@ -62,19 +62,19 @@ public class HouseApprove {
         this.id = id;
     }
 
-    public int getApprove_state() {
+    public String getApprove_state() {
         return approve_state;
     }
 
-    public void setApprove_state(int approve_state) {
+    public void setApprove_state(String approve_state) {
         this.approve_state = approve_state;
     }
 
-    public Date getApprove_time() {
+    public String getApprove_time() {
         return approve_time;
     }
 
-    public void setApprove_time(Date approve_time) {
+    public void setApprove_time(String approve_time) {
         this.approve_time = approve_time;
     }
 
@@ -118,11 +118,11 @@ public class HouseApprove {
         this.remark = remark;
     }
 
-    public int getFail_reason() {
+    public String getFail_reason() {
         return fail_reason;
     }
 
-    public void setFail_reason(int fail_reason) {
+    public void setFail_reason(String fail_reason) {
         this.fail_reason = fail_reason;
     }
 
@@ -134,11 +134,11 @@ public class HouseApprove {
         this.fail_reason_other = fail_reason_other;
     }
 
-    public int getLater_action() {
+    public String getLater_action() {
         return later_action;
     }
 
-    public void setLater_action(int later_action) {
+    public void setLater_action(String later_action) {
         this.later_action = later_action;
     }
 
