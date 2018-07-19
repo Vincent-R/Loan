@@ -9,7 +9,7 @@ public interface DepartmentService {
 
     Department save(Department department);
 
-    Department findOneById(int id);
+    Department findOneById(String id);
 
     Department findOneByName(String name);
 
@@ -17,5 +17,5 @@ public interface DepartmentService {
 
     List<Department> findAll();
 
-    int deleteById(int id);
+    int deleteById(String id);
 }

@@ -19,7 +19,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-@WebFilter(urlPatterns = {"/*"}, filterName = "TokenFilter")
+//@WebFilter(urlPatterns = {"/*"}, filterName = "TokenFilter")
 @Order(Integer.MAX_VALUE-1)
 public class TokenFilter implements Filter {
     @Override

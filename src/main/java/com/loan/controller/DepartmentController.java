@@ -19,7 +19,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<Department> getEmployee(@PathVariable("departmentId") int departmentId){
+    public DataReturn<Department> getEmployee(@PathVariable("departmentId") String departmentId){
         if("".equals(departmentId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "部门ID不合法" , null);
         }
@@ -60,7 +60,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.GET)
     @ResponseBody
-    public DataReturn<Integer> deleteDepartment(@PathVariable("departmentId") int departmentId){
+    public DataReturn<Integer> deleteDepartment(@PathVariable("departmentId") String departmentId){
         if("".equals(departmentId)){
             return new DataReturn<>(Constant.RESULT_ERROR, "部门ID不合法" , null);
         }
