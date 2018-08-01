@@ -550,4 +550,16 @@
       abandon_time = #{abandonTime,jdbcType=DATE}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="queryRecordChecklist" parameterType="java.util.List" resultType="com.loan.returnObj.MObjCommon">
+    SELECT lr.id AS taskId,
+				ll.client_name AS name,
+				ll.client_phone AS phone
+    from loan_mortgage_record lr, loan_mortgage_checklist ll
+    where (lr.id in #{idList}) and (lr.checklist = ll.id)
+  </select>
+
+
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.loan.controller;
 
+import com.loan.dao.LoanMortgageRecordDAO;
 import com.loan.dao.MortgageRecordDao;
 import com.loan.entity.*;
 import com.loan.returnObj.MObjApprove;
@@ -42,6 +43,10 @@ public class MortgageTaskController {
     @Autowired
     private MortgageRecordDao mMortgageRecordDao;
 
+    @Autowired
+    private LoanMortgageRecordDAO loanMortgageRecordDAO;
+
+
     @ResponseBody
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public DataReturn<List<MObjCommon>> getViewVisaTasks(){
@@ -83,9 +88,11 @@ public class MortgageTaskController {
             ids.add(taskService.getVariable(viewTask.getId(), Constant.LOANID).toString());
         }
 
-        List<MObjCommon> resultList= mMortgageRecordDao.queryMObjCommon(ids);
 
-        return new DataReturn<>(Constant.RESULT_OK, "", resultList);
+//
+//        List<MObjCommon> resultList= mMortgageRecordDao.queryMObjCommon(ids);
+
+        return new DataReturn<>(Constant.RESULT_OK, "", null);
 
     }
 
