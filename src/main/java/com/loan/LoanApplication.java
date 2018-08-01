@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan
 @ServletComponentScan("com.loan.filter")
 @EnableTransactionManagement
-@MapperScan(basePackages = "mapper/*")
+@MapperScan("com.loan.dao")
 //部署时使用
 public class LoanApplication extends SpringBootServletInitializer{
 //public class LoanApplication{
