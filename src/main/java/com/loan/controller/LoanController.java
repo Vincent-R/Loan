@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 @Api(value = "",description = "用户接口")
 @RestController
@@ -55,7 +56,7 @@ public class LoanController {
     @RequestMapping(value = "login", method = RequestMethod.GET)
     @ResponseBody
     public JSONResult<LoginResult> employeeLogin(@RequestParam(value = "name", defaultValue = "") String name,
-                                              @RequestParam(value = "password", defaultValue = "") String password, HttpServletResponse httpServletResponse) throws NotFoundException{
+                                              @RequestParam(value = "password", defaultValue = "") String password, HttpServletResponse httpServletResponse) throws NotFoundException, UnsupportedEncodingException {
         JSONResult<LoginResult> resp = new JSONResult<LoginResult>();
         LoginResult resultData = new LoginResult();
         resp.setData(resultData);

@@ -4,10 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Date;
 
 public class TokenSecurity {
@@ -15,8 +16,8 @@ public class TokenSecurity {
     /**
      * 由字符串生成加密key
      * */
-    public static SecretKey generalKey(String stringKey){
-        byte[] encodedKey = Base64.decodeBase64(stringKey);
+    public static SecretKey generalKey(String stringKey) throws UnsupportedEncodingException {
+        byte[] encodedKey = stringKey.getBytes("UTF-8");
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
         return key;
     }
@@ -24,7 +25,7 @@ public class TokenSecurity {
     /**
      * 创建token
      * */
-    public static String createToken(long ttlMillis, String stringKey, String id){
+    public static String createToken(long ttlMillis, String stringKey, String id) throws UnsupportedEncodingException {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         long noMillis = System.currentTimeMillis();
         Date now = new Date(noMillis);

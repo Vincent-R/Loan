@@ -84,10 +84,15 @@ public class MortgageTaskController {
 
         ArrayList<String> ids = new ArrayList<>();
 
+        long startTime=System.currentTimeMillis();   //获取开始时间
+        //通过测试，发现时间的消耗还是主要在这个地方啊
         for (Task viewTask:viewTasks) {
             ids.add(taskService.getVariable(viewTask.getId(), Constant.LOANID).toString());
         }
 
+        long endTime=System.currentTimeMillis(); //获取结束时间
+
+        System.out.println("程序运行时间： "+(endTime-startTime)+"ms");
         List<MObjCommon> resultList= loanMortgageRecordDAO.queryRecordChecklist(ids);
 
         return new DataReturn<>(Constant.RESULT_OK, "", resultList);
