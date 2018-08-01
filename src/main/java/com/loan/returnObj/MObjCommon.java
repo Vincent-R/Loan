@@ -1,14 +1,22 @@
 package com.loan.returnObj;
 
+import org.intellij.lang.annotations.Identifier;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 public class MObjCommon {
 
     private String taskId;
 
+
     private String name;
+
 
     private String phone;
 
-    private String state;
 
     public String getTaskId() {
         return taskId;
@@ -34,20 +42,11 @@ public class MObjCommon {
         this.phone = phone;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public MObjCommon(){}
 
-    public MObjCommon(String taskId, String name, String phone, String state){
+    public MObjCommon(String taskId, String name, String phone){
         this.taskId = taskId;
         this.name = name;
         this.phone = phone;
-        this.state = state;
     }
 }

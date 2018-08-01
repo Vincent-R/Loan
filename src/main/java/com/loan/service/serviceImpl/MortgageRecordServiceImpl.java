@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MortgageRecordServiceImpl implements MortgageRecordService{
 
@@ -17,6 +20,7 @@ public class MortgageRecordServiceImpl implements MortgageRecordService{
     public MortgageRecord findOneById(String id) {
         return mortgageRecordDao.findOne(id);
     }
+
 
     @Transactional
     @Override

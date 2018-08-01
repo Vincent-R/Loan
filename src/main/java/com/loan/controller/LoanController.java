@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Api(value = "",description = "用户接口")
@@ -51,7 +52,7 @@ public class LoanController {
 
     @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "用户登录" ,  notes="用户登录")
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     @ResponseBody
     public JSONResult<LoginResult> employeeLogin(@RequestParam(value = "name", defaultValue = "") String name,
                                               @RequestParam(value = "password", defaultValue = "") String password, HttpServletResponse httpServletResponse) throws NotFoundException{
@@ -74,6 +75,10 @@ public class LoanController {
         //把token放到Header里面
         String token = TokenSecurity.createToken(Constant.AUTHORIZE_NOTIME, Constant.stringKey, employee.getId());
         httpServletResponse.setHeader("token", token);
+        Cookie cookie = new Cookie("token",token);
+        cookie.setPath("/");
+        httpServletResponse.addCookie(cookie);
+
 
         LoginResult loginResult = new LoginResult();
         loginResult.setId(employee.getId());
@@ -81,6 +86,9 @@ public class LoanController {
         loginResult.setAccount(employee.getAccount());
         loginResult.setDepartment_id(employee.getDepartment_id());
         loginResult.setRole(employee.getRole());
+
+
+
 
         resp.setData(loginResult);
         return resp;
