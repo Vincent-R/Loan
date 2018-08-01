@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loan.dao.LoanMortgageRecordDAO">
+  <resultMap id="BaseResultMap" type="com.loan.entity.LoanMortgageRecord">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="checklist" jdbcType="VARCHAR" property="checklist" />
+    <result column="checklist_operator" jdbcType="VARCHAR" property="checklistOperator" />
+    <result column="advice" jdbcType="VARCHAR" property="advice" />
+    <result column="advice_operator" jdbcType="VARCHAR" property="adviceOperator" />
+    <result column="catalog" jdbcType="VARCHAR" property="catalog" />
+    <result column="form" jdbcType="VARCHAR" property="form" />
+    <result column="visa_finish_time" jdbcType="DATE" property="visaFinishTime" />
+    <result column="visa_address" jdbcType="VARCHAR" property="visaAddress" />
+    <result column="visa_operator" jdbcType="VARCHAR" property="visaOperator" />
+    <result column="order_finish_time" jdbcType="DATE" property="orderFinishTime" />
+    <result column="order_evaluate_company" jdbcType="VARCHAR" property="orderEvaluateCompany" />
+    <result column="order_report_finish_time" jdbcType="DATE" property="orderReportFinishTime" />
+    <result column="approve_data_complete" jdbcType="TINYINT" property="approveDataComplete" />
+    <result column="approve_time" jdbcType="DATE" property="approveTime" />
+    <result column="approve_pass" jdbcType="TINYINT" property="approvePass" />
+    <result column="approve_zp_finish_time" jdbcType="DATE" property="approveZpFinishTime" />
+    <result column="mortgage_finish_time" jdbcType="DATE" property="mortgageFinishTime" />
+    <result column="mortgage_need_guarantee" jdbcType="TINYINT" property="mortgageNeedGuarantee" />
+    <result column="mortgage_g_stamp" jdbcType="TINYINT" property="mortgageGStamp" />
+    <result column="mortgage_g_stamp_time" jdbcType="DATE" property="mortgageGStampTime" />
+    <result column="mortgage_g_time" jdbcType="DATE" property="mortgageGTime" />
+    <result column="charge_skip" jdbcType="TINYINT" property="chargeSkip" />
+    <result column="charge_finish_time" jdbcType="DATE" property="chargeFinishTime" />
+    <result column="process_id" jdbcType="VARCHAR" property="processId" />
+    <result column="record_state" jdbcType="INTEGER" property="recordState" />
+    <result column="abandon_time" jdbcType="DATE" property="abandonTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, checklist, checklist_operator, advice, advice_operator, `catalog`, form, visa_finish_time, 
+    visa_address, visa_operator, order_finish_time, order_evaluate_company, order_report_finish_time, 
+    approve_data_complete, approve_time, approve_pass, approve_zp_finish_time, mortgage_finish_time, 
+    mortgage_need_guarantee, mortgage_g_stamp, mortgage_g_stamp_time, mortgage_g_time, 
+    charge_skip, charge_finish_time, process_id, record_state, abandon_time
+  </sql>
+  <select id="selectByExample" parameterType="com.loan.entity.LoanMortgageRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from loan_mortgage_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from loan_mortgage_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from loan_mortgage_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.loan.entity.LoanMortgageRecordExample">
+    delete from loan_mortgage_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.loan.entity.LoanMortgageRecord" useGeneratedKeys="true">
+    insert into loan_mortgage_record (checklist, checklist_operator, advice, 
+      advice_operator, `catalog`, form, 
+      visa_finish_time, visa_address, visa_operator, 
+      order_finish_time, order_evaluate_company, order_report_finish_time, 
+      approve_data_complete, approve_time, approve_pass, 
+      approve_zp_finish_time, mortgage_finish_time, mortgage_need_guarantee, 
+      mortgage_g_stamp, mortgage_g_stamp_time, mortgage_g_time, 
+      charge_skip, charge_finish_time, process_id, 
+      record_state, abandon_time)
+    values (#{checklist,jdbcType=VARCHAR}, #{checklistOperator,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}, 
+      #{adviceOperator,jdbcType=VARCHAR}, #{catalog,jdbcType=VARCHAR}, #{form,jdbcType=VARCHAR}, 
+      #{visaFinishTime,jdbcType=DATE}, #{visaAddress,jdbcType=VARCHAR}, #{visaOperator,jdbcType=VARCHAR}, 
+      #{orderFinishTime,jdbcType=DATE}, #{orderEvaluateCompany,jdbcType=VARCHAR}, #{orderReportFinishTime,jdbcType=DATE}, 
+      #{approveDataComplete,jdbcType=TINYINT}, #{approveTime,jdbcType=DATE}, #{approvePass,jdbcType=TINYINT}, 
+      #{approveZpFinishTime,jdbcType=DATE}, #{mortgageFinishTime,jdbcType=DATE}, #{mortgageNeedGuarantee,jdbcType=TINYINT}, 
+      #{mortgageGStamp,jdbcType=TINYINT}, #{mortgageGStampTime,jdbcType=DATE}, #{mortgageGTime,jdbcType=DATE}, 
+      #{chargeSkip,jdbcType=TINYINT}, #{chargeFinishTime,jdbcType=DATE}, #{processId,jdbcType=VARCHAR}, 
+      #{recordState,jdbcType=INTEGER}, #{abandonTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.loan.entity.LoanMortgageRecord" useGeneratedKeys="true">
+    insert into loan_mortgage_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="checklist != null">
+        checklist,
+      </if>
+      <if test="checklistOperator != null">
+        checklist_operator,
+      </if>
+      <if test="advice != null">
+        advice,
+      </if>
+      <if test="adviceOperator != null">
+        advice_operator,
+      </if>
+      <if test="catalog != null">
+        `catalog`,
+      </if>
+      <if test="form != null">
+        form,
+      </if>
+      <if test="visaFinishTime != null">
+        visa_finish_time,
+      </if>
+      <if test="visaAddress != null">
+        visa_address,
+      </if>
+      <if test="visaOperator != null">
+        visa_operator,
+      </if>
+      <if test="orderFinishTime != null">
+        order_finish_time,
+      </if>
+      <if test="orderEvaluateCompany != null">
+        order_evaluate_company,
+      </if>
+      <if test="orderReportFinishTime != null">
+        order_report_finish_time,
+      </if>
+      <if test="approveDataComplete != null">
+        approve_data_complete,
+      </if>
+      <if test="approveTime != null">
+        approve_time,
+      </if>
+      <if test="approvePass != null">
+        approve_pass,
+      </if>
+      <if test="approveZpFinishTime != null">
+        approve_zp_finish_time,
+      </if>
+      <if test="mortgageFinishTime != null">
+        mortgage_finish_time,
+      </if>
+      <if test="mortgageNeedGuarantee != null">
+        mortgage_need_guarantee,
+      </if>
+      <if test="mortgageGStamp != null">
+        mortgage_g_stamp,
+      </if>
+      <if test="mortgageGStampTime != null">
+        mortgage_g_stamp_time,
+      </if>
+      <if test="mortgageGTime != null">
+        mortgage_g_time,
+      </if>
+      <if test="chargeSkip != null">
+        charge_skip,
+      </if>
+      <if test="chargeFinishTime != null">
+        charge_finish_time,
+      </if>
+      <if test="processId != null">
+        process_id,
+      </if>
+      <if test="recordState != null">
+        record_state,
+      </if>
+      <if test="abandonTime != null">
+        abandon_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="checklist != null">
+        #{checklist,jdbcType=VARCHAR},
+      </if>
+      <if test="checklistOperator != null">
+        #{checklistOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="adviceOperator != null">
+        #{adviceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="catalog != null">
+        #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="form != null">
+        #{form,jdbcType=VARCHAR},
+      </if>
+      <if test="visaFinishTime != null">
+        #{visaFinishTime,jdbcType=DATE},
+      </if>
+      <if test="visaAddress != null">
+        #{visaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="visaOperator != null">
+        #{visaOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFinishTime != null">
+        #{orderFinishTime,jdbcType=DATE},
+      </if>
+      <if test="orderEvaluateCompany != null">
+        #{orderEvaluateCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReportFinishTime != null">
+        #{orderReportFinishTime,jdbcType=DATE},
+      </if>
+      <if test="approveDataComplete != null">
+        #{approveDataComplete,jdbcType=TINYINT},
+      </if>
+      <if test="approveTime != null">
+        #{approveTime,jdbcType=DATE},
+      </if>
+      <if test="approvePass != null">
+        #{approvePass,jdbcType=TINYINT},
+      </if>
+      <if test="approveZpFinishTime != null">
+        #{approveZpFinishTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageFinishTime != null">
+        #{mortgageFinishTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageNeedGuarantee != null">
+        #{mortgageNeedGuarantee,jdbcType=TINYINT},
+      </if>
+      <if test="mortgageGStamp != null">
+        #{mortgageGStamp,jdbcType=TINYINT},
+      </if>
+      <if test="mortgageGStampTime != null">
+        #{mortgageGStampTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageGTime != null">
+        #{mortgageGTime,jdbcType=DATE},
+      </if>
+      <if test="chargeSkip != null">
+        #{chargeSkip,jdbcType=TINYINT},
+      </if>
+      <if test="chargeFinishTime != null">
+        #{chargeFinishTime,jdbcType=DATE},
+      </if>
+      <if test="processId != null">
+        #{processId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordState != null">
+        #{recordState,jdbcType=INTEGER},
+      </if>
+      <if test="abandonTime != null">
+        #{abandonTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.loan.entity.LoanMortgageRecordExample" resultType="java.lang.Long">
+    select count(*) from loan_mortgage_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update loan_mortgage_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checklist != null">
+        checklist = #{record.checklist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checklistOperator != null">
+        checklist_operator = #{record.checklistOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advice != null">
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adviceOperator != null">
+        advice_operator = #{record.adviceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catalog != null">
+        `catalog` = #{record.catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.form != null">
+        form = #{record.form,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visaFinishTime != null">
+        visa_finish_time = #{record.visaFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.visaAddress != null">
+        visa_address = #{record.visaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visaOperator != null">
+        visa_operator = #{record.visaOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderFinishTime != null">
+        order_finish_time = #{record.orderFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.orderEvaluateCompany != null">
+        order_evaluate_company = #{record.orderEvaluateCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderReportFinishTime != null">
+        order_report_finish_time = #{record.orderReportFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.approveDataComplete != null">
+        approve_data_complete = #{record.approveDataComplete,jdbcType=TINYINT},
+      </if>
+      <if test="record.approveTime != null">
+        approve_time = #{record.approveTime,jdbcType=DATE},
+      </if>
+      <if test="record.approvePass != null">
+        approve_pass = #{record.approvePass,jdbcType=TINYINT},
+      </if>
+      <if test="record.approveZpFinishTime != null">
+        approve_zp_finish_time = #{record.approveZpFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.mortgageFinishTime != null">
+        mortgage_finish_time = #{record.mortgageFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.mortgageNeedGuarantee != null">
+        mortgage_need_guarantee = #{record.mortgageNeedGuarantee,jdbcType=TINYINT},
+      </if>
+      <if test="record.mortgageGStamp != null">
+        mortgage_g_stamp = #{record.mortgageGStamp,jdbcType=TINYINT},
+      </if>
+      <if test="record.mortgageGStampTime != null">
+        mortgage_g_stamp_time = #{record.mortgageGStampTime,jdbcType=DATE},
+      </if>
+      <if test="record.mortgageGTime != null">
+        mortgage_g_time = #{record.mortgageGTime,jdbcType=DATE},
+      </if>
+      <if test="record.chargeSkip != null">
+        charge_skip = #{record.chargeSkip,jdbcType=TINYINT},
+      </if>
+      <if test="record.chargeFinishTime != null">
+        charge_finish_time = #{record.chargeFinishTime,jdbcType=DATE},
+      </if>
+      <if test="record.processId != null">
+        process_id = #{record.processId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordState != null">
+        record_state = #{record.recordState,jdbcType=INTEGER},
+      </if>
+      <if test="record.abandonTime != null">
+        abandon_time = #{record.abandonTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update loan_mortgage_record
+    set id = #{record.id,jdbcType=VARCHAR},
+      checklist = #{record.checklist,jdbcType=VARCHAR},
+      checklist_operator = #{record.checklistOperator,jdbcType=VARCHAR},
+      advice = #{record.advice,jdbcType=VARCHAR},
+      advice_operator = #{record.adviceOperator,jdbcType=VARCHAR},
+      `catalog` = #{record.catalog,jdbcType=VARCHAR},
+      form = #{record.form,jdbcType=VARCHAR},
+      visa_finish_time = #{record.visaFinishTime,jdbcType=DATE},
+      visa_address = #{record.visaAddress,jdbcType=VARCHAR},
+      visa_operator = #{record.visaOperator,jdbcType=VARCHAR},
+      order_finish_time = #{record.orderFinishTime,jdbcType=DATE},
+      order_evaluate_company = #{record.orderEvaluateCompany,jdbcType=VARCHAR},
+      order_report_finish_time = #{record.orderReportFinishTime,jdbcType=DATE},
+      approve_data_complete = #{record.approveDataComplete,jdbcType=TINYINT},
+      approve_time = #{record.approveTime,jdbcType=DATE},
+      approve_pass = #{record.approvePass,jdbcType=TINYINT},
+      approve_zp_finish_time = #{record.approveZpFinishTime,jdbcType=DATE},
+      mortgage_finish_time = #{record.mortgageFinishTime,jdbcType=DATE},
+      mortgage_need_guarantee = #{record.mortgageNeedGuarantee,jdbcType=TINYINT},
+      mortgage_g_stamp = #{record.mortgageGStamp,jdbcType=TINYINT},
+      mortgage_g_stamp_time = #{record.mortgageGStampTime,jdbcType=DATE},
+      mortgage_g_time = #{record.mortgageGTime,jdbcType=DATE},
+      charge_skip = #{record.chargeSkip,jdbcType=TINYINT},
+      charge_finish_time = #{record.chargeFinishTime,jdbcType=DATE},
+      process_id = #{record.processId,jdbcType=VARCHAR},
+      record_state = #{record.recordState,jdbcType=INTEGER},
+      abandon_time = #{record.abandonTime,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.loan.entity.LoanMortgageRecord">
+    update loan_mortgage_record
+    <set>
+      <if test="checklist != null">
+        checklist = #{checklist,jdbcType=VARCHAR},
+      </if>
+      <if test="checklistOperator != null">
+        checklist_operator = #{checklistOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="adviceOperator != null">
+        advice_operator = #{adviceOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="catalog != null">
+        `catalog` = #{catalog,jdbcType=VARCHAR},
+      </if>
+      <if test="form != null">
+        form = #{form,jdbcType=VARCHAR},
+      </if>
+      <if test="visaFinishTime != null">
+        visa_finish_time = #{visaFinishTime,jdbcType=DATE},
+      </if>
+      <if test="visaAddress != null">
+        visa_address = #{visaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="visaOperator != null">
+        visa_operator = #{visaOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="orderFinishTime != null">
+        order_finish_time = #{orderFinishTime,jdbcType=DATE},
+      </if>
+      <if test="orderEvaluateCompany != null">
+        order_evaluate_company = #{orderEvaluateCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="orderReportFinishTime != null">
+        order_report_finish_time = #{orderReportFinishTime,jdbcType=DATE},
+      </if>
+      <if test="approveDataComplete != null">
+        approve_data_complete = #{approveDataComplete,jdbcType=TINYINT},
+      </if>
+      <if test="approveTime != null">
+        approve_time = #{approveTime,jdbcType=DATE},
+      </if>
+      <if test="approvePass != null">
+        approve_pass = #{approvePass,jdbcType=TINYINT},
+      </if>
+      <if test="approveZpFinishTime != null">
+        approve_zp_finish_time = #{approveZpFinishTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageFinishTime != null">
+        mortgage_finish_time = #{mortgageFinishTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageNeedGuarantee != null">
+        mortgage_need_guarantee = #{mortgageNeedGuarantee,jdbcType=TINYINT},
+      </if>
+      <if test="mortgageGStamp != null">
+        mortgage_g_stamp = #{mortgageGStamp,jdbcType=TINYINT},
+      </if>
+      <if test="mortgageGStampTime != null">
+        mortgage_g_stamp_time = #{mortgageGStampTime,jdbcType=DATE},
+      </if>
+      <if test="mortgageGTime != null">
+        mortgage_g_time = #{mortgageGTime,jdbcType=DATE},
+      </if>
+      <if test="chargeSkip != null">
+        charge_skip = #{chargeSkip,jdbcType=TINYINT},
+      </if>
+      <if test="chargeFinishTime != null">
+        charge_finish_time = #{chargeFinishTime,jdbcType=DATE},
+      </if>
+      <if test="processId != null">
+        process_id = #{processId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordState != null">
+        record_state = #{recordState,jdbcType=INTEGER},
+      </if>
+      <if test="abandonTime != null">
+        abandon_time = #{abandonTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.loan.entity.LoanMortgageRecord">
+    update loan_mortgage_record
+    set checklist = #{checklist,jdbcType=VARCHAR},
+      checklist_operator = #{checklistOperator,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR},
+      advice_operator = #{adviceOperator,jdbcType=VARCHAR},
+      `catalog` = #{catalog,jdbcType=VARCHAR},
+      form = #{form,jdbcType=VARCHAR},
+      visa_finish_time = #{visaFinishTime,jdbcType=DATE},
+      visa_address = #{visaAddress,jdbcType=VARCHAR},
+      visa_operator = #{visaOperator,jdbcType=VARCHAR},
+      order_finish_time = #{orderFinishTime,jdbcType=DATE},
+      order_evaluate_company = #{orderEvaluateCompany,jdbcType=VARCHAR},
+      order_report_finish_time = #{orderReportFinishTime,jdbcType=DATE},
+      approve_data_complete = #{approveDataComplete,jdbcType=TINYINT},
+      approve_time = #{approveTime,jdbcType=DATE},
+      approve_pass = #{approvePass,jdbcType=TINYINT},
+      approve_zp_finish_time = #{approveZpFinishTime,jdbcType=DATE},
+      mortgage_finish_time = #{mortgageFinishTime,jdbcType=DATE},
+      mortgage_need_guarantee = #{mortgageNeedGuarantee,jdbcType=TINYINT},
+      mortgage_g_stamp = #{mortgageGStamp,jdbcType=TINYINT},
+      mortgage_g_stamp_time = #{mortgageGStampTime,jdbcType=DATE},
+      mortgage_g_time = #{mortgageGTime,jdbcType=DATE},
+      charge_skip = #{chargeSkip,jdbcType=TINYINT},
+      charge_finish_time = #{chargeFinishTime,jdbcType=DATE},
+      process_id = #{processId,jdbcType=VARCHAR},
+      record_state = #{recordState,jdbcType=INTEGER},
+      abandon_time = #{abandonTime,jdbcType=DATE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
