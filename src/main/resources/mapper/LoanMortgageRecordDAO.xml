@@ -30,6 +30,14 @@
     <result column="record_state" jdbcType="INTEGER" property="recordState" />
     <result column="abandon_time" jdbcType="DATE" property="abandonTime" />
   </resultMap>
+
+  <resultMap id="MObjCommonMap" type="com.loan.returnObj.MObjCommon">
+    <result column="taskId" jdbcType="VARCHAR" property="taskId"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
+  </resultMap>
+
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -552,12 +560,16 @@
   </update>
 
 
-  <select id="queryRecordChecklist" parameterType="java.util.List" resultType="com.loan.returnObj.MObjCommon">
+  <select id="queryRecordChecklist" parameterType="java.util.List" resultMap="MObjCommonMap">
     SELECT lr.id AS taskId,
 				ll.client_name AS name,
 				ll.client_phone AS phone
     from loan_mortgage_record lr, loan_mortgage_checklist ll
-    where (lr.id in #{idList}) and (lr.checklist = ll.id)
+    where (lr.id in
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    ) and (lr.checklist = ll.id)
   </select>
 
 

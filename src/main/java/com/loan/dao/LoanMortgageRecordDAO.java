@@ -21,7 +21,7 @@ import java.util.List;
 public interface LoanMortgageRecordDAO extends MyBatisBaseDao<LoanMortgageRecord, String, LoanMortgageRecordExample> {
 
 
-    List<MObjCommon> queryRecordChecklist(@Param("idList") List<String> idList);
+    List<MObjCommon> queryRecordChecklist(@Param("list") List<String> list);
 
 
 }

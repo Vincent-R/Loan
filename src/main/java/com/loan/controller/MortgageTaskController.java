@@ -88,11 +88,9 @@ public class MortgageTaskController {
             ids.add(taskService.getVariable(viewTask.getId(), Constant.LOANID).toString());
         }
 
+        List<MObjCommon> resultList= loanMortgageRecordDAO.queryRecordChecklist(ids);
 
-//
-//        List<MObjCommon> resultList= mMortgageRecordDao.queryMObjCommon(ids);
-
-        return new DataReturn<>(Constant.RESULT_OK, "", null);
+        return new DataReturn<>(Constant.RESULT_OK, "", resultList);
 
     }
 
