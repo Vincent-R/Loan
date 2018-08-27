@@ -111,6 +111,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("待分配面谈");
             results.add(mObjCommon);
         }
@@ -129,6 +130,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("待分配面签");
             results.add(mObjCommon);
         }
@@ -147,6 +149,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("待填写面谈建议");
             results.add(mObjCommon);
         }
@@ -362,6 +365,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("待确定收费状态");
             results.add(mObjCommon);
         }
@@ -398,6 +402,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("等待放款");
             results.add(mObjCommon);
         }
@@ -416,6 +421,7 @@ public class MortgageTaskController {
             MortgageCheckList mortgageCheckList = mortgageCheckListService.findOneById(mortgageRecord.getChecklist());
             mObjCommon.setName(mortgageCheckList.getClient_name());
             mObjCommon.setPhone(mortgageCheckList.getClient_phone());
+            mObjCommon.setChecklistId(mortgageCheckList.getId());
 //            mObjCommon.setState("");
             results.add(mObjCommon);
         }

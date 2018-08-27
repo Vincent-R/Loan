@@ -18,6 +18,8 @@ public class MObjCommon {
 
     private String phone;
 
+    private String checklistId;
+
 
     public String getTaskId() {
         return taskId;
@@ -43,11 +45,21 @@ public class MObjCommon {
         this.phone = phone;
     }
 
+    public String getChecklistId() {
+        return checklistId;
+    }
+
+    public void setChecklistId(String checklistId) {
+        this.checklistId = checklistId;
+    }
+
+
     public MObjCommon(){}
 
-    public MObjCommon(String taskId, String name, String phone){
+    public MObjCommon(String taskId, String name, String phone, String checklistId){
         this.taskId = taskId;
         this.name = name;
         this.phone = phone;
+        this.checklistId = checklistId;
     }
 }
