@@ -18,7 +18,11 @@ public class MObjCommon {
 
     private String phone;
 
+
     private String checklistId;
+
+
+    private Integer loanType;
 
 
     public String getTaskId() {
@@ -53,13 +57,21 @@ public class MObjCommon {
         this.checklistId = checklistId;
     }
 
+    public Integer getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(Integer loanType) {
+        this.loanType = loanType;
+    }
 
     public MObjCommon(){}
 
-    public MObjCommon(String taskId, String name, String phone, String checklistId){
+    public MObjCommon(String taskId, String name, String phone, String checklistId, Integer loanType){
         this.taskId = taskId;
         this.name = name;
         this.phone = phone;
         this.checklistId = checklistId;
+        this.loanType = loanType;
     }
 }

@@ -36,7 +36,7 @@ public class TokenFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         String url = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
-        if(!url.contains("login") && !url.contains("swagger") && !url.contains("api-docs")){
+        if(!url.contains("login") && !url.contains("swagger") && !url.contains("/api-docs")&&!url.contains("/v2") && !url.contains("docs.html") &&!url.contains("webjars")){
             String token = httpServletRequest.getHeader("token");//header方式
             if (null == token || token.isEmpty()) {
                 for(Cookie c : httpServletRequest.getCookies()){

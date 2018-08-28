@@ -144,7 +144,7 @@ function handleLogin() {
         scopes.push(scope);
     }
 
-    // Implicit auth recommends a state parameter.
+    // Implicit Auth recommends a state parameter.
     var state = Math.random ();
 
     window.enabledScopes=scopes;
@@ -192,7 +192,7 @@ function initOAuth(opts) {
   scopeSeparator = (o.scopeSeparator||' ');
 
   if(errors.length > 0){
-    log('auth unable initialize oauth: ' + errors);
+    log('Auth unable initialize oauth: ' + errors);
     return;
   }
 
@@ -246,7 +246,7 @@ window.onOAuthComplete = function onOAuthComplete(token) {
       if(b){
         // if all roles are satisfied
         var o = null;
-        $.each($('.auth .api-ic .api_information_panel'), function(k, v) {
+        $.each($('.Auth .api-ic .api_information_panel'), function(k, v) {
           var children = v;
           if(children && children.childNodes) {
             var requiredScopes = [];
