@@ -4,6 +4,7 @@ import com.loan.entity.LoanTableValue;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Angel on 2018/8/29.
@@ -31,7 +32,7 @@ public interface TableValueService {
      * @return
      */
 
-    List<LoanTableValue> findAll();
+    String[][] findAll();
     /**
      * 添加值
      * @param loanTableValue
@@ -53,4 +54,12 @@ public interface TableValueService {
      * @return
      */
     int deleteById(Integer id);
+
+    /**
+     * 根据键来拿静态索引
+     *
+     * @param remark
+     * @return
+     */
+    List<LoanTableValue> findValueByRemark(String remark);
 }

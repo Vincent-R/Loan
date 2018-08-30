@@ -1,12 +1,15 @@
 package com.loan.service.serviceImpl;
 
 
+
 import com.loan.dao.LoanTableValueDao;
 import com.loan.entity.LoanTableValue;
 import com.loan.entity.LoanTableValueExample;
 import com.loan.service.TableValueService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -48,12 +51,48 @@ public class TabelValueServiceImpl implements TableValueService {
      * @return
      */
     @Override
-    public List<LoanTableValue> findAll() {
+    public  String[][] findAll() {
         LoanTableValueExample example = new LoanTableValueExample();
         example.setOrderByClause("value_type ASC, id ASC");
-        return loanTableValueDao.selectByExample(example);
+        List<LoanTableValue> list =  loanTableValueDao.selectByExample(example);
+        int[] colNum = new int[5];
+        for(int i = 0; i <5; i++){
+            int count = 0;
+            for(int j=0; j<list.size();j++) {
+                LoanTableValue loanTableValue = list.get(j);
+                if (loanTableValue.getValueType() == i) {
+                    count+=1;
+                } else {
+                    continue;
+                }
+                colNum[i] = count;
+            }
+        }
+        String[][] result = new String[5][];
+        for(int k = 0; k<5;k++) {
+            result[k] = new String[colNum[k]];
+            int col = 0;
+            for (int i = 0; i < list.size(); i++) {
+                LoanTableValue loanTableValue = list.get(i);
+                if (loanTableValue.getValueType() == k) {
+                    try {
+                        String newLoanTableValue = "{ id: " + loanTableValue.getId() +
+                                ", valueType: " + loanTableValue.getValueType() +
+                                ", value: '" + loanTableValue.getValue() +
+                                "', remark: '" + loanTableValue.getRemark() +
+                                "'}";
+                        result[k][col] = newLoanTableValue;
+                        col++;
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }
+        return result;
     }
-
     /**
      * 添加值
      * @param loanTableValue
@@ -82,6 +121,14 @@ public class TabelValueServiceImpl implements TableValueService {
     @Override
     public int deleteById(Integer id) {
         return loanTableValueDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<LoanTableValue> findValueByRemark(String remark) {
+        LoanTableValueExample example = new LoanTableValueExample();
+        example.or().andRemarkEqualTo(remark);
+        example.setOrderByClause("id ASC");
+        return loanTableValueDao.selectByExample(example);
     }
 
 }
