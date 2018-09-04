@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface DepartmentDao extends JpaRepository<Department, Integer> {
 
-//    @Query("select  d from Department d where d.id = ?1")
-//    Department findById(int id);
+    @Query("select  d from Department d where d.id = ?1")
+    Department findOneById(String id);
 //
     @Query("select d from Department d where d.name = ?1")
     Department findOneByName(String name);
@@ -25,5 +25,5 @@ public interface DepartmentDao extends JpaRepository<Department, Integer> {
 //
     @Modifying
     @Query("delete from Department d where d.id = ?1")
-    int deleteById(int id);
+    int deleteById(String id);
 }

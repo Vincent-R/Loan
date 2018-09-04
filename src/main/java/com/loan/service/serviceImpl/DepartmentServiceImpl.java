@@ -16,8 +16,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentDao departmentDao;
 
     @Override
-    public Department findOneById(int id) {
-        return departmentDao.findOne(id);
+    public Department findOneById(String id) {
+        return departmentDao.findOneById(id);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Transactional
     @Override
-    public int deleteById(int id) {
+    public int deleteById(String id) {
         return departmentDao.deleteById(id);
     }
 }

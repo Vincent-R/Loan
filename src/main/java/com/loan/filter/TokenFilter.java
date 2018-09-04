@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,11 +30,25 @@ public class TokenFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
+
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+
         String url = httpServletRequest.getRequestURI().substring(httpServletRequest.getContextPath().length());
-        if(!url.contains("login")){
+        if(!url.contains("login") && !url.contains("swagger") && !url.contains("/api-docs")&&!url.contains("/v2") && !url.contains("docs.html") &&!url.contains("webjars")){
             String token = httpServletRequest.getHeader("token");//header方式
+            if (null == token || token.isEmpty()) {
+                for(Cookie c : httpServletRequest.getCookies()){
+                    if(c.getName().equals("token")){
+                        token = c.getValue();
+                        break;
+                    }
+                }
+            }
+
+
+
             DataReturn<String> resultInfo = null;
             if (null == token || token.isEmpty()) {
                 resultInfo = new DataReturn<>(Constant.AUTHORIZE_FAILED, "用户授权认证没有通过!客户端请求参数中无token信息", "");
